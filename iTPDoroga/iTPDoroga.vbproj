@@ -37,16 +37,39 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>construccio.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v15.2" />
     <Reference Include="DevExpress.Data.v15.2" />
+    <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v15.2" />
     <Reference Include="DevExpress.XtraBars.v15.2" />
     <Reference Include="DevExpress.XtraEditors.v15.2" />
+    <Reference Include="DevExpress.XtraGrid.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v15.2" />
+    <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management.Instrumentation" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,16 +91,102 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.vb">
+    <Compile Include="DataClasses\DataClassesDoroga.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClassesDoroga.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\SampleData.vb" />
+    <Compile Include="Forms\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.vb">
+    <Compile Include="Forms\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WaitFormLoadRec.Designer.vb">
+      <DependentUpon>WaitFormLoadRec.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WaitFormLoadRec.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WaitFormMain.Designer.vb">
+      <DependentUpon>WaitFormMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WaitFormMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WaitFormServers.Designer.vb">
+      <DependentUpon>WaitFormServers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WaitFormServers.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <EmbeddedResource Include="MainForm.resx">
+    <Compile Include="Supports\Classes\PersonInfo.vb" />
+    <Compile Include="Supports\Views\XtraUCLogin.Designer.vb">
+      <DependentUpon>XtraUCLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCLogin.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCPerson.Designer.vb">
+      <DependentUpon>XtraUCPerson.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCPerson.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCPersonInfo.Designer.vb">
+      <DependentUpon>XtraUCPersonInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCPersonInfo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCServers.Designer.vb">
+      <DependentUpon>XtraUCServers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCServers.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Modules\MainModule.vb" />
+    <Compile Include="Supports\Views\GroupDetailPage.Designer.vb">
+      <DependentUpon>GroupDetailPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\GroupDetailPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Views\GroupItemDetailPage.Designer.vb">
+      <DependentUpon>GroupItemDetailPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\GroupItemDetailPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Views\ItemDetailPagePerson.Designer.vb">
+      <DependentUpon>ItemDetailPagePerson.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\ItemDetailPagePerson.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Views\ItemDetailPage.Designer.vb">
+      <DependentUpon>ItemDetailPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\ItemDetailPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <None Include="DataClasses\DataClassesDoroga.dbml.layout">
+      <DependentUpon>DataClassesDoroga.dbml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WaitFormLoadRec.resx">
+      <DependentUpon>WaitFormLoadRec.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WaitFormMain.resx">
+      <DependentUpon>WaitFormMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WaitFormServers.resx">
+      <DependentUpon>WaitFormServers.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -91,6 +200,38 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Supports\Views\XtraUCLogin.resx">
+      <DependentUpon>XtraUCLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\XtraUCPerson.resx">
+      <DependentUpon>XtraUCPerson.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\XtraUCPersonInfo.resx">
+      <DependentUpon>XtraUCPersonInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\XtraUCServers.resx">
+      <DependentUpon>XtraUCServers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\GroupDetailPage.resx">
+      <DependentUpon>GroupDetailPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\GroupItemDetailPage.resx">
+      <DependentUpon>GroupItemDetailPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\ItemDetailPagePerson.resx">
+      <DependentUpon>ItemDetailPagePerson.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\ItemDetailPage.resx">
+      <DependentUpon>ItemDetailPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataClasses\DataClassesDoroga.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClassesDoroga.designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -100,8 +241,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="construccio.ico" />
+    <EmbeddedResource Include="Supports\Assets\DarkGray.png" />
+    <EmbeddedResource Include="Supports\Assets\LightGray.png" />
+    <EmbeddedResource Include="Supports\Assets\MediumGray.png" />
+    <Content Include="Supports\Icons\gif\construccio.gif" />
+    <Content Include="Supports\Icons\ico\books.ico" />
+    <Content Include="Supports\Icons\jpeg\sec00.jpeg" />
+    <EmbeddedResource Include="Supports\Icons\jpeg\structura.jpg" />
+    <Content Include="Supports\Icons\png\02.png" />
+    <Content Include="Supports\Icons\png\books-256.png" />
+    <None Include="Supports\Icons\png\nastroika-servera.png" />
+    <EmbeddedResource Include="Supports\Icons\png\support.png" />
+    <EmbeddedResource Include="Supports\Icons\png\proccess.png" />
+    <EmbeddedResource Include="Supports\Icons\png\personID.png" />
+    <EmbeddedResource Include="Supports\Icons\png\loadrec.png" />
+    <Content Include="Supports\Icons\png\teacher.png" />
+    <Content Include="Supports\Icons\png\technology.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Supports\Controls\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

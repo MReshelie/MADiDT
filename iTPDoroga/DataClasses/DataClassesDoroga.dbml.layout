@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.875, 18.25" name="DataClassesDoroga">
+  <DataContextMoniker Name="/DataClassesDorogaDataContext" />
+  <nestedChildShapes>
+    <classShape Id="73de95d1-5e03-4019-b4c0-184648aec670" absoluteBounds="7.375, 11.25, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/address" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e01a174d-689d-4cf0-a2e3-d3aeca5c09d6" absoluteBounds="7.3900000000000006, 11.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6206b869-b240-492c-9034-67ec46bfd9e4" absoluteBounds="10.125, 11.125, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/ALTNAMES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bf8d4562-cfb1-4a30-bc62-2ae333e4c3eb" absoluteBounds="10.14, 11.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a9f2b042-c0f0-4c96-a309-cd5cc0ea4cd8" absoluteBounds="12.75, 13.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/DOMA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d502a9f6-bde9-4cfc-8cdc-b07f61246e4f" absoluteBounds="12.765, 13.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b7d680e2-e3c8-44f2-b780-09b4285e3fb8" absoluteBounds="10.125, 1.25, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Email" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2efc40ed-95ec-48d2-a1c5-f44bbb5d53f1" absoluteBounds="10.14, 1.7100000000000009, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1187cd48-7a1f-4f87-8a0d-ac65a7320b0a" absoluteBounds="12.75, 16, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/FLAT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="16b6cf52-e9c5-4feb-bcbb-eb4a9822005c" absoluteBounds="12.765, 16.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0a54f171-6952-4048-a6d1-a895951e24e9" absoluteBounds="10.125, 14.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/KLADR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ccecde4f-cf58-40d9-8336-9fc265cab5e0" absoluteBounds="10.14, 15.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="94f85021-e06f-4285-92a1-d8953073ebb1" absoluteBounds="10.125, 12.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/SOCRBASE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="97e1118b-62c1-4881-b1ea-38fa022d135a" absoluteBounds="10.14, 13.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="00ced14b-0c42-4e79-aadf-cc096aab9d62" absoluteBounds="12.75, 11.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/STREET" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2093d63b-877d-4ff5-b4e6-cc052cf8ffe3" absoluteBounds="12.765, 11.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="41a3b16e-b3e8-46a8-a21e-d13b676060b0" absoluteBounds="10.125, 6.625, 2, 4.0785139973958309">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Адрес" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b864103d-ed50-4605-984f-0dee5b80ae01" absoluteBounds="10.14, 7.0850000000000009, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="09690691-0afc-47f8-aa70-0fe55cd6fc79" absoluteBounds="2.875, 10.875, 2, 3.1170068359375">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Город" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f90d8ffd-7d7a-4729-bbcb-cd10c9c1f9b7" absoluteBounds="2.8900000000000006, 11.335, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8f31f6b2-a867-46e4-a1b4-c2158fedaed9" absoluteBounds="0.5, 0.625, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Должность" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2c339c94-f7bf-4c78-93bd-f965f49b980f" absoluteBounds="0.515, 1.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="12e9e239-df93-4240-9fc4-7cbed4403f31" absoluteBounds="15.625, 0.625, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Кафедра" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d249ffbe-ad0c-4c69-abc7-cc4d7855facd" absoluteBounds="15.64, 1.0850000000000009, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="74c93540-5653-4d66-8662-4442b57089ba" absoluteBounds="12.75, 0.625, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Кафедра_Сотрудник" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8358b7d5-a7b4-4776-a0a7-c5d293553b10" absoluteBounds="12.765, 1.0850000000000009, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="935dce2a-46af-4eb4-a62b-d5e6c868b4a6" absoluteBounds="0.5, 4.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Пароль" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b698802c-9727-420a-bd47-ccf40bdd152f" absoluteBounds="0.51499999999999968, 4.9600000000000009, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a60d3548-adbc-4811-ab0d-4cb6f2c3214c" absoluteBounds="2.875, 7.25, 2, 3.1170068359375023">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Паспорт" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d3915a76-30a5-4aae-9688-9ae612e14044" absoluteBounds="2.8899999999999997, 7.7100000000000009, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" absoluteBounds="7.375, 0.625, 2, 3.1170068359375014">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Сотрудник" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d978cb85-c90d-40ac-8b1a-4e12f770c9e8" absoluteBounds="7.3900000000000006, 1.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="689fd69e-e3b0-4f60-956a-7b96f2f27a6e" absoluteBounds="2.875, 1.875, 2, 2.3478011067708326">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Степень" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ee7aed22-d090-4f38-b804-a3a0a5800e12" absoluteBounds="2.89, 2.3350000000000009, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b968537d-29b9-41ff-a944-c29d8951a1f1" absoluteBounds="0.5, 8.375, 2, 4.2708154296875">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Страна" />
+      <nestedChildShapes>
+        <elementListCompartment Id="be76450a-30b0-4fc7-8acf-409ef2cfc4b3" absoluteBounds="0.51500000000000057, 8.835, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="974e8fb2-d95f-4474-95c9-f371e39d9a70" absoluteBounds="12.75, 3.125, 2, 2.5401025390624987">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Факультет" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4d09727d-87e0-4437-b4b1-585d86743d5a" absoluteBounds="12.765, 3.5850000000000009, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7822b20c-91d1-4650-92a7-127093c199cd" absoluteBounds="5.125, 3.25, 2, 2.5401025390625023">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Фото" />
+      <nestedChildShapes>
+        <elementListCompartment Id="28a163cb-8307-464b-b15f-70c9d037619f" absoluteBounds="5.14, 3.7100000000000009, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(15.625 : 1.70274983723958); (14.75 : 1.70274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Кафедра/Кафедра_Кафедра_Сотрудник" />
+      <nodes>
+        <classShapeMoniker Id="12e9e239-df93-4240-9fc4-7cbed4403f31" />
+        <classShapeMoniker Id="74c93540-5653-4d66-8662-4442b57089ba" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.375 : 2.49600341796875); (10.125 : 2.49600341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Email" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="b7d680e2-e3c8-44f2-b780-09b4285e3fb8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.43419865402531 : 3.7420068359375); (8.43419865402531 : 8.66425699869792); (10.125 : 8.66425699869792)]" fixedFrom="Caller" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Адрес" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="41a3b16e-b3e8-46a8-a21e-d13b676060b0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.375 : 0.90625); (12.75 : 0.90625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Кафедра_Сотрудник" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="74c93540-5653-4d66-8662-4442b57089ba" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.76766927982622 : 3.7420068359375); (7.76766927982622 : 6.54250325520833); (2.5 : 6.54250325520833)]" fixedFrom="Caller" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Пароль" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="935dce2a-46af-4eb4-a62b-d5e6c868b4a6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.11230902015764 : 3.7420068359375); (8.11230902015764 : 8.80850341796875); (4.875 : 8.80850341796875)]" fixedFrom="Caller" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Паспорт" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="a60d3548-adbc-4811-ab0d-4cb6f2c3214c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 1.21875); (7.375 : 1.21875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Должность/Должность_Сотрудник" />
+      <nodes>
+        <classShapeMoniker Id="8f31f6b2-a867-46e4-a1b4-c2158fedaed9" />
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.875 : 2.53125); (7.375 : 2.53125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Степень/Степень_Сотрудник" />
+      <nodes>
+        <classShapeMoniker Id="689fd69e-e3b0-4f60-956a-7b96f2f27a6e" />
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 11.7604077148437); (2.875 : 11.7604077148437)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Страна/Страна_Город" />
+      <nodes>
+        <classShapeMoniker Id="b968537d-29b9-41ff-a944-c29d8951a1f1" />
+        <classShapeMoniker Id="09690691-0afc-47f8-aa70-0fe55cd6fc79" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.75 : 3.33735270182292); (15.625 : 3.33735270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Факультет/Факультет_Кафедра" />
+      <nodes>
+        <classShapeMoniker Id="974e8fb2-d95f-4474-95c9-f371e39d9a70" />
+        <classShapeMoniker Id="12e9e239-df93-4240-9fc4-7cbed4403f31" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.75 : 4.28760428854013); (8.95731797858254 : 4.28760428854013); (8.95731797858254 : 3.7420068359375)]" fixedFrom="Caller" fixedTo="Caller">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Факультет/Факультет_Сотрудник" />
+      <nodes>
+        <classShapeMoniker Id="974e8fb2-d95f-4474-95c9-f371e39d9a70" />
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.375 : 3.49600341796875); (7.125 : 3.49600341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Фото" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="7822b20c-91d1-4650-92a7-127093c199cd" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="cf0f4f3d-9a68-4e0a-8831-234f5cefd569" absoluteBounds="12.75, 6, 2, 2.5401025390625">
+      <DataClassMoniker Name="/DataClassesDorogaDataContext/Контакт" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d8b3dea8-4577-4ce3-a5f6-ccad87d9338b" absoluteBounds="12.765, 6.4600000000000009, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.66336570212242 : 3.7420068359375); (8.66336570212242 : 6.28125); (12.75 : 6.28125)]" fixedFrom="Caller" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClassesDorogaDataContext/Сотрудник/Сотрудник_Контакт" />
+      <nodes>
+        <classShapeMoniker Id="de1e0a58-6da0-43b8-8f25-5584c56847bb" />
+        <classShapeMoniker Id="cf0f4f3d-9a68-4e0a-8831-234f5cefd569" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
