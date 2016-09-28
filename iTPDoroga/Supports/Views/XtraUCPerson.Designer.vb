@@ -20,11 +20,6 @@ Partial Class XtraUCPerson
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim GridLevelNode1 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
-        Dim GridLevelNode2 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
-        Dim GridLevelNode3 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
-        Dim GridLevelNode4 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
-        Dim GridLevelNode5 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
         Me.GridViewКонтакт = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colкодКонтакт = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colкодСотрудник5 = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -38,6 +33,7 @@ Partial Class XtraUCPerson
         Me.colСотрудник4 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridControlPerson = New DevExpress.XtraGrid.GridControl()
         Me.сотрудникBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.GridViewСотрудник = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.GridViewПочта = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colкодEmail = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colкодСотрудник1 = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -93,35 +89,19 @@ Partial Class XtraUCPerson
         Me.colдатаИсправил4 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colПримечание4 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colСотрудник3 = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridViewСотрудник = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.emailBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.адресBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.паспортBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.фотоBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.контактBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.colКодСотрудник = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colФамилия = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colИмя = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colОтчество = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colкодСтепень = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colкодДолжность = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colкодФакультет = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colЗаписал = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colдатаЗаписал = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colИсправил = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colдатаИсправил = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colПримечание = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colДолжность = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colСтепень = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colФакультет = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.GridViewКонтакт, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControlPerson, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.сотрудникBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridViewСотрудник, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewПочта, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewАдрес, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewПаспорт, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewФото, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridViewСотрудник, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.emailBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.адресBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.паспортBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -207,28 +187,28 @@ Partial Class XtraUCPerson
         '
         Me.GridControlPerson.DataSource = Me.сотрудникBindingSource
         Me.GridControlPerson.Dock = System.Windows.Forms.DockStyle.Fill
-        GridLevelNode1.LevelTemplate = Me.GridViewКонтакт
-        GridLevelNode1.RelationName = "Телефон, факс, контакты"
-        GridLevelNode2.LevelTemplate = Me.GridViewПочта
-        GridLevelNode2.RelationName = "Электронная почта"
-        GridLevelNode3.LevelTemplate = Me.GridViewАдрес
-        GridLevelNode3.RelationName = "Почтовый адрес"
-        GridLevelNode4.LevelTemplate = Me.GridViewПаспорт
-        GridLevelNode4.RelationName = "Паспортные данные"
-        GridLevelNode5.LevelTemplate = Me.GridViewФото
-        GridLevelNode5.RelationName = "Персональные фотографии"
-        Me.GridControlPerson.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode1, GridLevelNode2, GridLevelNode3, GridLevelNode4, GridLevelNode5})
         Me.GridControlPerson.Location = New System.Drawing.Point(0, 0)
         Me.GridControlPerson.MainView = Me.GridViewСотрудник
         Me.GridControlPerson.Name = "GridControlPerson"
         Me.GridControlPerson.Size = New System.Drawing.Size(937, 413)
         Me.GridControlPerson.TabIndex = 0
         Me.GridControlPerson.UseEmbeddedNavigator = True
-        Me.GridControlPerson.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridViewПочта, Me.GridViewАдрес, Me.GridViewПаспорт, Me.GridViewФото, Me.GridViewСотрудник, Me.GridViewКонтакт})
+        Me.GridControlPerson.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridViewСотрудник, Me.GridViewПочта, Me.GridViewАдрес, Me.GridViewПаспорт, Me.GridViewФото, Me.GridViewКонтакт})
         '
         'сотрудникBindingSource
         '
         Me.сотрудникBindingSource.DataSource = GetType(iTPDoroga.Сотрудник)
+        '
+        'GridViewСотрудник
+        '
+        Me.GridViewСотрудник.GridControl = Me.GridControlPerson
+        Me.GridViewСотрудник.Name = "GridViewСотрудник"
+        Me.GridViewСотрудник.OptionsDetail.AllowExpandEmptyDetails = True
+        Me.GridViewСотрудник.OptionsNavigation.AutoFocusNewRow = True
+        Me.GridViewСотрудник.OptionsView.AllowGlyphSkinning = True
+        Me.GridViewСотрудник.OptionsView.AllowHtmlDrawGroups = False
+        Me.GridViewСотрудник.OptionsView.EnableAppearanceEvenRow = True
+        Me.GridViewСотрудник.OptionsView.EnableAppearanceOddRow = True
         '
         'GridViewПочта
         '
@@ -617,18 +597,6 @@ Partial Class XtraUCPerson
         Me.colСотрудник3.Visible = True
         Me.colСотрудник3.VisibleIndex = 9
         '
-        'GridViewСотрудник
-        '
-        Me.GridViewСотрудник.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colКодСотрудник, Me.colФамилия, Me.colИмя, Me.colОтчество, Me.colкодСтепень, Me.colкодДолжность, Me.colкодФакультет, Me.colЗаписал, Me.colдатаЗаписал, Me.colИсправил, Me.colдатаИсправил, Me.colПримечание, Me.colДолжность, Me.colСтепень, Me.colФакультет})
-        Me.GridViewСотрудник.GridControl = Me.GridControlPerson
-        Me.GridViewСотрудник.Name = "GridViewСотрудник"
-        Me.GridViewСотрудник.OptionsDetail.AllowExpandEmptyDetails = True
-        Me.GridViewСотрудник.OptionsNavigation.AutoFocusNewRow = True
-        Me.GridViewСотрудник.OptionsView.AllowGlyphSkinning = True
-        Me.GridViewСотрудник.OptionsView.AllowHtmlDrawGroups = False
-        Me.GridViewСотрудник.OptionsView.EnableAppearanceEvenRow = True
-        Me.GridViewСотрудник.OptionsView.EnableAppearanceOddRow = True
-        '
         'emailBindingSource
         '
         Me.emailBindingSource.DataSource = GetType(iTPDoroga.Email)
@@ -649,105 +617,6 @@ Partial Class XtraUCPerson
         '
         Me.контактBindingSource.DataSource = GetType(iTPDoroga.Контакт)
         '
-        'colКодСотрудник
-        '
-        Me.colКодСотрудник.FieldName = "КодСотрудник"
-        Me.colКодСотрудник.Name = "colКодСотрудник"
-        Me.colКодСотрудник.Visible = True
-        Me.colКодСотрудник.VisibleIndex = 0
-        '
-        'colФамилия
-        '
-        Me.colФамилия.FieldName = "Фамилия"
-        Me.colФамилия.Name = "colФамилия"
-        Me.colФамилия.Visible = True
-        Me.colФамилия.VisibleIndex = 1
-        '
-        'colИмя
-        '
-        Me.colИмя.FieldName = "Имя"
-        Me.colИмя.Name = "colИмя"
-        Me.colИмя.Visible = True
-        Me.colИмя.VisibleIndex = 2
-        '
-        'colОтчество
-        '
-        Me.colОтчество.FieldName = "Отчество"
-        Me.colОтчество.Name = "colОтчество"
-        Me.colОтчество.Visible = True
-        Me.colОтчество.VisibleIndex = 3
-        '
-        'colкодСтепень
-        '
-        Me.colкодСтепень.FieldName = "кодСтепень"
-        Me.colкодСтепень.Name = "colкодСтепень"
-        Me.colкодСтепень.Visible = True
-        Me.colкодСтепень.VisibleIndex = 4
-        '
-        'colкодДолжность
-        '
-        Me.colкодДолжность.FieldName = "кодДолжность"
-        Me.colкодДолжность.Name = "colкодДолжность"
-        Me.colкодДолжность.Visible = True
-        Me.colкодДолжность.VisibleIndex = 5
-        '
-        'colкодФакультет
-        '
-        Me.colкодФакультет.FieldName = "кодФакультет"
-        Me.colкодФакультет.Name = "colкодФакультет"
-        Me.colкодФакультет.Visible = True
-        Me.colкодФакультет.VisibleIndex = 6
-        '
-        'colЗаписал
-        '
-        Me.colЗаписал.FieldName = "Записал"
-        Me.colЗаписал.Name = "colЗаписал"
-        Me.colЗаписал.Visible = True
-        Me.colЗаписал.VisibleIndex = 7
-        '
-        'colдатаЗаписал
-        '
-        Me.colдатаЗаписал.FieldName = "датаЗаписал"
-        Me.colдатаЗаписал.Name = "colдатаЗаписал"
-        Me.colдатаЗаписал.Visible = True
-        Me.colдатаЗаписал.VisibleIndex = 8
-        '
-        'colИсправил
-        '
-        Me.colИсправил.FieldName = "Исправил"
-        Me.colИсправил.Name = "colИсправил"
-        Me.colИсправил.Visible = True
-        Me.colИсправил.VisibleIndex = 9
-        '
-        'colдатаИсправил
-        '
-        Me.colдатаИсправил.FieldName = "датаИсправил"
-        Me.colдатаИсправил.Name = "colдатаИсправил"
-        Me.colдатаИсправил.Visible = True
-        Me.colдатаИсправил.VisibleIndex = 10
-        '
-        'colПримечание
-        '
-        Me.colПримечание.FieldName = "Примечание"
-        Me.colПримечание.Name = "colПримечание"
-        Me.colПримечание.Visible = True
-        Me.colПримечание.VisibleIndex = 11
-        '
-        'colДолжность
-        '
-        Me.colДолжность.FieldName = "Должность"
-        Me.colДолжность.Name = "colДолжность"
-        '
-        'colСтепень
-        '
-        Me.colСтепень.FieldName = "Степень"
-        Me.colСтепень.Name = "colСтепень"
-        '
-        'colФакультет
-        '
-        Me.colФакультет.FieldName = "Факультет"
-        Me.colФакультет.Name = "colФакультет"
-        '
         'XtraUCPerson
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -758,11 +627,11 @@ Partial Class XtraUCPerson
         CType(Me.GridViewКонтакт, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControlPerson, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.сотрудникBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridViewСотрудник, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewПочта, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewАдрес, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewПаспорт, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewФото, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridViewСотрудник, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.emailBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.адресBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.паспортBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -846,19 +715,4 @@ Partial Class XtraUCPerson
     Friend WithEvents colдатаИсправил5 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colПримечание5 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colСотрудник4 As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colКодСотрудник As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colФамилия As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colИмя As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colОтчество As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colкодСтепень As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colкодДолжность As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colкодФакультет As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colЗаписал As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colдатаЗаписал As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colИсправил As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colдатаИсправил As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colПримечание As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colДолжность As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colСтепень As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colФакультет As DevExpress.XtraGrid.Columns.GridColumn
 End Class
