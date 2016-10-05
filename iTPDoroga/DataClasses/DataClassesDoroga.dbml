@@ -84,28 +84,6 @@
       <Column Name="OCATD" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Адрес" Member="Адрес">
-    <Type Name="Адрес">
-      <Column Name="кодАдрес" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="кодПроект" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="кодСотрудник" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="[Почтовый индекс]" Member="Почтовый_индекс" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
-      <Column Name="[Субъект РФ (регион)]" Member="Субъект_РФ__регион_" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование района]" Member="Наименование_района" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование города]" Member="Наименование_города" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование населенного пункта]" Member="Наименование_населенного_пункта" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование улицы]" Member="Наименование_улицы" Type="System.String" DbType="NVarChar(70)" CanBeNull="true" />
-      <Column Name="[Номер дома (владение)]" Member="Номер_дома__владение_" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="[Корпус (строение)]" Member="Корпус__строение_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="[Квартира (офис)]" Member="Квартира__офис_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="Сотрудник_Адрес" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Город" Member="Город">
     <Type Name="Город">
       <Column Name="кодГород" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -166,21 +144,6 @@
       <Association Name="Сотрудник_Кафедра_Сотрудник" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Пароль" Member="Пароль">
-    <Type Name="Пароль">
-      <Column Name="IDPassport" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Passport1" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Passport2" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="IDUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IDAuthor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Дата записи]" Member="Дата_записи" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Записал" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="[Дата исправления]" Member="Дата_исправления" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Исправил" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="Сотрудник_Пароль" Member="Сотрудник" ThisKey="IDUser" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Паспорт" Member="Паспорт">
     <Type Name="Паспорт">
       <Column Name="кодПаспорт" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -213,12 +176,12 @@
       <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Сотрудник_Email" Member="Email" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Email" />
-      <Association Name="Сотрудник_Адрес" Member="Адрес" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Адрес" />
       <Association Name="Сотрудник_Кафедра_Сотрудник" Member="Кафедра_Сотрудник" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Кафедра_Сотрудник" />
-      <Association Name="Сотрудник_Пароль" Member="Пароль" ThisKey="КодСотрудник" OtherKey="IDUser" Type="Пароль" />
       <Association Name="Сотрудник_Паспорт" Member="Паспорт" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Паспорт" />
       <Association Name="Сотрудник_Фото" Member="Фото" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Фото" />
       <Association Name="Сотрудник_Контакт" Member="Контакт" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Контакт" />
+      <Association Name="Сотрудник_Пароль" Member="Пароль" ThisKey="КодСотрудник" OtherKey="IDUser" Type="Пароль" />
+      <Association Name="Сотрудник_Адрес" Member="Адрес" ThisKey="КодСотрудник" OtherKey="кодСотрудник" Type="Адрес" />
       <Association Name="Должность_Сотрудник" Member="Должность" ThisKey="кодДолжность" OtherKey="кодДолжность" Type="Должность" IsForeignKey="true" />
       <Association Name="Степень_Сотрудник" Member="Степень" ThisKey="кодСтепень" OtherKey="кодСтепень" Type="Степень" IsForeignKey="true" />
       <Association Name="Факультет_Сотрудник" Member="Факультет" ThisKey="кодФакультет" OtherKey="кодФакультет" Type="Факультет" IsForeignKey="true" />
@@ -301,6 +264,44 @@
       <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Сотрудник_Контакт" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Пароль" Member="Пароль">
+    <Type Name="Пароль">
+      <Column Name="IDPassport" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Passport1" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Passport2" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="IDUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDAuthor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDLevel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Дата записи]" Member="Дата_записи" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Дата исправления]" Member="Дата_исправления" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Сотрудник_Пароль" Member="Сотрудник" ThisKey="IDUser" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Адрес" Member="Адрес">
+    <Type Name="Адрес">
+      <Column Name="кодАдрес" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="кодСотрудник" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="типАдрес" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Почтовый индекс]" Member="Почтовый_индекс" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="[Субъект РФ (регион)]" Member="Субъект_РФ__регион_" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование района]" Member="Наименование_района" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование города]" Member="Наименование_города" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование населенного пункта]" Member="Наименование_населенного_пункта" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование улицы]" Member="Наименование_улицы" Type="System.String" DbType="NVarChar(70)" CanBeNull="true" />
+      <Column Name="[Номер дома (владение)]" Member="Номер_дома__владение_" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="[Корпус (строение)]" Member="Корпус__строение_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="[Квартира (офис)]" Member="Квартира__офис_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Сотрудник_Адрес" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.CountСписок_сотрудников" Method="CountСписок_сотрудников" IsComposable="true">

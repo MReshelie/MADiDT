@@ -135,16 +135,16 @@ Partial Public Class MainForm
         gConnMain.ConnectionString = My.Settings.DorogaConnectionString
 
         Try
-            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Устанавливается соединения с сервером БД..."
+            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Устанавливается соединения с сервером БД"
 
             Call ConnectDBExtracted(25)
 
             gConnMain.Open()
             gblConn = True
-            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Соединение с сервером БД установлено."
+            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Соединение с сервером БД установлено"
         Catch ex As Exception
             gblConn = False
-            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Соединение с сервером БД не установлено."
+            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Соединение с сервером БД не установлено"
         Finally
             gConnMain.Close()
         End Try
