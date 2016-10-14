@@ -264,6 +264,8 @@ Partial Public Class MainForm
 
         If tileGroup IsNot Nothing Then
             windowsUIViewMain.ActivateContainer(groupsItemDetailPage(tileGroup))
+
+            Console.WriteLine(String.Format("groupsItemDetailPage({0}) = {1}", tileGroup, groupsItemDetailPage(tileGroup).Caption))
         End If
     End Sub
 #End Region

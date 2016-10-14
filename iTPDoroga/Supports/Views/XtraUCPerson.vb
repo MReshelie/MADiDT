@@ -1,13 +1,5 @@
-﻿Imports System.Data.Entity
-Imports System.Data.Linq
-Imports System.Data.SqlClient
-Imports System.Reflection
-Imports DevExpress.XtraBars.Docking2010.Views
-Imports DevExpress.XtraGrid
-Imports DevExpress.XtraGrid.Columns
-Imports DevExpress.XtraGrid.Tab
+﻿Imports DevExpress.XtraGrid.Columns
 Imports DevExpress.XtraGrid.Views.Grid
-Imports DevExpress.XtraSplashScreen
 
 Public Class XtraUCPerson
     Dim db As New DataClassesDorogaDataContext

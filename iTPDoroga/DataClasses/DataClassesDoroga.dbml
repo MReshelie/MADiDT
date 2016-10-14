@@ -304,6 +304,33 @@
       <Association Name="Сотрудник_Адрес" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Контролер" Member="Контролер">
+    <Type Name="Контролер">
+      <Column Name="кодКонтролер" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Таблица" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Индекс контролера]" Member="Индекс_контролера" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Имя контролера]" Member="Имя_контролера" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Дата записи]" Member="Дата_записи" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Дата исправления]" Member="Дата_исправления" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Контролер_Параметр" Member="Параметр" ThisKey="кодКонтролер" OtherKey="кодКонтролер" Type="Параметр" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Параметр" Member="Параметр">
+    <Type Name="Параметр">
+      <Column Name="кодПараметра" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="кодКонтролер" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Наименование" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Дата записи]" Member="Дата_записи" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Дата исправления]" Member="Дата_исправления" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Контролер_Параметр" Member="Контролер" ThisKey="кодКонтролер" OtherKey="кодКонтролер" Type="Контролер" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.CountСписок_сотрудников" Method="CountСписок_сотрудников" IsComposable="true">
     <Return Type="System.Int32" />
   </Function>

@@ -23,6 +23,8 @@
     ''' </summary>
     Private Sub InitializeComponent()
         Me.winLayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
+        Me.XtraUCParametr1 = New iTPDoroga.XtraUCParametr()
+        Me.XtraUCPerson1 = New iTPDoroga.XtraUCPerson()
         Me.imageControl = New DevExpress.XtraEditors.PictureEdit()
         Me.labelSubtitle = New DevExpress.XtraEditors.LabelControl()
         Me.labelTitle = New DevExpress.XtraEditors.LabelControl()
@@ -31,7 +33,7 @@
         Me.layoutControlItem1 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.layoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.emptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.XtraUCPerson1 = New iTPDoroga.XtraUCPerson()
+        Me.LayoutControlItem3 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.winLayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.winLayoutControl1.SuspendLayout()
@@ -41,11 +43,13 @@
         CType(Me.layoutControlItem1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.layoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.emptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'winLayoutControl1
         '
+        Me.winLayoutControl1.Controls.Add(Me.XtraUCParametr1)
         Me.winLayoutControl1.Controls.Add(Me.XtraUCPerson1)
         Me.winLayoutControl1.Controls.Add(Me.imageControl)
         Me.winLayoutControl1.Controls.Add(Me.labelSubtitle)
@@ -53,11 +57,25 @@
         Me.winLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.winLayoutControl1.Location = New System.Drawing.Point(50, 0)
         Me.winLayoutControl1.Name = "winLayoutControl1"
-        Me.winLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = New System.Drawing.Rectangle(-921, 139, 450, 350)
+        Me.winLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = New System.Drawing.Rectangle(1972, 239, 450, 350)
         Me.winLayoutControl1.Root = Me.layoutControlGroup1
-        Me.winLayoutControl1.Size = New System.Drawing.Size(793, 633)
+        Me.winLayoutControl1.Size = New System.Drawing.Size(1140, 781)
         Me.winLayoutControl1.TabIndex = 0
         Me.winLayoutControl1.Text = "winLayoutControl1"
+        '
+        'XtraUCParametr1
+        '
+        Me.XtraUCParametr1.Location = New System.Drawing.Point(376, 351)
+        Me.XtraUCParametr1.Name = "XtraUCParametr1"
+        Me.XtraUCParametr1.Size = New System.Drawing.Size(752, 418)
+        Me.XtraUCParametr1.TabIndex = 9
+        '
+        'XtraUCPerson1
+        '
+        Me.XtraUCPerson1.Location = New System.Drawing.Point(376, 12)
+        Me.XtraUCPerson1.Name = "XtraUCPerson1"
+        Me.XtraUCPerson1.Size = New System.Drawing.Size(752, 335)
+        Me.XtraUCPerson1.TabIndex = 8
         '
         'imageControl
         '
@@ -99,10 +117,10 @@
         Me.layoutControlGroup1.CustomizationFormText = "layoutControlGroup1"
         Me.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.layoutControlGroup1.GroupBordersVisible = False
-        Me.layoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.layoutControlItem2, Me.layoutControlItem1, Me.layoutControlItem4, Me.emptySpaceItem1, Me.LayoutControlItem5})
+        Me.layoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.layoutControlItem2, Me.layoutControlItem1, Me.layoutControlItem4, Me.emptySpaceItem1, Me.LayoutControlItem3, Me.LayoutControlItem5})
         Me.layoutControlGroup1.Location = New System.Drawing.Point(0, 0)
         Me.layoutControlGroup1.Name = "Root"
-        Me.layoutControlGroup1.Size = New System.Drawing.Size(793, 633)
+        Me.layoutControlGroup1.Size = New System.Drawing.Size(1140, 781)
         Me.layoutControlGroup1.TextVisible = False
         '
         'layoutControlItem2
@@ -136,7 +154,7 @@
         Me.layoutControlItem4.MaxSize = New System.Drawing.Size(314, 259)
         Me.layoutControlItem4.MinSize = New System.Drawing.Size(314, 259)
         Me.layoutControlItem4.Name = "layoutControlItem4"
-        Me.layoutControlItem4.Size = New System.Drawing.Size(314, 472)
+        Me.layoutControlItem4.Size = New System.Drawing.Size(314, 620)
         Me.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom
         Me.layoutControlItem4.TextSize = New System.Drawing.Size(0, 0)
         Me.layoutControlItem4.TextVisible = False
@@ -149,23 +167,25 @@
         Me.emptySpaceItem1.MaxSize = New System.Drawing.Size(50, 403)
         Me.emptySpaceItem1.MinSize = New System.Drawing.Size(50, 403)
         Me.emptySpaceItem1.Name = "emptySpaceItem1"
-        Me.emptySpaceItem1.Size = New System.Drawing.Size(50, 613)
+        Me.emptySpaceItem1.Size = New System.Drawing.Size(50, 761)
         Me.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom
         Me.emptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
         '
-        'XtraUCPerson1
+        'LayoutControlItem3
         '
-        Me.XtraUCPerson1.Location = New System.Drawing.Point(376, 12)
-        Me.XtraUCPerson1.Name = "XtraUCPerson1"
-        Me.XtraUCPerson1.Size = New System.Drawing.Size(405, 609)
-        Me.XtraUCPerson1.TabIndex = 8
+        Me.LayoutControlItem3.Control = Me.XtraUCPerson1
+        Me.LayoutControlItem3.Location = New System.Drawing.Point(364, 0)
+        Me.LayoutControlItem3.Name = "LayoutControlItem3"
+        Me.LayoutControlItem3.Size = New System.Drawing.Size(756, 339)
+        Me.LayoutControlItem3.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem3.TextVisible = False
         '
         'LayoutControlItem5
         '
-        Me.LayoutControlItem5.Control = Me.XtraUCPerson1
-        Me.LayoutControlItem5.Location = New System.Drawing.Point(364, 0)
+        Me.LayoutControlItem5.Control = Me.XtraUCParametr1
+        Me.LayoutControlItem5.Location = New System.Drawing.Point(364, 339)
         Me.LayoutControlItem5.Name = "LayoutControlItem5"
-        Me.LayoutControlItem5.Size = New System.Drawing.Size(409, 613)
+        Me.LayoutControlItem5.Size = New System.Drawing.Size(756, 422)
         Me.LayoutControlItem5.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem5.TextVisible = False
         '
@@ -176,7 +196,7 @@
         Me.Controls.Add(Me.winLayoutControl1)
         Me.Name = "ItemDetailPagePerson"
         Me.Padding = New System.Windows.Forms.Padding(50, 0, 50, 0)
-        Me.Size = New System.Drawing.Size(893, 633)
+        Me.Size = New System.Drawing.Size(1240, 781)
         CType(Me.winLayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.winLayoutControl1.ResumeLayout(False)
         CType(Me.imageControl.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -185,6 +205,7 @@
         CType(Me.layoutControlItem1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.layoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.emptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -202,5 +223,7 @@
     Private layoutControlItem4 As DevExpress.XtraLayout.LayoutControlItem
     Private emptySpaceItem1 As DevExpress.XtraLayout.EmptySpaceItem
     Friend WithEvents XtraUCPerson1 As XtraUCPerson
+    Friend WithEvents LayoutControlItem3 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents XtraUCParametr1 As XtraUCParametr
     Friend WithEvents LayoutControlItem5 As DevExpress.XtraLayout.LayoutControlItem
 End Class

@@ -6,16 +6,29 @@
 ''' </summary>
 Partial Public Class ItemDetailPagePerson
     Inherits XtraUserControl
+    Dim _index As Integer
 
     Public Sub New(ByVal item As SampleDataItem)
         InitializeComponent()
+
         labelTitle.Text = item.Title
         labelSubtitle.Text = item.Subtitle
         imageControl.Image = DevExpress.Utils.ResourceImageHelper.CreateImageFromResources(item.ImagePath, GetType(ItemDetailPage).Assembly)
-        'labelContent.Text = item.Content
+        _index = item.IndexItem
+        Me.LayoutControlItem3.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
+        Me.LayoutControlItem5.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
     End Sub
 
-    Private Sub ItemDetailPage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Console.WriteLine(String.Format("sender = {0}, ItemDetailPage_Load->labelTitle.Text = {1}", sender.name, labelTitle.Text))
+    Private Sub ItemDetailPagePerson_Enter(sender As Object, e As EventArgs) Handles MyBase.Enter
+        Console.WriteLine(String.Format("ItemDetailPagePerson_Enter = {0}", _index))
+
+        Select Case _index
+            Case 3
+                Me.LayoutControlItem3.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+                Me.LayoutControlItem5.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
+            Case 5
+                Me.LayoutControlItem3.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
+                Me.LayoutControlItem5.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+        End Select
     End Sub
 End Class

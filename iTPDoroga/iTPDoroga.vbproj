@@ -130,6 +130,12 @@
     <Compile Include="Supports\Views\XtraUCLogin.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Supports\Views\XtraUCParametr.Designer.vb">
+      <DependentUpon>XtraUCParametr.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Views\XtraUCParametr.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Supports\Views\XtraUCPerson.Designer.vb">
       <DependentUpon>XtraUCPerson.vb</DependentUpon>
     </Compile>
@@ -203,6 +209,9 @@
     <EmbeddedResource Include="Supports\Views\XtraUCLogin.resx">
       <DependentUpon>XtraUCLogin.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Views\XtraUCParametr.resx">
+      <DependentUpon>XtraUCParametr.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Supports\Views\XtraUCPerson.resx">
       <DependentUpon>XtraUCPerson.vb</DependentUpon>
     </EmbeddedResource>
@@ -259,6 +268,7 @@
     <EmbeddedResource Include="Supports\Icons\png\proccess.png" />
     <EmbeddedResource Include="Supports\Icons\png\personID.png" />
     <EmbeddedResource Include="Supports\Icons\png\loadrec.png" />
+    <EmbeddedResource Include="Supports\Icons\png\control-panel-icon.png" />
     <Content Include="Supports\Icons\png\teacher.png" />
     <Content Include="Supports\Icons\png\technology.png" />
   </ItemGroup>

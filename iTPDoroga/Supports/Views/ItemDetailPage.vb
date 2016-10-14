@@ -9,6 +9,7 @@ Partial Public Class ItemDetailPage
 
     Public Sub New(ByVal item As SampleDataItem)
         InitializeComponent()
+
         labelTitle.Text = item.Title
         labelSubtitle.Text = item.Subtitle
         imageControl.Image = DevExpress.Utils.ResourceImageHelper.CreateImageFromResources(item.ImagePath, GetType(ItemDetailPage).Assembly)

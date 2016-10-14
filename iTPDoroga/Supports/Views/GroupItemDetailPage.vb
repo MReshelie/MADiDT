@@ -41,6 +41,7 @@ Partial Public Class GroupItemDetailPage
         'stopwatch.Stop()
         SplashScreenManager.CloseForm(False)
     End Sub
+#Region "Пользовательские процедуры и функции"
     Private Sub ActivateContainer(ByVal manager As DocumentManager)
         Dim view As WindowsUIView = TryCast(manager.View, WindowsUIView)
 
@@ -52,4 +53,5 @@ Partial Public Class GroupItemDetailPage
             view.ActivateContainer(pageGroupCore)
         End If
     End Sub
+#End Region
 End Class

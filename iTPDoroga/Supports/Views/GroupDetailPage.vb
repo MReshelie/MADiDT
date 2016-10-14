@@ -17,14 +17,17 @@ Partial Public Class GroupDetailPage
 
     Public Sub New(ByVal dataGroup As SampleDataGroup, ByVal child As PageGroup)
         InitializeComponent()
+
         pageGroupCore = New PageGroup()
         pageGroupCore.Caption = dataGroup.Title
         imageControl.Image = DevExpress.Utils.ResourceImageHelper.CreateImageFromResources(dataGroup.ImagePath, GetType(MainForm).Assembly)
         labelSubtitle.Text = dataGroup.Subtitle
         labelDescription.Text = dataGroup.Description
-        CreateLayout(dataGroup, child)
+
+        Call CreateLayout(dataGroup, child)
     End Sub
 
+#Region "Пользовательские процедуры и функции"
     Private Sub CreateLayout(ByVal dataGroup As SampleDataGroup, ByVal child As PageGroup)
         For i As Integer = 0 To dataGroup.Items.Count - 1
             CreateLayoutCore(dataGroup.Items(i), child, i)
@@ -49,4 +52,5 @@ Partial Public Class GroupDetailPage
         layoutControlGroup2.Add(layoutTileItem)
         CType(Me.layoutControlItem2, System.ComponentModel.ISupportInitialize).EndInit()
     End Sub
+#End Region
 End Class
