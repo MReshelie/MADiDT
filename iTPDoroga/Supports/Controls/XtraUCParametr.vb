@@ -67,28 +67,21 @@ Public Class XtraUCParametr
 
         riLookUpEditTable.DataSource = Nothing
         riLookUpEditTable.DataSource = _List0
-        'riLookUpEditTable.Columns(0).Visible = False
     End Sub
 
     Private Sub InitRILookUpEdit()
-        Dim coll As LookUpColumnInfo
+        Dim coll As LookUpColumnInfoCollection = riLookUpEditTable.Columns
 
-        coll = New LookUpColumnInfo
-        coll.FieldName = "name"
-        coll.Caption = "Таблица в БД"
-        Me.riLookUpEditTable.Columns.Add(coll)
-
-        'Dim coll As LookUpColumnInfoCollection = riLookUpEditTable.Columns
-
-        'coll.Add(New LookUpColumnInfo("name", 0))
-
-        'coll.Add(New LookUpColumnInfo("Таблица", 0))
+        coll.Add(New LookUpColumnInfo("row", 0))
+        coll.Add(New LookUpColumnInfo("name", 0))
+        Me.riLookUpEditTable.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Me.riLookUpEditTable.BestFitMode = BestFitMode.BestFitResizePopup
         Me.riLookUpEditTable.SearchMode = SearchMode.AutoComplete
         Me.riLookUpEditTable.AutoSearchColumnIndex = 1
         Me.riLookUpEditTable.ValueMember = "name"
         Me.riLookUpEditTable.DisplayMember = "name"
-        'Me.riLookUpEditTable.Columns(0).Alignment = DevExpress.Utils.HorzAlignment.Center
+        Me.riLookUpEditTable.Columns("row").Caption = "Номер в списке"
+        Me.riLookUpEditTable.Columns("name").Caption = "Таблица в БД"
     End Sub
 #End Region
 End Class

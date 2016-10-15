@@ -336,6 +336,7 @@
   </Function>
   <Function Name="dbo.ListOfTables" Method="ListOfTables" IsComposable="true">
     <ElementType Name="ListOfTablesResult">
+      <Column Name="row" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
       <Column Name="object_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="principal_id" Type="System.Int32" DbType="Int" CanBeNull="true" />

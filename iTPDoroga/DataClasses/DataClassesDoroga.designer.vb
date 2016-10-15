@@ -6113,6 +6113,8 @@ End Class
 
 Partial Public Class ListOfTablesResult
 	
+	Private _row As System.Nullable(Of Long)
+	
 	Private _name As String
 	
 	Private _object_id As Integer
@@ -6140,6 +6142,18 @@ Partial Public Class ListOfTablesResult
 	Public Sub New()
 		MyBase.New
 	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_row", DbType:="BigInt")>  _
+	Public Property row() As System.Nullable(Of Long)
+		Get
+			Return Me._row
+		End Get
+		Set
+			If (Me._row.Equals(value) = false) Then
+				Me._row = value
+			End If
+		End Set
+	End Property
 	
 	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_name", DbType:="NVarChar(128) NOT NULL", CanBeNull:=false)>  _
 	Public Property name() As String
