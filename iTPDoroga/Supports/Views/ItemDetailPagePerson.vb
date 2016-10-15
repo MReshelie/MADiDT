@@ -20,7 +20,7 @@ Partial Public Class ItemDetailPagePerson
     End Sub
 
     Private Sub ItemDetailPagePerson_Enter(sender As Object, e As EventArgs) Handles MyBase.Enter
-        Console.WriteLine(String.Format("ItemDetailPagePerson_Enter = {0}", _index))
+        'Console.WriteLine(String.Format("ItemDetailPagePerson_Enter = {0}", _index))
 
         Select Case _index
             Case 3

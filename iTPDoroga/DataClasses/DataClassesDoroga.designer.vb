@@ -296,6 +296,11 @@ Partial Public Class DataClassesDorogaDataContext
 	Public Function CountСписок_сотрудников() As System.Nullable(Of Integer)
 		Return CType(Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo)).ReturnValue,System.Nullable(Of Integer))
 	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.ListOfTables", IsComposable:=true)>  _
+	Public Function ListOfTables() As IQueryable(Of ListOfTablesResult)
+		Return Me.CreateMethodCallQuery(Of ListOfTablesResult)(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo))
+	End Function
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.address")>  _
@@ -6104,4 +6109,187 @@ Partial Public Class Параметр
 			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
 		End If
 	End Sub
+End Class
+
+Partial Public Class ListOfTablesResult
+	
+	Private _name As String
+	
+	Private _object_id As Integer
+	
+	Private _principal_id As System.Nullable(Of Integer)
+	
+	Private _schema_id As Integer
+	
+	Private _parent_object_id As Integer
+	
+	Private _type As String
+	
+	Private _type_desc As String
+	
+	Private _create_date As Date
+	
+	Private _modify_date As Date
+	
+	Private _is_ms_shipped As Boolean
+	
+	Private _is_published As Boolean
+	
+	Private _is_schema_published As Boolean
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_name", DbType:="NVarChar(128) NOT NULL", CanBeNull:=false)>  _
+	Public Property name() As String
+		Get
+			Return Me._name
+		End Get
+		Set
+			If (String.Equals(Me._name, value) = false) Then
+				Me._name = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_object_id", DbType:="Int NOT NULL")>  _
+	Public Property object_id() As Integer
+		Get
+			Return Me._object_id
+		End Get
+		Set
+			If ((Me._object_id = value)  _
+						= false) Then
+				Me._object_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_principal_id", DbType:="Int")>  _
+	Public Property principal_id() As System.Nullable(Of Integer)
+		Get
+			Return Me._principal_id
+		End Get
+		Set
+			If (Me._principal_id.Equals(value) = false) Then
+				Me._principal_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_schema_id", DbType:="Int NOT NULL")>  _
+	Public Property schema_id() As Integer
+		Get
+			Return Me._schema_id
+		End Get
+		Set
+			If ((Me._schema_id = value)  _
+						= false) Then
+				Me._schema_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_parent_object_id", DbType:="Int NOT NULL")>  _
+	Public Property parent_object_id() As Integer
+		Get
+			Return Me._parent_object_id
+		End Get
+		Set
+			If ((Me._parent_object_id = value)  _
+						= false) Then
+				Me._parent_object_id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_type", DbType:="Char(2)")>  _
+	Public Property type() As String
+		Get
+			Return Me._type
+		End Get
+		Set
+			If (String.Equals(Me._type, value) = false) Then
+				Me._type = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_type_desc", DbType:="NVarChar(60)")>  _
+	Public Property type_desc() As String
+		Get
+			Return Me._type_desc
+		End Get
+		Set
+			If (String.Equals(Me._type_desc, value) = false) Then
+				Me._type_desc = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_create_date", DbType:="DateTime NOT NULL")>  _
+	Public Property create_date() As Date
+		Get
+			Return Me._create_date
+		End Get
+		Set
+			If ((Me._create_date = value)  _
+						= false) Then
+				Me._create_date = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_modify_date", DbType:="DateTime NOT NULL")>  _
+	Public Property modify_date() As Date
+		Get
+			Return Me._modify_date
+		End Get
+		Set
+			If ((Me._modify_date = value)  _
+						= false) Then
+				Me._modify_date = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_is_ms_shipped", DbType:="Bit NOT NULL")>  _
+	Public Property is_ms_shipped() As Boolean
+		Get
+			Return Me._is_ms_shipped
+		End Get
+		Set
+			If ((Me._is_ms_shipped = value)  _
+						= false) Then
+				Me._is_ms_shipped = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_is_published", DbType:="Bit NOT NULL")>  _
+	Public Property is_published() As Boolean
+		Get
+			Return Me._is_published
+		End Get
+		Set
+			If ((Me._is_published = value)  _
+						= false) Then
+				Me._is_published = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_is_schema_published", DbType:="Bit NOT NULL")>  _
+	Public Property is_schema_published() As Boolean
+		Get
+			Return Me._is_schema_published
+		End Get
+		Set
+			If ((Me._is_schema_published = value)  _
+						= false) Then
+				Me._is_schema_published = value
+			End If
+		End Set
+	End Property
 End Class

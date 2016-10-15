@@ -334,4 +334,20 @@
   <Function Name="dbo.CountСписок_сотрудников" Method="CountСписок_сотрудников" IsComposable="true">
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.ListOfTables" Method="ListOfTables" IsComposable="true">
+    <ElementType Name="ListOfTablesResult">
+      <Column Name="name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="object_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="principal_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="schema_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="parent_object_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="type_desc" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="create_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="modify_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="is_ms_shipped" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="is_published" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="is_schema_published" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>
