@@ -1,25 +1,30 @@
 ﻿Imports System.Data.Linq
+Imports DevExpress.XtraEditors
 Imports DevExpress.XtraEditors.Controls
 Imports DevExpress.XtraEditors.Repository
 Imports DevExpress.XtraGrid.Columns
+Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraGrid.Views.Grid
 
 Public Class XtraUCParametr
     Dim db As New DataClassesDorogaDataContext
-    Dim riMemoEdit As New RepositoryItemMemoEdit()
-    Dim riLookUpEditTable As New RepositoryItemLookUpEdit()
 
     Public Sub New()
         InitializeComponent()
-
-        Me.GridControlSettings.RepositoryItems.Add(riLookUpEditTable)
-        Me.GridControlSettings.RepositoryItems.Add(riMemoEdit)
 
         Call InitRILookUpEdit()
     End Sub
 
     Private Sub XtraUCParametr_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If (Not DBConnect()) Then Return
+    End Sub
+
+    Private Sub riLookUpEditTable_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditTable.EditValueChanged
+        If CType(Me.GridViewMain, GridView).FocusedColumn.Name = "colТаблица" Then
+            CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Таблица"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+
+            Call riLookUpEditData(1, Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+        End If
     End Sub
 
 #Region "Пользовательскте процедуры и функции"
@@ -38,18 +43,15 @@ Public Class XtraUCParametr
     Private Sub GVSettings(ByVal view As GridView)
         view.BestFitColumns()
         view.OptionsView.ColumnAutoWidth = True
-        view.Columns("Таблица").ColumnEdit = riLookUpEditTable
 
         Call riLookUpEditData(0)
 
-        view.Columns("Индекс_контролера").Caption = "Индекс контролера"
-        view.Columns("Имя_контролера").Caption = "Имя контролера"
+        view.Columns("Поле").Caption = "Список полей"
         view.Columns("Дата_записи").Caption = "Дата записи"
         view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         view.Columns("Дата_исправления").Caption = "Дата исправления"
         view.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         riMemoEdit.WordWrap = True
-        view.Columns("Примечание").ColumnEdit = riMemoEdit
         view.Columns("кодКонтролер").Visible = False
 
         For Each column As GridColumn In view.Columns
@@ -59,29 +61,43 @@ Public Class XtraUCParametr
         view.OptionsView.RowAutoHeight = True
     End Sub
 
-    Private Sub riLookUpEditData(ByVal i As Integer)
-        ' Получение списка таблиц
-        db = New DataClassesDorogaDataContext()
-
-        Dim _List0 As IEnumerable(Of ListOfTablesResult) = db.ListOfTables().ToList()
-
-        riLookUpEditTable.DataSource = Nothing
-        riLookUpEditTable.DataSource = _List0
+    Private Sub riLookUpEditData(ByVal i As Integer, Optional ByVal nameTab As String = Nothing)
+        Select Case i
+            Case 0
+                ' Получение списка таблиц
+                riLookUpEditTable.DataSource = Nothing
+                riLookUpEditTable.DataSource = db.ListOfTables().ToList()
+            Case 1
+                ' Получение списка полей
+                riLookUpEditField.DataSource = Nothing
+                riLookUpEditField.DataSource = db.GetListFieldTable(nameTab).ToList()
+        End Select
     End Sub
 
     Private Sub InitRILookUpEdit()
-        Dim coll As LookUpColumnInfoCollection = riLookUpEditTable.Columns
+        ' Поле Таблица
+        Dim coll1 As LookUpColumnInfoCollection = riLookUpEditTable.Columns
 
-        coll.Add(New LookUpColumnInfo("row", 0))
-        coll.Add(New LookUpColumnInfo("name", 0))
+        coll1.Add(New LookUpColumnInfo("row", "Номер в списке", 0))
+        coll1.Add(New LookUpColumnInfo("name", "Таблица в БД", 0))
         Me.riLookUpEditTable.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Me.riLookUpEditTable.BestFitMode = BestFitMode.BestFitResizePopup
         Me.riLookUpEditTable.SearchMode = SearchMode.AutoComplete
         Me.riLookUpEditTable.AutoSearchColumnIndex = 1
         Me.riLookUpEditTable.ValueMember = "name"
         Me.riLookUpEditTable.DisplayMember = "name"
-        Me.riLookUpEditTable.Columns("row").Caption = "Номер в списке"
-        Me.riLookUpEditTable.Columns("name").Caption = "Таблица в БД"
+
+        ' Поле Поле
+        Dim coll2 As LookUpColumnInfoCollection = riLookUpEditField.Columns
+
+        coll2.Add(New LookUpColumnInfo("row", "Позиция в таблице", 0))
+        coll2.Add(New LookUpColumnInfo("name", "Имя поля", 0))
+        Me.riLookUpEditField.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        Me.riLookUpEditField.BestFitMode = BestFitMode.BestFitResizePopup
+        Me.riLookUpEditField.SearchMode = SearchMode.AutoComplete
+        Me.riLookUpEditField.AutoSearchColumnIndex = 1
+        Me.riLookUpEditField.ValueMember = "name"
+        Me.riLookUpEditField.DisplayMember = "name"
     End Sub
 #End Region
 End Class

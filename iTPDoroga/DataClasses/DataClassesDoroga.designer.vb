@@ -115,17 +115,17 @@ Partial Public Class DataClassesDorogaDataContext
     End Sub
   Partial Private Sub DeleteАдрес(instance As Адрес)
     End Sub
-  Partial Private Sub InsertКонтролер(instance As Контролер)
-    End Sub
-  Partial Private Sub UpdateКонтролер(instance As Контролер)
-    End Sub
-  Partial Private Sub DeleteКонтролер(instance As Контролер)
-    End Sub
   Partial Private Sub InsertПараметр(instance As Параметр)
     End Sub
   Partial Private Sub UpdateПараметр(instance As Параметр)
     End Sub
   Partial Private Sub DeleteПараметр(instance As Параметр)
+    End Sub
+  Partial Private Sub InsertКонтролер(instance As Контролер)
+    End Sub
+  Partial Private Sub UpdateКонтролер(instance As Контролер)
+    End Sub
+  Partial Private Sub DeleteКонтролер(instance As Контролер)
     End Sub
   #End Region
 	
@@ -280,15 +280,15 @@ Partial Public Class DataClassesDorogaDataContext
 		End Get
 	End Property
 	
-	Public ReadOnly Property Контролер() As System.Data.Linq.Table(Of Контролер)
-		Get
-			Return Me.GetTable(Of Контролер)
-		End Get
-	End Property
-	
 	Public ReadOnly Property Параметр() As System.Data.Linq.Table(Of Параметр)
 		Get
 			Return Me.GetTable(Of Параметр)
+		End Get
+	End Property
+	
+	Public ReadOnly Property Контролер() As System.Data.Linq.Table(Of Контролер)
+		Get
+			Return Me.GetTable(Of Контролер)
 		End Get
 	End Property
 	
@@ -300,6 +300,11 @@ Partial Public Class DataClassesDorogaDataContext
 	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.ListOfTables", IsComposable:=true)>  _
 	Public Function ListOfTables() As IQueryable(Of ListOfTablesResult)
 		Return Me.CreateMethodCallQuery(Of ListOfTablesResult)(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo))
+	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.GetListFieldTable", IsComposable:=true)>  _
+	Public Function GetListFieldTable(<Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="TableName", DbType:="NVarChar(MAX)")> ByVal tableName As String) As IQueryable(Of GetListFieldTableResult)
+		Return Me.CreateMethodCallQuery(Of GetListFieldTableResult)(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), tableName)
 	End Function
 End Class
 
@@ -5599,267 +5604,6 @@ Partial Public Class Адрес
 	End Sub
 End Class
 
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Контролер")>  _
-Partial Public Class Контролер
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _кодКонтролер As Integer
-	
-	Private _Таблица As String
-	
-	Private _Индекс_контролера As System.Nullable(Of Integer)
-	
-	Private _Имя_контролера As String
-	
-	Private _Дата_записи As System.Nullable(Of Date)
-	
-	Private _Записал As String
-	
-	Private _Дата_исправления As System.Nullable(Of Date)
-	
-	Private _Исправил As String
-	
-	Private _Примечание As String
-	
-	Private _Параметр As EntitySet(Of Параметр)
-	
-    #Region "Определения метода расширяемости"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub OnкодКонтролерChanging(value As Integer)
-    End Sub
-    Partial Private Sub OnкодКонтролерChanged()
-    End Sub
-    Partial Private Sub OnТаблицаChanging(value As String)
-    End Sub
-    Partial Private Sub OnТаблицаChanged()
-    End Sub
-    Partial Private Sub OnИндекс_контролераChanging(value As System.Nullable(Of Integer))
-    End Sub
-    Partial Private Sub OnИндекс_контролераChanged()
-    End Sub
-    Partial Private Sub OnИмя_контролераChanging(value As String)
-    End Sub
-    Partial Private Sub OnИмя_контролераChanged()
-    End Sub
-    Partial Private Sub OnДата_записиChanging(value As System.Nullable(Of Date))
-    End Sub
-    Partial Private Sub OnДата_записиChanged()
-    End Sub
-    Partial Private Sub OnЗаписалChanging(value As String)
-    End Sub
-    Partial Private Sub OnЗаписалChanged()
-    End Sub
-    Partial Private Sub OnДата_исправленияChanging(value As System.Nullable(Of Date))
-    End Sub
-    Partial Private Sub OnДата_исправленияChanged()
-    End Sub
-    Partial Private Sub OnИсправилChanging(value As String)
-    End Sub
-    Partial Private Sub OnИсправилChanged()
-    End Sub
-    Partial Private Sub OnПримечаниеChanging(value As String)
-    End Sub
-    Partial Private Sub OnПримечаниеChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		Me._Параметр = New EntitySet(Of Параметр)(AddressOf Me.attach_Параметр, AddressOf Me.detach_Параметр)
-		OnCreated
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_кодКонтролер", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property кодКонтролер() As Integer
-		Get
-			Return Me._кодКонтролер
-		End Get
-		Set
-			If ((Me._кодКонтролер = value)  _
-						= false) Then
-				Me.OnкодКонтролерChanging(value)
-				Me.SendPropertyChanging
-				Me._кодКонтролер = value
-				Me.SendPropertyChanged("кодКонтролер")
-				Me.OnкодКонтролерChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Таблица", DbType:="NVarChar(MAX)")>  _
-	Public Property Таблица() As String
-		Get
-			Return Me._Таблица
-		End Get
-		Set
-			If (String.Equals(Me._Таблица, value) = false) Then
-				Me.OnТаблицаChanging(value)
-				Me.SendPropertyChanging
-				Me._Таблица = value
-				Me.SendPropertyChanged("Таблица")
-				Me.OnТаблицаChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Индекс контролера]", Storage:="_Индекс_контролера", DbType:="Int")>  _
-	Public Property Индекс_контролера() As System.Nullable(Of Integer)
-		Get
-			Return Me._Индекс_контролера
-		End Get
-		Set
-			If (Me._Индекс_контролера.Equals(value) = false) Then
-				Me.OnИндекс_контролераChanging(value)
-				Me.SendPropertyChanging
-				Me._Индекс_контролера = value
-				Me.SendPropertyChanged("Индекс_контролера")
-				Me.OnИндекс_контролераChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Имя контролера]", Storage:="_Имя_контролера", DbType:="NVarChar(MAX)")>  _
-	Public Property Имя_контролера() As String
-		Get
-			Return Me._Имя_контролера
-		End Get
-		Set
-			If (String.Equals(Me._Имя_контролера, value) = false) Then
-				Me.OnИмя_контролераChanging(value)
-				Me.SendPropertyChanging
-				Me._Имя_контролера = value
-				Me.SendPropertyChanged("Имя_контролера")
-				Me.OnИмя_контролераChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Дата записи]", Storage:="_Дата_записи", DbType:="Date")>  _
-	Public Property Дата_записи() As System.Nullable(Of Date)
-		Get
-			Return Me._Дата_записи
-		End Get
-		Set
-			If (Me._Дата_записи.Equals(value) = false) Then
-				Me.OnДата_записиChanging(value)
-				Me.SendPropertyChanging
-				Me._Дата_записи = value
-				Me.SendPropertyChanged("Дата_записи")
-				Me.OnДата_записиChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Записал", DbType:="NVarChar(MAX)")>  _
-	Public Property Записал() As String
-		Get
-			Return Me._Записал
-		End Get
-		Set
-			If (String.Equals(Me._Записал, value) = false) Then
-				Me.OnЗаписалChanging(value)
-				Me.SendPropertyChanging
-				Me._Записал = value
-				Me.SendPropertyChanged("Записал")
-				Me.OnЗаписалChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Дата исправления]", Storage:="_Дата_исправления", DbType:="Date")>  _
-	Public Property Дата_исправления() As System.Nullable(Of Date)
-		Get
-			Return Me._Дата_исправления
-		End Get
-		Set
-			If (Me._Дата_исправления.Equals(value) = false) Then
-				Me.OnДата_исправленияChanging(value)
-				Me.SendPropertyChanging
-				Me._Дата_исправления = value
-				Me.SendPropertyChanged("Дата_исправления")
-				Me.OnДата_исправленияChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Исправил", DbType:="NVarChar(MAX)")>  _
-	Public Property Исправил() As String
-		Get
-			Return Me._Исправил
-		End Get
-		Set
-			If (String.Equals(Me._Исправил, value) = false) Then
-				Me.OnИсправилChanging(value)
-				Me.SendPropertyChanging
-				Me._Исправил = value
-				Me.SendPropertyChanged("Исправил")
-				Me.OnИсправилChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Примечание", DbType:="NVarChar(MAX)")>  _
-	Public Property Примечание() As String
-		Get
-			Return Me._Примечание
-		End Get
-		Set
-			If (String.Equals(Me._Примечание, value) = false) Then
-				Me.OnПримечаниеChanging(value)
-				Me.SendPropertyChanging
-				Me._Примечание = value
-				Me.SendPropertyChanged("Примечание")
-				Me.OnПримечаниеChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Контролер_Параметр", Storage:="_Параметр", ThisKey:="кодКонтролер", OtherKey:="кодКонтролер")>  _
-	Public Property Параметр() As EntitySet(Of Параметр)
-		Get
-			Return Me._Параметр
-		End Get
-		Set
-			Me._Параметр.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Параметр(ByVal entity As Параметр)
-		Me.SendPropertyChanging
-		entity.Контролер = Me
-	End Sub
-	
-	Private Sub detach_Параметр(ByVal entity As Параметр)
-		Me.SendPropertyChanging
-		entity.Контролер = Nothing
-	End Sub
-End Class
-
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Параметр")>  _
 Partial Public Class Параметр
 	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
@@ -6064,7 +5808,7 @@ Partial Public Class Параметр
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Контролер_Параметр", Storage:="_Контролер", ThisKey:="кодКонтролер", OtherKey:="кодКонтролер", IsForeignKey:=true)>  _
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Контролер_Параметр", Storage:="_Контролер", ThisKey:="кодКонтролер", OtherKey:="кодКонтролер", IsForeignKey:=true, DeleteOnNull:=true, DeleteRule:="CASCADE")>  _
 	Public Property Контролер() As Контролер
 		Get
 			Return Me._Контролер.Entity
@@ -6108,6 +5852,245 @@ Partial Public Class Параметр
 					= false) Then
 			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
 		End If
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Контролер")>  _
+Partial Public Class Контролер
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _кодКонтролер As Integer
+	
+	Private _Таблица As String
+	
+	Private _Поле As String
+	
+	Private _Дата_записи As System.Nullable(Of Date)
+	
+	Private _Записал As String
+	
+	Private _Дата_исправления As System.Nullable(Of Date)
+	
+	Private _Исправил As String
+	
+	Private _Примечание As String
+	
+	Private _Параметр As EntitySet(Of Параметр)
+	
+    #Region "Определения метода расширяемости"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub OnкодКонтролерChanging(value As Integer)
+    End Sub
+    Partial Private Sub OnкодКонтролерChanged()
+    End Sub
+    Partial Private Sub OnТаблицаChanging(value As String)
+    End Sub
+    Partial Private Sub OnТаблицаChanged()
+    End Sub
+    Partial Private Sub OnПолеChanging(value As String)
+    End Sub
+    Partial Private Sub OnПолеChanged()
+    End Sub
+    Partial Private Sub OnДата_записиChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub OnДата_записиChanged()
+    End Sub
+    Partial Private Sub OnЗаписалChanging(value As String)
+    End Sub
+    Partial Private Sub OnЗаписалChanged()
+    End Sub
+    Partial Private Sub OnДата_исправленияChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub OnДата_исправленияChanged()
+    End Sub
+    Partial Private Sub OnИсправилChanging(value As String)
+    End Sub
+    Partial Private Sub OnИсправилChanged()
+    End Sub
+    Partial Private Sub OnПримечаниеChanging(value As String)
+    End Sub
+    Partial Private Sub OnПримечаниеChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		Me._Параметр = New EntitySet(Of Параметр)(AddressOf Me.attach_Параметр, AddressOf Me.detach_Параметр)
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_кодКонтролер", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property кодКонтролер() As Integer
+		Get
+			Return Me._кодКонтролер
+		End Get
+		Set
+			If ((Me._кодКонтролер = value)  _
+						= false) Then
+				Me.OnкодКонтролерChanging(value)
+				Me.SendPropertyChanging
+				Me._кодКонтролер = value
+				Me.SendPropertyChanged("кодКонтролер")
+				Me.OnкодКонтролерChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Таблица", DbType:="NVarChar(MAX)")>  _
+	Public Property Таблица() As String
+		Get
+			Return Me._Таблица
+		End Get
+		Set
+			If (String.Equals(Me._Таблица, value) = false) Then
+				Me.OnТаблицаChanging(value)
+				Me.SendPropertyChanging
+				Me._Таблица = value
+				Me.SendPropertyChanged("Таблица")
+				Me.OnТаблицаChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Поле", DbType:="NVarChar(MAX)")>  _
+	Public Property Поле() As String
+		Get
+			Return Me._Поле
+		End Get
+		Set
+			If (String.Equals(Me._Поле, value) = false) Then
+				Me.OnПолеChanging(value)
+				Me.SendPropertyChanging
+				Me._Поле = value
+				Me.SendPropertyChanged("Поле")
+				Me.OnПолеChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Дата записи]", Storage:="_Дата_записи", DbType:="Date")>  _
+	Public Property Дата_записи() As System.Nullable(Of Date)
+		Get
+			Return Me._Дата_записи
+		End Get
+		Set
+			If (Me._Дата_записи.Equals(value) = false) Then
+				Me.OnДата_записиChanging(value)
+				Me.SendPropertyChanging
+				Me._Дата_записи = value
+				Me.SendPropertyChanged("Дата_записи")
+				Me.OnДата_записиChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Записал", DbType:="NVarChar(MAX)")>  _
+	Public Property Записал() As String
+		Get
+			Return Me._Записал
+		End Get
+		Set
+			If (String.Equals(Me._Записал, value) = false) Then
+				Me.OnЗаписалChanging(value)
+				Me.SendPropertyChanging
+				Me._Записал = value
+				Me.SendPropertyChanged("Записал")
+				Me.OnЗаписалChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Дата исправления]", Storage:="_Дата_исправления", DbType:="Date")>  _
+	Public Property Дата_исправления() As System.Nullable(Of Date)
+		Get
+			Return Me._Дата_исправления
+		End Get
+		Set
+			If (Me._Дата_исправления.Equals(value) = false) Then
+				Me.OnДата_исправленияChanging(value)
+				Me.SendPropertyChanging
+				Me._Дата_исправления = value
+				Me.SendPropertyChanged("Дата_исправления")
+				Me.OnДата_исправленияChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Исправил", DbType:="NVarChar(MAX)")>  _
+	Public Property Исправил() As String
+		Get
+			Return Me._Исправил
+		End Get
+		Set
+			If (String.Equals(Me._Исправил, value) = false) Then
+				Me.OnИсправилChanging(value)
+				Me.SendPropertyChanging
+				Me._Исправил = value
+				Me.SendPropertyChanged("Исправил")
+				Me.OnИсправилChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Примечание", DbType:="NVarChar(MAX)")>  _
+	Public Property Примечание() As String
+		Get
+			Return Me._Примечание
+		End Get
+		Set
+			If (String.Equals(Me._Примечание, value) = false) Then
+				Me.OnПримечаниеChanging(value)
+				Me.SendPropertyChanging
+				Me._Примечание = value
+				Me.SendPropertyChanged("Примечание")
+				Me.OnПримечаниеChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Контролер_Параметр", Storage:="_Параметр", ThisKey:="кодКонтролер", OtherKey:="кодКонтролер")>  _
+	Public Property Параметр() As EntitySet(Of Параметр)
+		Get
+			Return Me._Параметр
+		End Get
+		Set
+			Me._Параметр.Assign(value)
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+	
+	Private Sub attach_Параметр(ByVal entity As Параметр)
+		Me.SendPropertyChanging
+		entity.Контролер = Me
+	End Sub
+	
+	Private Sub detach_Параметр(ByVal entity As Параметр)
+		Me.SendPropertyChanging
+		entity.Контролер = Nothing
 	End Sub
 End Class
 
@@ -6303,6 +6286,97 @@ Partial Public Class ListOfTablesResult
 			If ((Me._is_schema_published = value)  _
 						= false) Then
 				Me._is_schema_published = value
+			End If
+		End Set
+	End Property
+End Class
+
+Partial Public Class GetListFieldTableResult
+	
+	Private _row As System.Nullable(Of Integer)
+	
+	Private _name As String
+	
+	Private _DATA_TYPE As String
+	
+	Private _CHARACTER_MAXIMUM_LENGTH As System.Nullable(Of Integer)
+	
+	Private _IS_NULLABLE As String
+	
+	Private _COLUMN_DEFAULT As String
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_row", DbType:="Int")>  _
+	Public Property row() As System.Nullable(Of Integer)
+		Get
+			Return Me._row
+		End Get
+		Set
+			If (Me._row.Equals(value) = false) Then
+				Me._row = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_name", DbType:="NVarChar(128)")>  _
+	Public Property name() As String
+		Get
+			Return Me._name
+		End Get
+		Set
+			If (String.Equals(Me._name, value) = false) Then
+				Me._name = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_DATA_TYPE", DbType:="NVarChar(128)")>  _
+	Public Property DATA_TYPE() As String
+		Get
+			Return Me._DATA_TYPE
+		End Get
+		Set
+			If (String.Equals(Me._DATA_TYPE, value) = false) Then
+				Me._DATA_TYPE = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_CHARACTER_MAXIMUM_LENGTH", DbType:="Int")>  _
+	Public Property CHARACTER_MAXIMUM_LENGTH() As System.Nullable(Of Integer)
+		Get
+			Return Me._CHARACTER_MAXIMUM_LENGTH
+		End Get
+		Set
+			If (Me._CHARACTER_MAXIMUM_LENGTH.Equals(value) = false) Then
+				Me._CHARACTER_MAXIMUM_LENGTH = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IS_NULLABLE", DbType:="VarChar(3)")>  _
+	Public Property IS_NULLABLE() As String
+		Get
+			Return Me._IS_NULLABLE
+		End Get
+		Set
+			If (String.Equals(Me._IS_NULLABLE, value) = false) Then
+				Me._IS_NULLABLE = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_COLUMN_DEFAULT", DbType:="NVarChar(4000)")>  _
+	Public Property COLUMN_DEFAULT() As String
+		Get
+			Return Me._COLUMN_DEFAULT
+		End Get
+		Set
+			If (String.Equals(Me._COLUMN_DEFAULT, value) = false) Then
+				Me._COLUMN_DEFAULT = value
 			End If
 		End Set
 	End Property
