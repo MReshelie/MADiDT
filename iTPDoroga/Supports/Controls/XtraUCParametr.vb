@@ -29,6 +29,13 @@ Public Class XtraUCParametr
         End If
     End Sub
 
+    Private Sub riLookUpEditField_Closed(sender As Object, e As ClosedEventArgs) Handles riLookUpEditField.Closed
+        'Dim view As GridView = CType(Me.GridViewMain, GridView)
+        'Dim editor As LookUpEdit = CType(sender, LookUpEdit)
+
+        CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    End Sub
+
     Private Sub GridViewMain_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewMain.InitNewRow
         Dim view As GridView = CType(sender, GridView)
 
@@ -72,7 +79,36 @@ Public Class XtraUCParametr
     Private Sub GridControlSettings_EmbeddedNavigator_ButtonClick(sender As Object, e As NavigatorButtonClickEventArgs) Handles GridControlSettings.EmbeddedNavigator.ButtonClick
         Dim view As ColumnView = CType(Me.GridControlSettings.FocusedView, ColumnView)
 
-        Console.WriteLine(String.Format("{0}", view.Name))
+        'Console.WriteLine(String.Format("{0}", view.Name))
+        Select Case e.Button.ButtonType
+            Case NavigatorButtonType.EndEdit
+                If view.UpdateCurrentRow() Then
+                    Try
+                        db.SubmitChanges(ConflictMode.FailOnFirstConflict)
+                    Catch ex As ChangeConflictException
+                        XtraMessageBox.Show(String.Format("Ошибка при записи в БД:{0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
+                                       "Система: запись в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+
+                        For Each occ As ObjectChangeConflict In db.ChangeConflicts
+                            occ.Resolve(RefreshMode.OverwriteCurrentValues)
+                        Next
+                    Catch ex As Exception
+                        XtraMessageBox.Show(String.Format("Ошибка при записи в БД:{0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
+                                       "Система: запись в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+
+                        If (Not DBConnect()) Then Return
+                    End Try
+                End If
+
+                e.Handled = True
+        End Select
+
+        'Select Case view.Name
+        '    Case "GridViewMain"
+        '    Case "GridViewParametr"
+        'End Select
     End Sub
 
 #Region "Пользовательскте процедуры и функции"
@@ -83,10 +119,11 @@ Public Class XtraUCParametr
 
         Dim tbControler = From qTb In db.GetTable(Of Контролер)()
 
+        Me.контролерBindingSource.DataSource = tbControler
+
         Call GVSettings(Me.GridViewMain)
         Call GVSettings(Me.GridViewParametr)
 
-        Me.контролерBindingSource.DataSource = tbControler
         Return True
     End Function
 
@@ -97,6 +134,12 @@ Public Class XtraUCParametr
                 view.OptionsView.ColumnAutoWidth = True
 
                 Call riLookUpEditData(0)
+
+                If Not IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица"))) = Nothing Then
+                    Console.WriteLine(String.Format("Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns(""Таблица"")), String)) = {0}", Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String))))
+
+                    Call riLookUpEditData(1, Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String)))
+                End If
 
                 view.Columns("Поле").Caption = "Список полей"
                 view.Columns("Дата_записи").Caption = "Дата записи"
@@ -114,9 +157,6 @@ Public Class XtraUCParametr
             Case "GridViewParametr"
                 view.BestFitColumns()
                 view.OptionsView.ColumnAutoWidth = True
-
-                Call riLookUpEditData(0)
-
                 view.Columns("Наименование").Caption = "Наименование параметра"
                 view.Columns("Дата_записи").Caption = "Дата записи"
                 view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
