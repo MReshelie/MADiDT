@@ -95,6 +95,8 @@ Partial Public Class MainForm
                         ' Проверка доступа пользователя и его права
                         If Trim(_ucLogin.ComboBoxEditPerson.Text).Split(" ")(0) = "Администратор" AndAlso Trim(_ucLogin.TextEditPassword.Text) = "sandozik" Then
                             pUserL = "A"
+                            pUserF = "Администратор системы"
+                            pUserS = "Полный доступ"
                         Else
                             pUserL = "U"
                         End If

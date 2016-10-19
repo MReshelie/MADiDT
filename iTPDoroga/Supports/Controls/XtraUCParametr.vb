@@ -7,6 +7,8 @@ Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraGrid.Views.Grid
 
 Public Class XtraUCParametr
+    Private newRow As Boolean = False
+
     Dim db As New DataClassesDorogaDataContext
 
     Public Sub New()
@@ -27,6 +29,52 @@ Public Class XtraUCParametr
         End If
     End Sub
 
+    Private Sub GridViewMain_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewMain.InitNewRow
+        Dim view As GridView = CType(sender, GridView)
+
+        ' Начальные значения Новая запись
+        newRow = True
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Дата_записи"), Date.Today)
+
+        If pUserF = "Администратор системы" Then
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
+        Else
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+        End If
+
+        view.Columns("Записал").OptionsColumn.ReadOnly = True
+        view.Columns("Дата_записи").OptionsColumn.ReadOnly = True
+        view.Columns("Исправил").OptionsColumn.ReadOnly = True
+        view.Columns("Дата_исправления").OptionsColumn.ReadOnly = True
+        view.FocusedColumn = view.Columns("Таблица")
+    End Sub
+
+    Private Sub GridViewParametr_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewParametr.InitNewRow
+        Dim view As GridView = CType(sender, GridView)
+
+        ' Начальные значения Новая запись
+        newRow = True
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Дата_записи"), Date.Today)
+
+        If pUserF = "Администратор системы" Then
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
+        Else
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+        End If
+
+        view.Columns("Записал").OptionsColumn.ReadOnly = True
+        view.Columns("Дата_записи").OptionsColumn.ReadOnly = True
+        view.Columns("Исправил").OptionsColumn.ReadOnly = True
+        view.Columns("Дата_исправления").OptionsColumn.ReadOnly = True
+        view.FocusedColumn = view.Columns("Наименование")
+    End Sub
+
+    Private Sub GridControlSettings_EmbeddedNavigator_ButtonClick(sender As Object, e As NavigatorButtonClickEventArgs) Handles GridControlSettings.EmbeddedNavigator.ButtonClick
+        Dim view As ColumnView = CType(Me.GridControlSettings.FocusedView, ColumnView)
+
+        Console.WriteLine(String.Format("{0}", view.Name))
+    End Sub
+
 #Region "Пользовательскте процедуры и функции"
     Private Function DBConnect() As Boolean
         db = New DataClassesDorogaDataContext()
@@ -36,29 +84,54 @@ Public Class XtraUCParametr
         Dim tbControler = From qTb In db.GetTable(Of Контролер)()
 
         Call GVSettings(Me.GridViewMain)
+        Call GVSettings(Me.GridViewParametr)
+
         Me.контролерBindingSource.DataSource = tbControler
         Return True
     End Function
 
     Private Sub GVSettings(ByVal view As GridView)
-        view.BestFitColumns()
-        view.OptionsView.ColumnAutoWidth = True
+        Select Case view.Name
+            Case "GridViewMain"
+                view.BestFitColumns()
+                view.OptionsView.ColumnAutoWidth = True
 
-        Call riLookUpEditData(0)
+                Call riLookUpEditData(0)
 
-        view.Columns("Поле").Caption = "Список полей"
-        view.Columns("Дата_записи").Caption = "Дата записи"
-        view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        view.Columns("Дата_исправления").Caption = "Дата исправления"
-        view.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        riMemoEdit.WordWrap = True
-        view.Columns("кодКонтролер").Visible = False
+                view.Columns("Поле").Caption = "Список полей"
+                view.Columns("Дата_записи").Caption = "Дата записи"
+                view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("Дата_исправления").Caption = "Дата исправления"
+                view.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                riMemoEdit.WordWrap = True
+                view.Columns("кодКонтролер").Visible = False
 
-        For Each column As GridColumn In view.Columns
-            column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        Next
+                For Each column As GridColumn In view.Columns
+                    column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                Next
 
-        view.OptionsView.RowAutoHeight = True
+                view.OptionsView.RowAutoHeight = True
+            Case "GridViewParametr"
+                view.BestFitColumns()
+                view.OptionsView.ColumnAutoWidth = True
+
+                Call riLookUpEditData(0)
+
+                view.Columns("Наименование").Caption = "Наименование параметра"
+                view.Columns("Дата_записи").Caption = "Дата записи"
+                view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("Дата_исправления").Caption = "Дата исправления"
+                view.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                riMemoEdit.WordWrap = True
+                view.Columns("кодПараметра").Visible = False
+                view.Columns("кодКонтролер").Visible = False
+
+                For Each column As GridColumn In view.Columns
+                    column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                Next
+
+                view.OptionsView.RowAutoHeight = True
+        End Select
     End Sub
 
     Private Sub riLookUpEditData(ByVal i As Integer, Optional ByVal nameTab As String = Nothing)
