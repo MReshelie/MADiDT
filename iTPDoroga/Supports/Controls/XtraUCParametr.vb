@@ -13,27 +13,65 @@ Public Class XtraUCParametr
 
     Public Sub New()
         InitializeComponent()
-
-        Call InitRILookUpEdit()
     End Sub
 
     Private Sub XtraUCParametr_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If (Not DBConnect()) Then Return
     End Sub
 
-    Private Sub riLookUpEditTable_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditTable.EditValueChanged
-        If CType(Me.GridViewMain, GridView).FocusedColumn.Name = "colТаблица" Then
-            CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Таблица"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    Private Sub GridViewMain_CustomRowCellEdit(sender As Object, e As CustomRowCellEditEventArgs) Handles GridViewMain.CustomRowCellEdit
+        If e.Column.FieldName = "Поле" Then
+            Dim gv As GridView = CType(sender, GridView)
+            Dim fieldName As String = gv.GetRowCellValue(e.RowHandle, gv.Columns("Поле")).ToString()
 
-            Call riLookUpEditData(1, Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+            Select Case (fieldName)
+                Case "Поле"
+                    e.RepositoryItem = Me.riLookUpEditField
+            End Select
+
         End If
     End Sub
 
-    Private Sub riLookUpEditField_Closed(sender As Object, e As ClosedEventArgs) Handles riLookUpEditField.Closed
-        'Dim view As GridView = CType(Me.GridViewMain, GridView)
-        'Dim editor As LookUpEdit = CType(sender, LookUpEdit)
+    'Private Sub GridViewMain_ColumnChanged(sender As Object, e As EventArgs) Handles GridViewMain.ColumnChanged
+    '    Dim view As GridView = CType(sender, GridView)
+    '    Dim fieldName As String = view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Поле")).ToString()
 
-        CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    '    Select Case (fieldName)
+    '        Case "Поле"
+    '            e.RepositoryItem = Me.riLookUpEditField
+    '    End Select
+    'End Sub
+
+    'Private Sub GridViewMain_ShownEditor(sender As Object, e As EventArgs) Handles GridViewMain.ShownEditor
+    '    Dim view As ColumnView = DirectCast(sender, ColumnView)
+
+    '    If view.FocusedColumn.FieldName = "Поле" AndAlso TypeOf view.ActiveEditor Is LookUpEdit Then
+    '        Dim edit As LookUpEdit = CType(view.ActiveEditor, LookUpEdit)
+    '        Dim nameTab As String = CStr(view.GetFocusedRowCellValue("Таблица"))
+
+    '        edit.Properties.DataSource = db.GetListFieldTable(nameTab).ToList()
+    '        'CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(edit.EditValue, String)))
+    '    End If
+    'End Sub
+
+    Private Sub riLookUpEditTable_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditTable.EditValueChanged
+        CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Таблица"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+
+        Console.WriteLine(String.Format("riLookUpEditTable_EditValueChanged -> Trim(CType(CType(sender, LookUpEdit).EditValue, String)) = {0}", Trim(CType(CType(sender, LookUpEdit).EditValue, String))))
+
+        Call riLookUpEditData(1, Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    End Sub
+
+    Private Sub riLookUpEditField_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditField.EditValueChanged
+        'CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    End Sub
+
+    Private Sub riLookUpEditField_Closed(sender As Object, e As ClosedEventArgs) Handles riLookUpEditField.Closed
+        'CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    End Sub
+
+    Private Sub riTextEditName_EditValueChanging(sender As Object, e As ChangingEventArgs) Handles riTextEditName.EditValueChanging
+        CType(Me.GridViewParametr, GridView).SetFocusedRowCellValue(CType(Me.GridViewParametr, GridView).Columns("Наименование"), Trim(CType(CType(sender, TextEdit).EditValue, String)))
     End Sub
 
     Private Sub GridViewMain_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewMain.InitNewRow
@@ -84,7 +122,22 @@ Public Class XtraUCParametr
             Case NavigatorButtonType.EndEdit
                 If view.UpdateCurrentRow() Then
                     Try
+                        If newRow = False Then
+                            'Select Case view.Name
+                            '    Case "GridViewMain"
+                            '    Case "GridViewParametr"
+                            'End Select
+                            If pUserF = "Администратор системы" Then
+                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
+                            Else
+                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+                            End If
+
+                            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Дата_исправления"), Date.Today)
+                        End If
+
                         db.SubmitChanges(ConflictMode.FailOnFirstConflict)
+                        newRow = False
                     Catch ex As ChangeConflictException
                         XtraMessageBox.Show(String.Format("Ошибка при записи в БД:{0}{0}{1}.",
                                          Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
@@ -105,10 +158,6 @@ Public Class XtraUCParametr
                 e.Handled = True
         End Select
 
-        'Select Case view.Name
-        '    Case "GridViewMain"
-        '    Case "GridViewParametr"
-        'End Select
     End Sub
 
 #Region "Пользовательскте процедуры и функции"
@@ -130,14 +179,13 @@ Public Class XtraUCParametr
     Private Sub GVSettings(ByVal view As GridView)
         Select Case view.Name
             Case "GridViewMain"
-                view.BestFitColumns()
-                view.OptionsView.ColumnAutoWidth = True
-
+                Call InitRILookUpEdit(Me.riLookUpEditTable)
+                Call InitRILookUpEdit(Me.riLookUpEditField)
                 Call riLookUpEditData(0)
 
-                If Not IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица"))) = Nothing Then
-                    Console.WriteLine(String.Format("Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns(""Таблица"")), String)) = {0}", Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String))))
+                Console.WriteLine(String.Format("Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns(""Таблица"")), String)) = {0}", Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String))))
 
+                If Not IsNothing(Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String))) Then
                     Call riLookUpEditData(1, Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String)))
                 End If
 
@@ -153,10 +201,10 @@ Public Class XtraUCParametr
                     column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
                 Next
 
-                view.OptionsView.RowAutoHeight = True
-            Case "GridViewParametr"
                 view.BestFitColumns()
                 view.OptionsView.ColumnAutoWidth = True
+                view.OptionsView.RowAutoHeight = True
+            Case "GridViewParametr"
                 view.Columns("Наименование").Caption = "Наименование параметра"
                 view.Columns("Дата_записи").Caption = "Дата записи"
                 view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
@@ -170,6 +218,8 @@ Public Class XtraUCParametr
                     column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
                 Next
 
+                view.BestFitColumns()
+                view.OptionsView.ColumnAutoWidth = True
                 view.OptionsView.RowAutoHeight = True
         End Select
     End Sub
@@ -187,30 +237,26 @@ Public Class XtraUCParametr
         End Select
     End Sub
 
-    Private Sub InitRILookUpEdit()
-        ' Поле Таблица
-        Dim coll1 As LookUpColumnInfoCollection = riLookUpEditTable.Columns
+    Private Sub InitRILookUpEdit(ByVal riLUEF As RepositoryItemLookUpEdit)
+        Dim coll As LookUpColumnInfoCollection = riLUEF.Columns
 
-        coll1.Add(New LookUpColumnInfo("row", "Номер в списке", 0))
-        coll1.Add(New LookUpColumnInfo("name", "Таблица в БД", 0))
-        Me.riLookUpEditTable.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        Me.riLookUpEditTable.BestFitMode = BestFitMode.BestFitResizePopup
-        Me.riLookUpEditTable.SearchMode = SearchMode.AutoComplete
-        Me.riLookUpEditTable.AutoSearchColumnIndex = 1
-        Me.riLookUpEditTable.ValueMember = "name"
-        Me.riLookUpEditTable.DisplayMember = "name"
+        Select Case riLUEF.Name
+            Case "riLookUpEditTable"
+                ' Поле Таблица
+                coll.Add(New LookUpColumnInfo("row", "Номер в списке", 0))
+                coll.Add(New LookUpColumnInfo("name", "Таблица в БД", 0))
+            Case "riLookUpEditField"
+                ' Поле Поле
+                coll.Add(New LookUpColumnInfo("row", "Позиция в таблице", 0))
+                coll.Add(New LookUpColumnInfo("name", "Имя поля", 0))
+        End Select
 
-        ' Поле Поле
-        Dim coll2 As LookUpColumnInfoCollection = riLookUpEditField.Columns
-
-        coll2.Add(New LookUpColumnInfo("row", "Позиция в таблице", 0))
-        coll2.Add(New LookUpColumnInfo("name", "Имя поля", 0))
-        Me.riLookUpEditField.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        Me.riLookUpEditField.BestFitMode = BestFitMode.BestFitResizePopup
-        Me.riLookUpEditField.SearchMode = SearchMode.AutoComplete
-        Me.riLookUpEditField.AutoSearchColumnIndex = 1
-        Me.riLookUpEditField.ValueMember = "name"
-        Me.riLookUpEditField.DisplayMember = "name"
+        riLUEF.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        riLUEF.BestFitMode = BestFitMode.BestFitResizePopup
+        riLUEF.SearchMode = SearchMode.AutoComplete
+        riLUEF.AutoSearchColumnIndex = 1
+        riLUEF.ValueMember = "name"
+        riLUEF.DisplayMember = "name"
     End Sub
 #End Region
 End Class

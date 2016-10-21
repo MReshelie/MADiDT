@@ -24,6 +24,7 @@ Partial Class XtraUCParametr
         Me.GridViewParametr = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colкодПараметра = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colкодКонтролер1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.riTextEditName = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit()
         Me.colНаименование = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colДата_записи1 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colЗаписал1 = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -38,20 +39,21 @@ Partial Class XtraUCParametr
         Me.colТаблица = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.riLookUpEditTable = New DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit()
         Me.colПоле = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.riLookUpEditField = New DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit()
         Me.colДата_записи = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colЗаписал = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colДата_исправления = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colИсправил = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colПримечание = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.riMemoEdit = New DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit()
+        Me.riLookUpEditField = New DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit()
         CType(Me.GridViewParametr, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.riTextEditName, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControlSettings, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.контролерBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.riLookUpEditTable, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.riLookUpEditField, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.riMemoEdit, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.riLookUpEditField, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GridViewParametr
@@ -69,10 +71,16 @@ Partial Class XtraUCParametr
         '
         'colкодКонтролер1
         '
+        Me.colкодКонтролер1.ColumnEdit = Me.riTextEditName
         Me.colкодКонтролер1.FieldName = "кодКонтролер"
         Me.colкодКонтролер1.Name = "colкодКонтролер1"
         Me.colкодКонтролер1.Visible = True
         Me.colкодКонтролер1.VisibleIndex = 1
+        '
+        'riTextEditName
+        '
+        Me.riTextEditName.AutoHeight = False
+        Me.riTextEditName.Name = "riTextEditName"
         '
         'colНаименование
         '
@@ -120,8 +128,6 @@ Partial Class XtraUCParametr
         '
         Me.colКонтролер.FieldName = "Контролер"
         Me.colКонтролер.Name = "colКонтролер"
-        Me.colКонтролер.Visible = True
-        Me.colКонтролер.VisibleIndex = 8
         '
         'GridControlSettings
         '
@@ -133,7 +139,7 @@ Partial Class XtraUCParametr
         Me.GridControlSettings.Location = New System.Drawing.Point(0, 0)
         Me.GridControlSettings.MainView = Me.GridViewMain
         Me.GridControlSettings.Name = "GridControlSettings"
-        Me.GridControlSettings.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.riLookUpEditTable, Me.riLookUpEditField, Me.riMemoEdit})
+        Me.GridControlSettings.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.riLookUpEditTable, Me.riLookUpEditField, Me.riMemoEdit, Me.riTextEditName})
         Me.GridControlSettings.Size = New System.Drawing.Size(806, 394)
         Me.GridControlSettings.TabIndex = 0
         Me.GridControlSettings.UseEmbeddedNavigator = True
@@ -148,18 +154,19 @@ Partial Class XtraUCParametr
         Me.GridViewMain.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colкодКонтролер, Me.colТаблица, Me.colПоле, Me.colДата_записи, Me.colЗаписал, Me.colДата_исправления, Me.colИсправил, Me.colПримечание})
         Me.GridViewMain.GridControl = Me.GridControlSettings
         Me.GridViewMain.Name = "GridViewMain"
+        Me.GridViewMain.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.EditFormInplace
         Me.GridViewMain.OptionsDetail.AllowExpandEmptyDetails = True
         '
         'colкодКонтролер
         '
         Me.colкодКонтролер.FieldName = "кодКонтролер"
         Me.colкодКонтролер.Name = "colкодКонтролер"
+        Me.colкодКонтролер.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.[False]
         Me.colкодКонтролер.Visible = True
         Me.colкодКонтролер.VisibleIndex = 0
         '
         'colТаблица
         '
-        Me.colТаблица.ColumnEdit = Me.riLookUpEditTable
         Me.colТаблица.FieldName = "Таблица"
         Me.colТаблица.Name = "colТаблица"
         Me.colТаблица.Visible = True
@@ -173,17 +180,10 @@ Partial Class XtraUCParametr
         '
         'colПоле
         '
-        Me.colПоле.ColumnEdit = Me.riLookUpEditField
         Me.colПоле.FieldName = "Поле"
         Me.colПоле.Name = "colПоле"
         Me.colПоле.Visible = True
         Me.colПоле.VisibleIndex = 2
-        '
-        'riLookUpEditField
-        '
-        Me.riLookUpEditField.AutoHeight = False
-        Me.riLookUpEditField.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.riLookUpEditField.Name = "riLookUpEditField"
         '
         'colДата_записи
         '
@@ -217,7 +217,6 @@ Partial Class XtraUCParametr
         '
         Me.colПримечание.AppearanceCell.Options.UseTextOptions = True
         Me.colПримечание.AppearanceCell.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap
-        Me.colПримечание.ColumnEdit = Me.riMemoEdit
         Me.colПримечание.FieldName = "Примечание"
         Me.colПримечание.Name = "colПримечание"
         Me.colПримечание.Visible = True
@@ -227,6 +226,12 @@ Partial Class XtraUCParametr
         '
         Me.riMemoEdit.Name = "riMemoEdit"
         '
+        'riLookUpEditField
+        '
+        Me.riLookUpEditField.AutoHeight = False
+        Me.riLookUpEditField.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.riLookUpEditField.Name = "riLookUpEditField"
+        '
         'XtraUCParametr
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -235,12 +240,13 @@ Partial Class XtraUCParametr
         Me.Name = "XtraUCParametr"
         Me.Size = New System.Drawing.Size(806, 394)
         CType(Me.GridViewParametr, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.riTextEditName, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControlSettings, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.контролерBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewMain, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.riLookUpEditTable, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.riLookUpEditField, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.riMemoEdit, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.riLookUpEditField, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -269,4 +275,5 @@ Partial Class XtraUCParametr
     Friend WithEvents colИсправил1 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colПримечание1 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colКонтролер As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents riTextEditName As DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
 End Class
