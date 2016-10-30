@@ -282,28 +282,6 @@
       <Association Name="Сотрудник_Пароль" Member="Сотрудник" ThisKey="IDUser" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Адрес" Member="Адрес">
-    <Type Name="Адрес">
-      <Column Name="кодАдрес" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="кодСотрудник" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="типАдрес" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Почтовый индекс]" Member="Почтовый_индекс" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
-      <Column Name="[Субъект РФ (регион)]" Member="Субъект_РФ__регион_" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование района]" Member="Наименование_района" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование города]" Member="Наименование_города" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование населенного пункта]" Member="Наименование_населенного_пункта" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="[Наименование улицы]" Member="Наименование_улицы" Type="System.String" DbType="NVarChar(70)" CanBeNull="true" />
-      <Column Name="[Номер дома (владение)]" Member="Номер_дома__владение_" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="[Корпус (строение)]" Member="Корпус__строение_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="[Квартира (офис)]" Member="Квартира__офис_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="Сотрудник_Адрес" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Параметр" Member="Параметр">
     <Type Name="Параметр">
       <Column Name="кодПараметра" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -328,6 +306,28 @@
       <Column Name="Исправил" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Контролер_Параметр" Member="Параметр" ThisKey="кодКонтролер" OtherKey="кодКонтролер" Type="Параметр" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Адрес" Member="Адрес">
+    <Type Name="Адрес">
+      <Column Name="кодАдрес" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="кодСотрудник" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="типАдрес" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="[Почтовый индекс]" Member="Почтовый_индекс" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="[Субъект РФ (регион)]" Member="Субъект_РФ__регион_" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование района]" Member="Наименование_района" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование города]" Member="Наименование_города" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование населенного пункта]" Member="Наименование_населенного_пункта" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Наименование улицы]" Member="Наименование_улицы" Type="System.String" DbType="NVarChar(70)" CanBeNull="true" />
+      <Column Name="[Номер дома (владение)]" Member="Номер_дома__владение_" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="[Корпус (строение)]" Member="Корпус__строение_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="[Квартира (офис)]" Member="Квартира__офис_" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Сотрудник_Адрес" Member="Сотрудник" ThisKey="кодСотрудник" OtherKey="КодСотрудник" Type="Сотрудник" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.CountСписок_сотрудников" Method="CountСписок_сотрудников" IsComposable="true">
@@ -359,6 +359,13 @@
       <Column Name="CHARACTER_MAXIMUM_LENGTH" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IS_NULLABLE" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
       <Column Name="COLUMN_DEFAULT" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetParameters" Method="GetParameters" IsComposable="true">
+    <Parameter Name="кодКонтролер" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetParametersResult">
+      <Column Name="row" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="NAME" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

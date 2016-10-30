@@ -96,6 +96,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesDoroga.dbml</DependentUpon>
     </Compile>
+    <Compile Include="DataClasses\DataClassesDoroga.vb">
+      <DependentUpon>DataClassesDoroga.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Data\SampleData.vb" />
     <Compile Include="DorogaDataSet.Designer.vb">
       <AutoGen>True</AutoGen>

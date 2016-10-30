@@ -209,12 +209,12 @@ Public Class XtraUCParametr
         Select Case i
             Case 0
                 ' Получение списка таблиц
-                riLookUpEditTable.DataSource = Nothing
-                riLookUpEditTable.DataSource = db.ListOfTables().ToList()
+                Me.riLookUpEditTable.DataSource = Nothing
+                Me.riLookUpEditTable.DataSource = db.ListOfTables().ToList()
             Case 1
                 ' Получение списка полей
-                riLookUpEditField.DataSource = Nothing
-                riLookUpEditField.DataSource = db.GetListFieldTable(nameTab).ToList()
+                Me.riLookUpEditField.DataSource = Nothing
+                Me.riLookUpEditField.DataSource = db.GetListFieldTable(nameTab).ToList()
         End Select
     End Sub
 

@@ -1,6 +1,8 @@
 ﻿Imports System.Data.Linq
 Imports System.Data.SqlClient
 Imports DevExpress.XtraBars.Docking2010.Views
+Imports DevExpress.XtraEditors.Controls
+Imports DevExpress.XtraEditors.Repository
 Imports DevExpress.XtraGrid
 Imports DevExpress.XtraGrid.Columns
 Imports DevExpress.XtraGrid.Views.Grid
@@ -20,12 +22,18 @@ Public Class XtraUCPersonInfo
     Dim WithEvents GridViewФото As New GridView(GridControlPersonRecord) With {.Name = "GridViewФото"}
     Dim WithEvents GridViewПароль As New GridView(GridControlPersonRecord) With {.Name = "GridViewПароль"}
 
-    'Private Delegate Sub ExpandNewRowDelagate(ByVal view As GridView)
+    Dim riLookUpEditКонтакт As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditКонтакт"}
+    Dim riLookUpEditАдрес As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditАдрес"}
+    Dim riLookUpEditEmail As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditEmail"}
 
+    'Private Delegate Sub ExpandNewRowDelagate(ByVal view As GridView)
     Public Sub New(ByRef nUser As Integer)
         InitializeComponent()
 
         _nUser = nUser
+        Me.GridControlPersonRecord.RepositoryItems.Add(riLookUpEditКонтакт)
+        Me.GridControlPersonRecord.RepositoryItems.Add(riLookUpEditАдрес)
+        Me.GridControlPersonRecord.RepositoryItems.Add(riLookUpEditEmail)
         Me.GridControlPersonRecord.MainView = Me.GridViewСотрудник
         Me.Controls.Add(Me.GridControlPersonRecord)
     End Sub
@@ -109,8 +117,6 @@ Public Class XtraUCPersonInfo
         Me.GridViewПароль.PopulateColumns(_ds.Tables("Пароль"))
 
         ' GridViewСотрудник
-        Me.GridViewСотрудник.BestFitColumns()
-        Me.GridViewСотрудник.OptionsView.ColumnAutoWidth = True
         Me.GridViewСотрудник.Columns("кодСтепень").Caption = "Степень"
         Me.GridViewСотрудник.Columns("кодДолжность").Caption = "Должность"
         Me.GridViewСотрудник.Columns("кодФакультет").Caption = "Факультет"
@@ -125,10 +131,14 @@ Public Class XtraUCPersonInfo
         Next
 
         Me.GridViewСотрудник.OptionsDetail.AllowExpandEmptyDetails = True
+        Me.GridViewСотрудник.BestFitColumns()
+        Me.GridViewСотрудник.OptionsView.ColumnAutoWidth = True
 
         ' GridViewКонтакт
-        Me.GridViewКонтакт.BestFitColumns()
-        Me.GridViewКонтакт.OptionsView.ColumnAutoWidth = True
+        Call InitRILookUpEdit(Me.riLookUpEditКонтакт)
+        Call riLookUpEditData(1, Me.riLookUpEditКонтакт)
+
+        Me.GridViewКонтакт.Columns("Тип Контакт").ColumnEdit = Me.riLookUpEditКонтакт
         Me.GridViewКонтакт.Columns("Тип Контакт").Caption = "Тип контакта"
         Me.GridViewКонтакт.Columns("Контакт").Caption = "Номер контакта"
         Me.GridViewКонтакт.Columns("датаЗаписал").Caption = "Дата записи"
@@ -142,25 +152,14 @@ Public Class XtraUCPersonInfo
             column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Next
 
-        ' GridViewEmail
-        Me.GridViewEmail.BestFitColumns()
-        Me.GridViewEmail.OptionsView.ColumnAutoWidth = True
-        Me.GridViewEmail.Columns("Тип email").Caption = "Тип электронной почты"
-        Me.GridViewEmail.Columns("email").Caption = "Электронная почта"
-        Me.GridViewEmail.Columns("датаЗаписал").Caption = "Дата записи"
-        Me.GridViewEmail.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        Me.GridViewEmail.Columns("датаИсправил").Caption = "Дата исправления"
-        Me.GridViewEmail.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        Me.GridViewEmail.Columns("кодEmail").Visible = False
-        Me.GridViewEmail.Columns("кодСотрудник").Visible = False
-
-        For Each column As GridColumn In Me.GridViewEmail.Columns
-            column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-        Next
+        Me.GridViewКонтакт.BestFitColumns()
+        Me.GridViewКонтакт.OptionsView.ColumnAutoWidth = True
 
         ' GridViewАдрес
-        Me.GridViewАдрес.BestFitColumns()
-        Me.GridViewАдрес.OptionsView.ColumnAutoWidth = True
+        Call InitRILookUpEdit(Me.riLookUpEditАдрес)
+        Call riLookUpEditData(2, Me.riLookUpEditАдрес)
+
+        Me.GridViewАдрес.Columns("типАдрес").ColumnEdit = Me.riLookUpEditАдрес
         Me.GridViewАдрес.Columns("типАдрес").Caption = "Тип адреса"
         Me.GridViewАдрес.Columns("Почтовый индекс").Caption = "Почтовый индекс"
         Me.GridViewАдрес.Columns("Субъект РФ (регион)").Caption = "Субъект РФ (регион)"
@@ -182,9 +181,33 @@ Public Class XtraUCPersonInfo
             column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Next
 
+        Me.GridViewАдрес.BestFitColumns()
+        Me.GridViewАдрес.OptionsView.ColumnAutoWidth = True
+
+        ' GridViewEmail
+        Call InitRILookUpEdit(Me.riLookUpEditEmail)
+        Call riLookUpEditData(3, Me.riLookUpEditEmail)
+
+        Me.GridViewEmail.Columns("Тип email").ColumnEdit = Me.riLookUpEditEmail
+        Me.GridViewEmail.Columns("Тип email").Caption = "Тип электронной почты"
+        Me.GridViewEmail.Columns("email").Caption = "Электронная почта"
+        Me.GridViewEmail.Columns("датаЗаписал").Caption = "Дата записи"
+        Me.GridViewEmail.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        Me.GridViewEmail.Columns("датаИсправил").Caption = "Дата исправления"
+        Me.GridViewEmail.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        Me.GridViewEmail.Columns("кодEmail").Visible = False
+        Me.GridViewEmail.Columns("кодСотрудник").Visible = False
+
+        For Each column As GridColumn In Me.GridViewEmail.Columns
+            column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        Next
+
+        Me.GridViewEmail.BestFitColumns()
+        Me.GridViewEmail.OptionsView.ColumnAutoWidth = True
+
         ' GridViewПаспорт
-        Me.GridViewПаспорт.BestFitColumns()
-        Me.GridViewПаспорт.OptionsView.ColumnAutoWidth = True
+        'Call InitRILookUpEdit(Me.riLookUpEditПаспорт)
+
         Me.GridViewПаспорт.Columns("Код подразделения").Caption = "Код подразделения"
         Me.GridViewПаспорт.Columns("датаЗаписал").Caption = "Дата записи"
         Me.GridViewПаспорт.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
@@ -197,9 +220,10 @@ Public Class XtraUCPersonInfo
             column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Next
 
+        Me.GridViewПаспорт.BestFitColumns()
+        Me.GridViewПаспорт.OptionsView.ColumnAutoWidth = True
+
         ' GridViewФото
-        Me.GridViewФото.BestFitColumns()
-        Me.GridViewФото.OptionsView.ColumnAutoWidth = True
         Me.GridViewФото.Columns("Тип фото").Caption = "Тип фотографии"
         Me.GridViewФото.Columns("датаЗаписал").Caption = "Дата записи"
         Me.GridViewФото.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
@@ -212,9 +236,10 @@ Public Class XtraUCPersonInfo
             column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Next
 
+        Me.GridViewФото.BestFitColumns()
+        Me.GridViewФото.OptionsView.ColumnAutoWidth = True
+
         ' GridViewПароль
-        Me.GridViewПароль.BestFitColumns()
-        Me.GridViewПароль.OptionsView.ColumnAutoWidth = True
         Me.GridViewПароль.Columns("IDAuthor").Caption = "Руководитель"
         Me.GridViewПароль.Columns("IDAuthor").VisibleIndex = 1
         Me.GridViewПароль.Columns("IDLevel").Caption = "Статус пользователя"
@@ -232,11 +257,39 @@ Public Class XtraUCPersonInfo
             column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Next
 
+        Me.GridViewПароль.BestFitColumns()
+        Me.GridViewПароль.OptionsView.ColumnAutoWidth = True
 
         'For i As Integer = 0 To Me.GridViewФото.Columns.Count - 1
         '    Console.WriteLine(String.Format("Me.GridViewФото.Columns({0}).Name = {1}", i, Me.GridViewФото.Columns(i).Name))
         'Next
+    End Sub
 
+    Private Sub InitRILookUpEdit(ByVal riLUEF As RepositoryItemLookUpEdit)
+        Dim coll As LookUpColumnInfoCollection = riLUEF.Columns
+
+        coll.Add(New LookUpColumnInfo("row", "Номер позиции", 0))
+
+        Select Case riLUEF.Name
+            Case "riLookUpEditКонтакт"
+                coll.Add(New LookUpColumnInfo("NAME", "Тип контакта", 0))
+            Case "riLookUpEditАдрес"
+                coll.Add(New LookUpColumnInfo("NAME", "Тип адреса", 0))
+            Case "riLookUpEditEmail"
+                coll.Add(New LookUpColumnInfo("NAME", "Тип электронной почты", 0))
+        End Select
+
+        riLUEF.AppearanceDropDownHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+        riLUEF.BestFitMode = BestFitMode.BestFitResizePopup
+        riLUEF.SearchMode = SearchMode.AutoComplete
+        riLUEF.AutoSearchColumnIndex = 1
+        riLUEF.ValueMember = "NAME"
+        riLUEF.DisplayMember = "NAME"
+    End Sub
+
+    Private Sub riLookUpEditData(ByVal i As Integer, ByVal riLookUpEdit As RepositoryItemLookUpEdit)
+        riLookUpEdit.DataSource = Nothing
+        riLookUpEdit.DataSource = db.GetParameters(i).ToList()
     End Sub
 #End Region
 End Class
