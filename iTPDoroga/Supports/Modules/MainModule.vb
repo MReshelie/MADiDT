@@ -121,5 +121,14 @@ Module MainModule
 
         Return _strConn
     End Function
+
+    Public Function SourceName(ByVal _viewName As String) As String
+        Select Case _viewName
+            Case "GridViewSettings"
+                Return "Перечень таблиц БД [dbo.Контролер]"
+            Case "GridViewParametr"
+                Return "Список параметров [dbo.Параметр]"
+        End Select
+    End Function
 #End Region
 End Module

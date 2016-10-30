@@ -23,7 +23,7 @@ Public Class XtraUCPerson
             Return
         End If
 
-        Me.GridViewСотрудник.OptionsEditForm.CustomEditFormLayout = New XtraUCPersonInfo(view.GetRowCellValue(e.RowHandle, "код"))
+        Me.GridViewСотрудник.OptionsEditForm.CustomEditFormLayout = New XtraUCPersonInfo(CType(view.GetRowCellValue(e.RowHandle, "код"), Integer))
     End Sub
 
 #Region "Пользовательские функции и процедуры"

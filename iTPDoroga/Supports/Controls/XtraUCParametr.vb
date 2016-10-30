@@ -8,18 +8,22 @@ Imports DevExpress.XtraGrid.Views.Grid
 
 Public Class XtraUCParametr
     Private newRow As Boolean = False
+    Private tabLookUpEdit As LookUpEdit
+    Private fldLookUpEdit As LookUpEdit
 
     Dim db As New DataClassesDorogaDataContext
 
     Public Sub New()
         InitializeComponent()
+
+        Me.GridViewSettings.OptionsEditForm.CustomEditFormLayout = New XtraUCEditFormTable()
     End Sub
 
     Private Sub XtraUCParametr_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If (Not DBConnect()) Then Return
     End Sub
 
-    Private Sub GridViewMain_CustomRowCellEdit(sender As Object, e As CustomRowCellEditEventArgs) Handles GridViewMain.CustomRowCellEdit
+    Private Sub GridViewSettings_CustomRowCellEdit(sender As Object, e As CustomRowCellEditEventArgs) Handles GridViewSettings.CustomRowCellEdit
         If e.Column.FieldName = "Поле" Then
             Dim gv As GridView = CType(sender, GridView)
             Dim fieldName As String = gv.GetRowCellValue(e.RowHandle, gv.Columns("Поле")).ToString()
@@ -32,66 +36,81 @@ Public Class XtraUCParametr
         End If
     End Sub
 
-    'Private Sub GridViewMain_ColumnChanged(sender As Object, e As EventArgs) Handles GridViewMain.ColumnChanged
-    '    Dim view As GridView = CType(sender, GridView)
-    '    Dim fieldName As String = view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Поле")).ToString()
-
-    '    Select Case (fieldName)
-    '        Case "Поле"
-    '            e.RepositoryItem = Me.riLookUpEditField
-    '    End Select
-    'End Sub
-
-    'Private Sub GridViewMain_ShownEditor(sender As Object, e As EventArgs) Handles GridViewMain.ShownEditor
-    '    Dim view As ColumnView = DirectCast(sender, ColumnView)
-
-    '    If view.FocusedColumn.FieldName = "Поле" AndAlso TypeOf view.ActiveEditor Is LookUpEdit Then
-    '        Dim edit As LookUpEdit = CType(view.ActiveEditor, LookUpEdit)
-    '        Dim nameTab As String = CStr(view.GetFocusedRowCellValue("Таблица"))
-
-    '        edit.Properties.DataSource = db.GetListFieldTable(nameTab).ToList()
-    '        'CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(edit.EditValue, String)))
-    '    End If
-    'End Sub
-
-    Private Sub riLookUpEditTable_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditTable.EditValueChanged
-        CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Таблица"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
-
-        Console.WriteLine(String.Format("riLookUpEditTable_EditValueChanged -> Trim(CType(CType(sender, LookUpEdit).EditValue, String)) = {0}", Trim(CType(CType(sender, LookUpEdit).EditValue, String))))
-
-        Call riLookUpEditData(1, Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    Private Sub GridViewSettings_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewSettings.InitNewRow
+        '
     End Sub
 
-    Private Sub riLookUpEditField_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditField.EditValueChanged
-        'CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
-    End Sub
+    Private Sub GridViewSettings_EditFormPrepared(sender As Object, e As EditFormPreparedEventArgs) Handles GridViewSettings.EditFormPrepared
+        If e.BindableControls(Me.GridViewSettings.FocusedColumn) IsNot Nothing Then
+            e.FocusField(Me.GridViewSettings.FocusedColumn)
+            tabLookUpEdit = TryCast(e.BindableControls("Таблица"), LookUpEdit)
+            fldLookUpEdit = TryCast(e.BindableControls("Поле"), LookUpEdit)
 
-    Private Sub riLookUpEditField_Closed(sender As Object, e As ClosedEventArgs) Handles riLookUpEditField.Closed
-        'CType(Me.GridViewMain, GridView).SetFocusedRowCellValue(CType(Me.GridViewMain, GridView).Columns("Поле"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
-    End Sub
-
-    Private Sub riTextEditName_EditValueChanging(sender As Object, e As ChangingEventArgs) Handles riTextEditName.EditValueChanging
-        CType(Me.GridViewParametr, GridView).SetFocusedRowCellValue(CType(Me.GridViewParametr, GridView).Columns("Наименование"), Trim(CType(CType(sender, TextEdit).EditValue, String)))
-    End Sub
-
-    Private Sub GridViewMain_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewMain.InitNewRow
-        Dim view As GridView = CType(sender, GridView)
-
-        ' Начальные значения Новая запись
-        newRow = True
-        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Дата_записи"), Date.Today)
-
-        If pUserF = "Администратор системы" Then
-            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
-        Else
-            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+            If tabLookUpEdit IsNot Nothing Then
+                fldLookUpEdit.Properties.DataSource = Nothing
+                fldLookUpEdit.Properties.DataSource = db.GetListFieldTable(Trim(tabLookUpEdit.Text)).ToList()
+            End If
         End If
+    End Sub
 
-        view.Columns("Записал").OptionsColumn.ReadOnly = True
-        view.Columns("Дата_записи").OptionsColumn.ReadOnly = True
-        view.Columns("Исправил").OptionsColumn.ReadOnly = True
-        view.Columns("Дата_исправления").OptionsColumn.ReadOnly = True
-        view.FocusedColumn = view.Columns("Таблица")
+    Private Sub GridControlSettings_EmbeddedNavigator_ButtonClick(sender As Object, e As NavigatorButtonClickEventArgs) Handles GridControlSettings.EmbeddedNavigator.ButtonClick
+        Dim view As ColumnView = CType(Me.GridControlSettings.FocusedView, ColumnView)
+
+        Select Case e.Button.ButtonType
+            Case NavigatorButtonType.EndEdit
+                If view.UpdateCurrentRow() Then
+                    Try
+                        If newRow = False Then
+                            If pUserF = "Администратор системы" Then
+                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
+                            Else
+                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+                            End If
+
+                            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Дата_исправления"), Date.Today)
+                        End If
+
+                        db.SubmitChanges(ConflictMode.FailOnFirstConflict)
+                        newRow = False
+                    Catch ex As ChangeConflictException
+                        XtraMessageBox.Show(String.Format("Ошибка при записи в БД: таблица [{2}] БД:{0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message, SourceName(view.Name)),
+                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+
+                        For Each occ As ObjectChangeConflict In db.ChangeConflicts
+                            occ.Resolve(RefreshMode.OverwriteCurrentValues)
+                        Next
+                    Catch ex As Exception
+                        XtraMessageBox.Show(String.Format("Ошибка при записи в БД: таблица [{2}]:{0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message, SourceName(view.Name)),
+                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+
+                        If (Not DBConnect()) Then Return
+                    End Try
+                End If
+
+                e.Handled = True
+            Case NavigatorButtonType.Remove
+                If XtraMessageBox.Show(String.Format("Таблица: [{0}]{1}{1}Удалить текущую запись ?", SourceName(view.Name), Global.Microsoft.VisualBasic.ChrW(10)),
+                                           "Система: запись данных в БД.", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                           MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
+
+                    Select Case view.Name
+                        Case "GridViewSettings"
+                            If DeleteRec(view.Name, view.GetRowCellValue(view.FocusedRowHandle, view.Columns.ColumnByFieldName("кодКонтролер"))) Then
+                                Me.GridControlSettings.RefreshDataSource()
+                            End If
+                        Case "GridViewParametr"
+                            If DeleteRec(view.Name, view.GetRowCellValue(view.FocusedRowHandle, view.Columns.ColumnByFieldName("кодПараметра"))) Then
+                                Me.GridControlSettings.RefreshDataSource()
+                            End If
+                    End Select
+                    e.Handled = True
+                Else
+                    e.Handled = True
+                End If
+        End Select
+
     End Sub
 
     Private Sub GridViewParametr_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewParametr.InitNewRow
@@ -114,50 +133,14 @@ Public Class XtraUCParametr
         view.FocusedColumn = view.Columns("Наименование")
     End Sub
 
-    Private Sub GridControlSettings_EmbeddedNavigator_ButtonClick(sender As Object, e As NavigatorButtonClickEventArgs) Handles GridControlSettings.EmbeddedNavigator.ButtonClick
-        Dim view As ColumnView = CType(Me.GridControlSettings.FocusedView, ColumnView)
+    Private Sub riLookUpEditTable_EditValueChanged(sender As Object, e As EventArgs) Handles riLookUpEditTable.EditValueChanged
+        CType(Me.GridViewSettings, GridView).SetFocusedRowCellValue(CType(Me.GridViewSettings, GridView).Columns("Таблица"), Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
 
-        'Console.WriteLine(String.Format("{0}", view.Name))
-        Select Case e.Button.ButtonType
-            Case NavigatorButtonType.EndEdit
-                If view.UpdateCurrentRow() Then
-                    Try
-                        If newRow = False Then
-                            'Select Case view.Name
-                            '    Case "GridViewMain"
-                            '    Case "GridViewParametr"
-                            'End Select
-                            If pUserF = "Администратор системы" Then
-                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
-                            Else
-                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
-                            End If
+        Call riLookUpEditData(1, Trim(CType(CType(sender, LookUpEdit).EditValue, String)))
+    End Sub
 
-                            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Дата_исправления"), Date.Today)
-                        End If
-
-                        db.SubmitChanges(ConflictMode.FailOnFirstConflict)
-                        newRow = False
-                    Catch ex As ChangeConflictException
-                        XtraMessageBox.Show(String.Format("Ошибка при записи в БД:{0}{0}{1}.",
-                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
-                                       "Система: запись в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
-
-                        For Each occ As ObjectChangeConflict In db.ChangeConflicts
-                            occ.Resolve(RefreshMode.OverwriteCurrentValues)
-                        Next
-                    Catch ex As Exception
-                        XtraMessageBox.Show(String.Format("Ошибка при записи в БД:{0}{0}{1}.",
-                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
-                                       "Система: запись в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
-
-                        If (Not DBConnect()) Then Return
-                    End Try
-                End If
-
-                e.Handled = True
-        End Select
-
+    Private Sub riTextEditName_EditValueChanging(sender As Object, e As ChangingEventArgs) Handles riTextEditName.EditValueChanging
+        CType(Me.GridViewParametr, GridView).SetFocusedRowCellValue(CType(Me.GridViewParametr, GridView).Columns("Наименование"), Trim(CType(CType(sender, TextEdit).EditValue, String)))
     End Sub
 
 #Region "Пользовательскте процедуры и функции"
@@ -170,7 +153,7 @@ Public Class XtraUCParametr
 
         Me.контролерBindingSource.DataSource = tbControler
 
-        Call GVSettings(Me.GridViewMain)
+        Call GVSettings(Me.GridViewSettings)
         Call GVSettings(Me.GridViewParametr)
 
         Return True
@@ -178,12 +161,10 @@ Public Class XtraUCParametr
 
     Private Sub GVSettings(ByVal view As GridView)
         Select Case view.Name
-            Case "GridViewMain"
+            Case "GridViewSettings"
                 Call InitRILookUpEdit(Me.riLookUpEditTable)
                 Call InitRILookUpEdit(Me.riLookUpEditField)
                 Call riLookUpEditData(0)
-
-                Console.WriteLine(String.Format("Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns(""Таблица"")), String)) = {0}", Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String))))
 
                 If Not IsNothing(Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String))) Then
                     Call riLookUpEditData(1, Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Таблица")), String)))
@@ -258,5 +239,43 @@ Public Class XtraUCParametr
         riLUEF.ValueMember = "name"
         riLUEF.DisplayMember = "name"
     End Sub
+
+    Private Function DeleteRec(ByVal _viewName As String, _intRec As Integer) As Boolean
+        Select Case _viewName
+            Case "GridViewSettings"
+                Dim delRec As Контролер = (From p In db.Контролер Where p.кодКонтролер = _intRec Select p).FirstOrDefault()
+
+                Try
+                    If delRec IsNot Nothing Then
+                        db.Контролер.DeleteOnSubmit(delRec)
+                    End If
+
+                    db.SubmitChanges()
+                    Return True
+                Catch ex As Exception
+                    XtraMessageBox.Show(String.Format("Таблица: {0}{1}Попытка удаления записи из БД:{1}Ошибка: {2}{0}Повторить попытку - [ОК].", SourceName(_viewName),
+                                                          Global.Microsoft.VisualBasic.ChrW(10), ex.Message), "Система: запись данных в БД.",
+                                                          MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1)
+                    Return False
+                End Try
+            Case "GridViewParametr"
+                Dim delRec As Параметр = (From p In db.Параметр Where p.кодПараметра = _intRec Select p).FirstOrDefault()
+
+                Try
+                    If delRec IsNot Nothing Then
+                        db.Параметр.DeleteOnSubmit(delRec)
+                    End If
+
+                    db.SubmitChanges()
+                    Return True
+                Catch ex As Exception
+                    XtraMessageBox.Show(String.Format("Таблица: {0}{1}Попытка удаления записи из БД:{1}Ошибка: {2}{0}Повторить попытку - [ОК].", SourceName(_viewName),
+                                                          Global.Microsoft.VisualBasic.ChrW(10), ex.Message), "Система: запись данных в БД.",
+                                                          MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1)
+                    Return False
+                End Try
+
+        End Select
+    End Function
 #End Region
 End Class
