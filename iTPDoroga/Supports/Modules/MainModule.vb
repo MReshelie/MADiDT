@@ -128,6 +128,8 @@ Module MainModule
                 Return "Перечень таблиц БД [dbo.Контролер]"
             Case "GridViewParametr"
                 Return "Список параметров [dbo.Параметр]"
+            Case "GridViewКонтакт"
+                Return "Контакты пользователя [dbo.Контакт]"
         End Select
     End Function
 #End Region
