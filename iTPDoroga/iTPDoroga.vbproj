@@ -50,6 +50,7 @@
     <Reference Include="DevExpress.XtraEditors.v15.2" />
     <Reference Include="DevExpress.XtraGrid.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v15.2" />
+    <Reference Include="DevExpress.XtraNavBar.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -162,6 +163,12 @@
     <Compile Include="Supports\Controls\XtraUCPersonInfo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Supports\Controls\XtraUCPersonRecord.Designer.vb">
+      <DependentUpon>XtraUCPersonRecord.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Controls\XtraUCPersonRecord.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Supports\Controls\XtraUCServers.Designer.vb">
       <DependentUpon>XtraUCServers.vb</DependentUpon>
     </Compile>
@@ -234,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Supports\Controls\XtraUCPersonInfo.resx">
       <DependentUpon>XtraUCPersonInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Controls\XtraUCPersonRecord.resx">
+      <DependentUpon>XtraUCPersonRecord.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Supports\Controls\XtraUCServers.resx">
       <DependentUpon>XtraUCServers.vb</DependentUpon>
