@@ -307,6 +307,7 @@
     <EmbeddedResource Include="Supports\Icons\png\personID.png" />
     <EmbeddedResource Include="Supports\Icons\png\loadrec.png" />
     <EmbeddedResource Include="Supports\Icons\png\control-panel-icon.png" />
+    <None Include="Supports\Icons\png\stop.png" />
     <Content Include="Supports\Icons\png\teacher.png" />
     <Content Include="Supports\Icons\png\technology.png" />
   </ItemGroup>

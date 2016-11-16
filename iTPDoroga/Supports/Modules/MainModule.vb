@@ -1,8 +1,9 @@
 ﻿Imports System.Data.SqlClient
+Imports DevExpress.XtraEditors
 
 Module MainModule
     ''' <summary>
-    ''' Гловальные переменные
+    ''' Глобальные переменные
     ''' </summary>
     Friend pUserF As String = String.Empty
     Friend pUserS As String = String.Empty
@@ -13,7 +14,7 @@ Module MainModule
 
 #Region "Пользовательские процедуры и функции"
     ''' <summary>
-    ''' Функция Загрузка данных в объект DataTable
+    ''' Функция: Загрузка данных в объект DataTable
     ''' </summary>
     ''' <param name="parIList">Объект List, данные из которго перезаписываются в Datatable</param>
     ''' <returns>Возвращается сформированныей DataTable</returns>
@@ -57,7 +58,7 @@ Module MainModule
         Return ret
     End Function
     ''' <summary>
-    ''' Процедура Задержка строки сообщения на экране заставки загрузки прграммы
+    ''' Процедура: Задержка строки сообщения на экране заставки загрузки прграммы
     ''' </summary>
     ''' <param name="interval">Величина интервала задержки в милисекунлах</param>
     Public Sub ConnectDBExtracted(ByVal interval As Integer)
@@ -65,6 +66,7 @@ Module MainModule
             System.Threading.Thread.Sleep(interval)
         Next i
     End Sub
+
     'Private Sub SGetConnectionString(ByVal exeConfigName As String, ByVal _server As String, ByVal _user As String, ByVal _pass As String, ByVal _catalog As String)
     '    Dim entityBuilder As EntityConnectionStringBuilder = New EntityConnectionStringBuilder()
 
@@ -107,8 +109,47 @@ Module MainModule
     '    End Try
     'End Sub
 
+
     ''' <summary>
-    ''' Функция Скрытие пароля в строке connectionString
+    ''' Функция: Получение списка доступных БД с сервера (SQL server)
+    ''' </summary>
+    ''' <param name="cbxServName">Имя сервера\Имя SQL server</param>
+    ''' <param name="txtUserID">Учетная запись</param>
+    ''' <param name="txtPassword">Пароль учетной записи</param>
+    ''' <returns>Список имен доступных БД</returns>
+    Public Function GetDataBases(ByVal cbxServName As String, ByVal txtUserID As String, ByVal txtPassword As String) As List(Of String)
+        Dim DBlist As New List(Of String)
+        Dim reader As SqlDataReader
+        Dim MyConn As New SqlClient.SqlConnection
+        Dim str As String = String.Empty
+
+        MyConn.ConnectionString = "Data Source=" & Trim(cbxServName) & ";User ID=" & Trim(txtUserID) & ";Password=" & Trim(txtPassword)
+
+        Dim query As String = "sp_databases"
+        Dim command As SqlCommand = New SqlCommand(query, MyConn)
+
+        Try
+            MyConn.Open()
+            reader = command.ExecuteReader
+
+            While reader.Read()
+                str = CType(reader("DATABASE_NAME"), String)
+                DBlist.Add(str)
+            End While
+
+            reader.Close()
+            MyConn.Close()
+        Catch ex As SqlException
+            XtraMessageBox.Show(String.Format("Ошибка при подключении к SQL Server: {0}{0}{1}{0}{0}Система будет перезапущена.",
+                                              Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
+                                                    "Система: список доступных БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+        End Try
+
+        Return DBlist
+    End Function
+
+    ''' <summary>
+    ''' Функция: Скрытие пароля в строке connectionString
     ''' </summary>
     ''' <param name="_strConn">Исходная строка подключения</param>
     ''' <returns>Возвращается исходная строка подключения с символами * вместо символов пароля</returns>
@@ -122,6 +163,11 @@ Module MainModule
         Return _strConn
     End Function
 
+    ''' <summary>
+    ''' Функция: Информация о назначении GridView
+    ''' </summary>
+    ''' <param name="_viewName">Имя GridView</param>
+    ''' <returns>Информация о назначении</returns>
     Public Function SourceName(ByVal _viewName As String) As String
         Select Case _viewName
             Case "GridViewSettings"

@@ -24,6 +24,7 @@ Partial Public Class MainForm
     ''' </summary>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.documentManagerMain = New DevExpress.XtraBars.Docking2010.DocumentManager(Me.components)
         Me.windowsUIViewMain = New DevExpress.XtraBars.Docking2010.Views.WindowsUI.WindowsUIView(Me.components)
         Me.mainTileContainer = New DevExpress.XtraBars.Docking2010.Views.WindowsUI.TileContainer(Me.components)
@@ -77,6 +78,7 @@ Partial Public Class MainForm
         'closeAppFlyout
         '
         Me.closeAppFlyout.FlyoutButtons = System.Windows.Forms.MessageBoxButtons.OK
+        Me.closeAppFlyout.Image = CType(resources.GetObject("closeAppFlyout.Image"), System.Drawing.Image)
         Me.closeAppFlyout.Name = "closeAppFlyout"
         '
         'ucServersFlyout

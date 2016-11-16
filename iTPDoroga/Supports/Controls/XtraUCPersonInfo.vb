@@ -88,34 +88,34 @@ Public Class XtraUCPersonInfo
 
                         Try
                             Select Case view.Name
-                                Case "GridViewСотрудник"
-                                    db.p_SaveСотрудник(IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("КодСотрудник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("КодСотрудник"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Фамилия"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Фамилия"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Имя"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Имя"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Отчество"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Отчество"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСтепень"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСтепень"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодДолжность"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодДолжность"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодФакультет"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодФакультет"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))))
-                                Case "GridViewКонтакт"
-                                    db.p_SaveКонтакт(IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодКонтакт"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодКонтакт"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип Контакт"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип Контакт"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Контакт"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Контакт"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))),
-                                             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))))
-                                Case "GridViewАдрес"
-                                Case "GridViewEmail"
-                                Case "GridViewПаспорт"
-                                Case "GridViewФото"
-                                Case "GridViewПароль"
+                                'Case "GridViewСотрудник"
+                                '    db.p_SaveСотрудник(IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("КодСотрудник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("КодСотрудник"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Фамилия"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Фамилия"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Имя"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Имя"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Отчество"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Отчество"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСтепень"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСтепень"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодДолжность"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодДолжность"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодФакультет"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодФакультет"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))))
+                                'Case "GridViewКонтакт"
+                                '    db.p_SaveКонтакт(IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодКонтакт"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодКонтакт"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип Контакт"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип Контакт"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Контакт"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Контакт"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))),
+                                '             IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))))
+                                'Case "GridViewАдрес"
+                                'Case "GridViewEmail"
+                                'Case "GridViewПаспорт"
+                                'Case "GridViewФото"
+                                'Case "GridViewПароль"
                             End Select
                         Catch ex As Exception
                             'XtraMessageBox.Show(String.Format("ex.ToString = {0}", ex))

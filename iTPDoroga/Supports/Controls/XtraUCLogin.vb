@@ -35,11 +35,14 @@ Public Class XtraUCLogin
     ''' <param name="_flag">Флаг активации строки подключения</param>
     Private Sub Persons(ByVal _flag As Boolean)
         Dim cbPerson As ComboBoxEdit = Me.ComboBoxEditPerson
-        Dim _dbDDC As New DataClassesDorogaDataContext()
 
-        If _flag = True And _dbDDC.CountСписок_сотрудников() > 0 Then
-            PersonsCB(cbPerson, From dE In _dbDDC.Сотрудник Order By dE.Фамилия, dE.Имя, dE.Отчество
-                                Select New With {dE.Фамилия, dE.Имя, dE.Отчество, dE.Степень.Аббревиатура, dE.Должность.Наименование})
+        If _flag Then
+            Dim _dbDDC As New DataClassesDorogaDataContext()
+
+            If _dbDDC.CountСписок_сотрудников() > 0 Then
+                PersonsCB(cbPerson, From dE In _dbDDC.Сотрудник Order By dE.Фамилия, dE.Имя, dE.Отчество
+                                    Select New With {dE.Фамилия, dE.Имя, dE.Отчество, dE.Степень.Аббревиатура, dE.Должность.Наименование})
+            End If
         End If
 
         cbPerson.Properties.Items.BeginUpdate()

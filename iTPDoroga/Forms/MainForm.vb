@@ -27,8 +27,6 @@ Partial Public Class MainForm
     Public Sub New()
         InitializeComponent()
 
-        Call ConnectionDB()
-
         Me.windowsUIViewMain.AddDocument(_ucLogin)
         ucLoginAction.Caption = "Идентификация пользователя:"
         ucLoginAction.Commands.Add(FlyoutCommand.OK)
@@ -46,7 +44,9 @@ Partial Public Class MainForm
         dataSource = New SampleDataSource()
         groupsItemDetailPage = New Dictionary(Of SampleDataGroup, PageGroup)()
 
-        'AddHandler Me.windowsUIViewMain.QueryControl, AddressOf windowsUIViewMain_QueryControl
+        If (Not ConnectionDB()) Then Return
+
+        AddHandler Me.windowsUIViewMain.QueryControl, AddressOf windowsUIViewMain_QueryControl
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -61,7 +61,11 @@ Partial Public Class MainForm
         If blExit Then Exit Sub
 
         Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout)
-        Me.TimerServers.Enabled = False
+
+        If Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout) = System.Windows.Forms.DialogResult.OK Then
+            e.Cancel = False
+            Me.TimerServers.Enabled = False
+        End If
     End Sub
 
     Private Sub TimerServers_Tick(sender As Object, e As EventArgs) Handles TimerServers.Tick
@@ -73,18 +77,26 @@ Partial Public Class MainForm
     End Sub
 
     ' Assigning a required content for each auto generated Document
-    'Sub windowsUIViewMain_QueryControl(sender As Object, e As DevExpress.XtraBars.Docking2010.Views.QueryControlEventArgs)
+    Sub windowsUIViewMain_QueryControl(sender As Object, e As DevExpress.XtraBars.Docking2010.Views.QueryControlEventArgs)
+        If e.Document Is addLoginDocument Then
+            e.Control = New iTPDoroga.XtraUCLogin()
+            Console.WriteLine("Панель логинов...")
+        End If
 
-    '    If e.Document Is addLoginDocument Then
-    '        e.Control = New iTPDoroga.XtraUCLogin()
-    '    End If
-    '    If e.Document Is openServersDocument Then
-    '        e.Control = New iTPDoroga.XtraUCServers()
-    '    End If
-    '    If e.Control Is Nothing Then
-    '        e.Control = New System.Windows.Forms.Control()
-    '    End If
-    'End Sub
+        If e.Document Is openServersDocument Then
+            e.Control = New iTPDoroga.XtraUCServers()
+            Console.WriteLine("Панель серверов...")
+        End If
+
+        If e.Document Is closeAppFlyout Then
+            'e.Control = New iTPDoroga.XtraUCServers()
+            Console.WriteLine("Панель завершения...")
+        End If
+
+        If e.Control Is Nothing Then
+            e.Control = New System.Windows.Forms.Control()
+        End If
+    End Sub
 
     Private Sub windowsUIViewMain_FlyoutHidden(sender As Object, e As FlyoutResultEventArgs) Handles windowsUIViewMain.FlyoutHidden
         Select Case sender.ActiveDocument.ControlName.ToString
@@ -106,7 +118,7 @@ Partial Public Class MainForm
                         If Trim(_ucLogin.ComboBoxEditPerson.Text).Split(" ")(0) = "Администратор" AndAlso Trim(_ucLogin.TextEditPassword.Text) = "sandozik" Then
                             blUCServers = True
                         Else
-                            XtraMessageBox.Show(String.Format("Ошибка при вводе пароля.{0}{0}Система будет перезапузена.",
+                            XtraMessageBox.Show(String.Format("Ошибка при вводе пароля.{0}{0}Система будет перезапущена.",
                                           Global.Microsoft.VisualBasic.ChrW(10)),
                                         "Система: идентификация пользователя.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
                             blExit = True
@@ -131,9 +143,9 @@ Partial Public Class MainForm
 
 #Region "Пользовательские функции и процедуры"
     ''' <summary>
-    ''' Процедура обеспечения соединения с БД на SQL server
+    ''' Функция проверки обеспечения соединения с БД на SQL server
     ''' </summary>
-    Private Sub ConnectionDB()
+    Private Function ConnectionDB() As Boolean
         gConnMain.ConnectionString = My.Settings.DorogaConnectionString
 
         Try
@@ -152,7 +164,13 @@ Partial Public Class MainForm
         End Try
 
         Call ConnectDBExtracted(20)
-    End Sub
+
+        If gblConn Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
     Private Sub CreateLayout()
         SplashScreenManager.ShowForm(GetType(WaitFormMain))
