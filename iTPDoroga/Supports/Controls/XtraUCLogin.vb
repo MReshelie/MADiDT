@@ -28,6 +28,7 @@ Public Class XtraUCLogin
             iSlide += 1
         End If
     End Sub
+
 #Region "Пользовательские процедуры и функции"
     ''' <summary>
     ''' Процедура Получение данных о пользователях для заполнения combobox
@@ -50,6 +51,7 @@ Public Class XtraUCLogin
         cbPerson.SelectedIndex = 0
         cbPerson.Properties.Items.EndUpdate()
     End Sub
+
     ''' <summary>
     ''' Процедура Заполнение combobox данными о пользователях
     ''' </summary>

@@ -1,5 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Imports DevExpress.XtraEditors
+Imports System.IO
+Imports System.Xml
+Imports System.Configuration
 
 Module MainModule
     ''' <summary>
@@ -11,6 +14,7 @@ Module MainModule
     Friend pPass As String = String.Empty
     Friend gConnMain As New SqlConnection
     Public gblConn As Boolean = False
+    Public gblExit As Boolean = False
 
 #Region "Пользовательские процедуры и функции"
     ''' <summary>
@@ -57,6 +61,7 @@ Module MainModule
 
         Return ret
     End Function
+
     ''' <summary>
     ''' Процедура: Задержка строки сообщения на экране заставки загрузки прграммы
     ''' </summary>
@@ -67,63 +72,19 @@ Module MainModule
         Next i
     End Sub
 
-    'Private Sub SGetConnectionString(ByVal exeConfigName As String, ByVal _server As String, ByVal _user As String, ByVal _pass As String, ByVal _catalog As String)
-    '    Dim entityBuilder As EntityConnectionStringBuilder = New EntityConnectionStringBuilder()
-
-    '    Try
-    '        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(exeConfigName)
-    '        Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
-
-    '        ' Удаление криптования секции файла конфигурации.
-    '        If section.SectionInformation.IsProtected Then
-    '            section.SectionInformation.UnprotectSection()
-    '        End If
-
-    '        entityBuilder.Provider = "System.Data.SqlClient"
-    '        entityBuilder.ProviderConnectionString = "data source=" + _server + ";initial catalog=" + _catalog +
-    '                                             ";persist security info=True;user id=" + _user + ";password=" + _pass +
-    '                                             ";MultipleActiveResultSets=True;App=EntityFramework"
-    '        entityBuilder.Metadata = "res://*/DataModel.DorogaModel.csdl|res://*/DataModel.DorogaModel.ssdl|res://*/DataModel.DorogaModel.msl"
-
-    '        For i As Integer = 0 To section.ConnectionStrings.Count - 1
-    '            If section.ConnectionStrings(i).Name = "DorogaEntities" Then
-    '                section.ConnectionStrings(i).ConnectionString = Trim(entityBuilder.ToString)
-    '                config.Save(ConfigurationSaveMode.Modified)
-    '            End If
-    '        Next
-
-    '        'Криптование секции файла конфигурации.
-    '        If section.SectionInformation.IsProtected = False Then
-    '            section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider")
-    '        End If
-    '    Catch ex As Exception
-    '        XtraMessageBox.Show(String.Format("Ошибка перезаписи строки подключения: {0}{1}{0}Лист методов, выполненые до ошибки:.{0}{2}{0}Система будет завершена.",
-    '                                          Global.Microsoft.VisualBasic.ChrW(10), ex.Message, ex.StackTrace),
-    '                                        "Система: строка подключения.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
-    '    Finally
-    '        XtraMessageBox.Show(String.Format("Файл с конфигурацией с новой строкой подключения: {0}{0}{1}{0}{0}успешно сохранен и перезаписан.{0}{0}Система будет перезапущена.",
-    '                                          Global.Microsoft.VisualBasic.ChrW(10), strPassword(Trim(entityBuilder.ToString))),
-    '                                        "Система: строка подключения.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
-    '        blExit = True
-    '        Application.Restart()
-    '    End Try
-    'End Sub
-
-
     ''' <summary>
     ''' Функция: Получение списка доступных БД с сервера (SQL server)
     ''' </summary>
-    ''' <param name="cbxServName">Имя сервера\Имя SQL server</param>
-    ''' <param name="txtUserID">Учетная запись</param>
-    ''' <param name="txtPassword">Пароль учетной записи</param>
+    ''' <param name="_ServName">Имя сервера\Имя SQL server</param>
+    ''' <param name="_UserID">Учетная запись</param>
+    ''' <param name="_Password">Пароль учетной записи</param>
     ''' <returns>Список имен доступных БД</returns>
-    Public Function GetDataBases(ByVal cbxServName As String, ByVal txtUserID As String, ByVal txtPassword As String) As List(Of String)
+    Public Function GetDataBases(ByVal _ServName As String, ByVal _UserID As String, ByVal _Password As String) As List(Of String)
         Dim DBlist As New List(Of String)
         Dim reader As SqlDataReader
         Dim MyConn As New SqlClient.SqlConnection
-        Dim str As String = String.Empty
 
-        MyConn.ConnectionString = "Data Source=" & Trim(cbxServName) & ";User ID=" & Trim(txtUserID) & ";Password=" & Trim(txtPassword)
+        MyConn.ConnectionString = "Data Source=" & Trim(_ServName) & ";User ID=" & Trim(_UserID) & ";Password=" & Trim(_Password)
 
         Dim query As String = "sp_databases"
         Dim command As SqlCommand = New SqlCommand(query, MyConn)
@@ -133,20 +94,87 @@ Module MainModule
             reader = command.ExecuteReader
 
             While reader.Read()
-                str = CType(reader("DATABASE_NAME"), String)
-                DBlist.Add(str)
+                DBlist.Add(CType(reader("DATABASE_NAME"), String))
             End While
 
             reader.Close()
             MyConn.Close()
         Catch ex As SqlException
-            XtraMessageBox.Show(String.Format("Ошибка при подключении к SQL Server: {0}{0}{1}{0}{0}Система будет перезапущена.",
-                                              Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
-                                                    "Система: список доступных БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+            XtraMessageBox.Show(String.Format("Ошибка при подключении к SQL Server: {0}{0}{1}{0}{0}Для устранения в дальнейшем подобных ошибок, " &
+                                              "обратитесь к администратору.{0}{0}Приложение будет остановлено.", Global.Microsoft.VisualBasic.ChrW(10), ex.Message),
+                                              "Система: список доступных БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+            DBlist.Add("Нет записей")
         End Try
 
         Return DBlist
     End Function
+
+    ''' <summary>
+    ''' Функция: Формирование строки подключения к серверу БД
+    ''' </summary>
+    ''' <param name="_ServName">Имя сервера</param>
+    ''' <param name="_Catalog">Имя БД</param>
+    ''' <param name="_UserID">Учетная запись</param>
+    ''' <param name="_Password">Пароль учетной записи</param>
+    ''' <returns>Строка подключения</returns>
+    Public Function SetConnectionString(ByVal _ServName As String, ByVal _Catalog As String, ByVal _UserID As String, ByVal _Password As String) As String
+        Dim sqlBuilder As New SqlConnectionStringBuilder
+
+        If Not String.IsNullOrWhiteSpace(_ServName) Then
+            sqlBuilder.DataSource = _ServName
+        End If
+
+        If Not String.IsNullOrWhiteSpace(_Catalog) Then
+            sqlBuilder.InitialCatalog = _Catalog
+        End If
+
+        sqlBuilder.IntegratedSecurity = False
+        sqlBuilder.Password = _Password
+        sqlBuilder.UserID = _UserID
+
+        Return sqlBuilder.ConnectionString
+    End Function
+
+    ''' <summary>
+    ''' Процедура: Обновление строки подключения к БД в app.config
+    ''' </summary>
+    ''' <param name="exeConfigName">Имя выполняемого модуля</param>
+    ''' <param name="sConnStr">Строка подключения</param>
+    ''' <param name="strNameConnStr">Имя строки подключения</param>
+    Public Sub ToggleConfigEncryption(ByVal exeConfigName As String, ByVal sConnStr As String, ByVal strNameConnStr As String)
+        ' Передавать имя файла конфигурации для выполняемого модуля без расширения .config
+        Try
+            ' Открытие файла конфигурации и получение значений для секции connectionStrings.
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(exeConfigName)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+
+            If section.SectionInformation.IsProtected Then
+                ' Удаление криптования секции файла конфигурации.
+                section.SectionInformation.UnprotectSection()
+            End If
+
+            For i As Integer = 0 To section.ConnectionStrings.Count - 1
+                If section.ConnectionStrings(i).ToString = Settings.Default.Item(strNameConnStr).ToString Then
+                    section.ConnectionStrings(i).ConnectionString = Trim(sConnStr)
+                    config.Save(ConfigurationSaveMode.Modified)
+                    Settings.Default.Item(strNameConnStr) = section.ConnectionStrings(i).ToString
+                    Exit For
+                End If
+            Next
+
+            If section.SectionInformation.IsProtected = False Then
+                ' Криптование секции файла конфигурации.
+                section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider")
+            End If
+
+            ' Сохранение текущей конфигурации
+            config.Save()
+            XtraMessageBox.Show(String.Format("Файл с конфигурацией и новой строкой подключения: {0}{0}{1}{0}{0}успешно сохранен и перезаписан.{0}{0}Система будет перезапущена.",
+                                              Global.Microsoft.VisualBasic.ChrW(10), strPassword(sConnStr)),
+                                            "Система: перезапуск.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+        Catch ex As Exception
+        End Try
+    End Sub
 
     ''' <summary>
     ''' Функция: Скрытие пароля в строке connectionString
@@ -154,13 +182,15 @@ Module MainModule
     ''' <param name="_strConn">Исходная строка подключения</param>
     ''' <returns>Возвращается исходная строка подключения с символами * вместо символов пароля</returns>
     Private Function strPassword(ByVal _strConn As String) As String
-        If InStrRev(_strConn, "password") > 0 Then
-            For i As Integer = InStr(InStrRev(_strConn, "password"), _strConn, "=") + 1 To InStr(InStrRev(_strConn, "password"), _strConn, ";") - 1
+        _strConn += ";"
+
+        If InStrRev(LCase(_strConn), "password") > 0 Then
+            For i As Integer = InStr(InStrRev(LCase(_strConn), "password"), _strConn, "=") + 1 To InStr(InStrRev(LCase(_strConn), "password"), _strConn, ";") - 1
                 Mid(_strConn, i, 1) = "*"
             Next
         End If
 
-        Return _strConn
+        Return Mid(_strConn, 1, Len(_strConn) - 1)
     End Function
 
     ''' <summary>

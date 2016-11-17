@@ -28,9 +28,9 @@ Public Class XtraUCServers
         Try
             For Each dr In Sql.SqlDataSourceEnumerator.Instance.GetDataSources().Rows
                 If dr("InstanceName").ToString = "" Then
-                    ComboBoxEditServers.Properties.Items.Add(dr("ServerName"))
+                    ComboBoxEditServers.Properties.Items.Add(String.Format("{0}", dr("ServerName")))
                 Else
-                    ComboBoxEditServers.Properties.Items.Add(dr("ServerName") & "\" & dr("InstanceName"))
+                    ComboBoxEditServers.Properties.Items.Add(String.Format("{0}\{1}", dr("ServerName"), dr("InstanceName")))
                 End If
             Next
         Catch ex As System.Data.SqlClient.SqlException
@@ -61,43 +61,19 @@ Public Class XtraUCServers
         SplashScreenManager.Default.SetWaitFormDescription("Получение списка баз данных.")
 
         For Each row In GetDataBases(Me.ComboBoxEditServers.Text, Me.TextEditUser.Text, Me.TextEditPassword.Text)
+            If Trim(row) = "Нет записей" Then
+                Console.WriteLine(String.Format("Trim(row) = {0}", Trim(row)))
+                blDataBases = True
+                SplashScreenManager.CloseForm(False)
+                gblExit = True
+                Application.Exit()
+            End If
+
             Me.ComboBoxEditDB.Properties.Items.Add(row)
         Next
-        '
+
         Me.ComboBoxEditDB.Enabled = True
         blDataBases = True
         SplashScreenManager.CloseForm(False)
     End Sub
-
-#Region "Пользовательские функции и процедуры"
-    'Public Shared Function GetDatabaseNames(ByVal serName As String, ByVal usrName As String, pswStr As String) As List(Of String)
-    '    Dim connString As String
-    '    Dim databaseNames As New List(Of String)
-
-    '    connString = "Data Source=" & serName & ";initial catalog=master;user id=" & usrName & ";password=" & pswStr
-    '    'connString = "Data Source=" & serName & ";user id=" & usrName & ";password=" & pswStr
-
-    '    If Not String.IsNullOrWhiteSpace(connString) Then
-    '        Using cn As SqlConnection = New SqlConnection(connString)
-    '            ' Open the connection 
-    '            cn.Open()
-
-    '            Using cmd As SqlCommand = New SqlCommand()
-    '                cmd.Connection = cn
-    '                cmd.CommandType = CommandType.StoredProcedure
-    '                cmd.CommandText = "sp_databases"
-
-    '                Using myReader As SqlDataReader = cmd.ExecuteReader()
-    '                    While (myReader.Read())
-    '                        databaseNames.Add(myReader.GetString(0))
-    '                    End While
-    '                End Using
-    '            End Using
-    '        End Using
-    '    End If
-
-    '    Return databaseNames
-    'End Function
-
-#End Region
 End Class

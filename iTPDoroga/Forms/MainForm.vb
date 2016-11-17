@@ -11,17 +11,14 @@ Imports DevExpress.XtraSplashScreen
 Partial Public Class MainForm
     Inherits XtraForm
 
+    Private dataSource As SampleDataSource
+    Private groupsItemDetailPage As Dictionary(Of SampleDataGroup, PageGroup)
     Private ucLoginAction As FlyoutAction = New FlyoutAction()
     Private ucServersAction As FlyoutAction = New FlyoutAction()
     Private clAppAction As FlyoutAction = New FlyoutAction()
 
-    Private dataSource As SampleDataSource
-    Private groupsItemDetailPage As Dictionary(Of SampleDataGroup, PageGroup)
-
-    Dim dbDC As New DataClassesDorogaDataContext
     Dim _ucLogin As New XtraUCLogin()
     Dim _ucServers As New XtraUCServers()
-    Dim blExit As Boolean = False
     Dim blUCServers As Boolean = False
 
     Public Sub New()
@@ -58,11 +55,10 @@ Partial Public Class MainForm
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If blExit Then Exit Sub
-
-        Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout)
+        If gblExit Then Exit Sub
 
         If Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout) = System.Windows.Forms.DialogResult.OK Then
+            gblExit = True
             e.Cancel = False
             Me.TimerServers.Enabled = False
         End If
@@ -101,7 +97,6 @@ Partial Public Class MainForm
     Private Sub windowsUIViewMain_FlyoutHidden(sender As Object, e As FlyoutResultEventArgs) Handles windowsUIViewMain.FlyoutHidden
         Select Case sender.ActiveDocument.ControlName.ToString
             Case "XtraUCLogin"
-                'MsgBox("_ucLogin.ComboBoxEditPerson.Properties.Items.Count = " & _ucLogin.ComboBoxEditPerson.Properties.Items.Count)
                 If e.Result = System.Windows.Forms.DialogResult.OK Then
                     If _ucLogin.ComboBoxEditPerson.Properties.Items.Count > 1 Then
                         ' Проверка доступа пользователя и его права
@@ -121,20 +116,24 @@ Partial Public Class MainForm
                             XtraMessageBox.Show(String.Format("Ошибка при вводе пароля.{0}{0}Система будет перезапущена.",
                                           Global.Microsoft.VisualBasic.ChrW(10)),
                                         "Система: идентификация пользователя.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
-                            blExit = True
+                            gblExit = True
                             Application.Restart()
                         End If
                     End If
                 Else
-                    blExit = True
+                    gblExit = True
                     Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout)
                     Application.Exit()
                 End If
             Case "XtraUCServers"
                 If e.Result = System.Windows.Forms.DialogResult.OK Then
-                    'Call SGetConnectionString("iTPDoroga.exe", _ucServers.ComboBoxEditServers.Text, _ucServers.TextEditUser.Text, _ucServers.TextEditPassword.Text, _ucServers.ComboBoxEditDB.Text)
+                    ToggleConfigEncryption("iTPDoroga.exe", SetConnectionString(_ucServers.ComboBoxEditServers.Text,
+                                                                                _ucServers.ComboBoxEditDB.Text,
+                                                                                _ucServers.TextEditUser.Text, _ucServers.TextEditPassword.Text), "DorogaConnectionString")
+                    gblExit = True
+                    Application.Restart()
                 Else
-                    blExit = True
+                    gblExit = True
                     Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout)
                     Application.Exit()
                 End If
@@ -143,7 +142,7 @@ Partial Public Class MainForm
 
 #Region "Пользовательские функции и процедуры"
     ''' <summary>
-    ''' Функция проверки обеспечения соединения с БД на SQL server
+    ''' Функция: Проверка существования соединения с БД на SQL server
     ''' </summary>
     Private Function ConnectionDB() As Boolean
         gConnMain.ConnectionString = My.Settings.DorogaConnectionString
