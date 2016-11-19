@@ -162,10 +162,10 @@ Module MainModule
                 End If
             Next
 
-            If section.SectionInformation.IsProtected = False Then
-                ' Криптование секции файла конфигурации.
-                section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider")
-            End If
+            'If section.SectionInformation.IsProtected = False Then
+            '    ' Криптование секции файла конфигурации.
+            '    section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider")
+            'End If
 
             ' Сохранение текущей конфигурации
             config.Save()

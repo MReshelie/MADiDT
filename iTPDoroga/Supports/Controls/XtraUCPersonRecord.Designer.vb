@@ -59,11 +59,11 @@ Partial Class XtraUCPersonRecord
         Me.LookUpEdit2 = New DevExpress.XtraEditors.LookUpEdit()
         Me.LookUpEdit1 = New DevExpress.XtraEditors.LookUpEdit()
         Me.DateEdit1 = New DevExpress.XtraEditors.DateEdit()
-        Me.TextEdit3 = New DevExpress.XtraEditors.TextEdit()
-        Me.TextEdit1 = New DevExpress.XtraEditors.TextEdit()
+        Me.TextEditОтчество = New DevExpress.XtraEditors.TextEdit()
+        Me.TextEditФамилия = New DevExpress.XtraEditors.TextEdit()
         Me.MemoEditПримечание = New DevExpress.XtraEditors.MemoEdit()
         Me.DateEditДатаИсправил = New DevExpress.XtraEditors.DateEdit()
-        Me.TextEdit2 = New DevExpress.XtraEditors.TextEdit()
+        Me.TextEditИмя = New DevExpress.XtraEditors.TextEdit()
         Me.DateEditДатаЗаписал = New DevExpress.XtraEditors.DateEdit()
         Me.TextEditИсправил = New DevExpress.XtraEditors.TextEdit()
         Me.LookUpEditФакультет = New DevExpress.XtraEditors.LookUpEdit()
@@ -89,6 +89,7 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem17 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.SplitContainerControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainerControl1.SuspendLayout()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,12 +130,12 @@ Partial Class XtraUCPersonRecord
         CType(Me.LookUpEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit3.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEditОтчество.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEditФамилия.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MemoEditПримечание.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditДатаИсправил.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditДатаИсправил.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEditИмя.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditДатаЗаписал.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditДатаЗаписал.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TextEditИсправил.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -161,6 +162,7 @@ Partial Class XtraUCPersonRecord
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainerControl1
@@ -182,7 +184,6 @@ Partial Class XtraUCPersonRecord
         'LayoutControl1
         '
         Me.SetBoundPropertyName(Me.LayoutControl1, "")
-        Me.LayoutControl1.Controls.Add(Me.TextEditКодСотрудник)
         Me.LayoutControl1.Controls.Add(Me.ImageSlider1)
         Me.LayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.LayoutControl1.HiddenItems.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem14})
@@ -198,10 +199,10 @@ Partial Class XtraUCPersonRecord
         '
         Me.SetBoundFieldName(Me.TextEditКодСотрудник, "КодСотрудник")
         Me.SetBoundPropertyName(Me.TextEditКодСотрудник, "EditValue")
-        Me.TextEditКодСотрудник.Location = New System.Drawing.Point(270, 228)
+        Me.TextEditКодСотрудник.Location = New System.Drawing.Point(117, 178)
         Me.TextEditКодСотрудник.Name = "TextEditКодСотрудник"
-        Me.TextEditКодСотрудник.Size = New System.Drawing.Size(50, 20)
-        Me.TextEditКодСотрудник.StyleController = Me.LayoutControl1
+        Me.TextEditКодСотрудник.Size = New System.Drawing.Size(1012, 20)
+        Me.TextEditКодСотрудник.StyleController = Me.LayoutControl2
         Me.TextEditКодСотрудник.TabIndex = 17
         '
         'ImageSlider1
@@ -219,7 +220,6 @@ Partial Class XtraUCPersonRecord
         '
         'LayoutControlItem14
         '
-        Me.LayoutControlItem14.Control = Me.TextEditКодСотрудник
         Me.LayoutControlItem14.Location = New System.Drawing.Point(258, 216)
         Me.LayoutControlItem14.Name = "LayoutControlItem14"
         Me.LayoutControlItem14.ShowInCustomizationForm = False
@@ -256,6 +256,7 @@ Partial Class XtraUCPersonRecord
         Me.OfficeNavigationBarPersona.Location = New System.Drawing.Point(0, 216)
         Me.OfficeNavigationBarPersona.Name = "OfficeNavigationBarPersona"
         Me.OfficeNavigationBarPersona.NavigationClient = Me.NavBarControlPersona
+        Me.OfficeNavigationBarPersona.PeekFormShowDelay = 1
         Me.OfficeNavigationBarPersona.Size = New System.Drawing.Size(1141, 45)
         Me.OfficeNavigationBarPersona.TabIndex = 0
         Me.OfficeNavigationBarPersona.Text = "OfficeNavigationBar1"
@@ -328,6 +329,7 @@ Partial Class XtraUCPersonRecord
         Me.NavigationFramePersona.Size = New System.Drawing.Size(1141, 261)
         Me.NavigationFramePersona.TabIndex = 0
         Me.NavigationFramePersona.Text = "NavigationFrame1"
+        Me.NavigationFramePersona.TransitionAnimationProperties.FrameInterval = 5000
         '
         'NavigationPageКонтакт
         '
@@ -503,16 +505,17 @@ Partial Class XtraUCPersonRecord
         'LayoutControl2
         '
         Me.SetBoundPropertyName(Me.LayoutControl2, "")
+        Me.LayoutControl2.Controls.Add(Me.TextEditКодСотрудник)
         Me.LayoutControl2.Controls.Add(Me.LookUpEdit4)
         Me.LayoutControl2.Controls.Add(Me.LookUpEdit3)
         Me.LayoutControl2.Controls.Add(Me.LookUpEdit2)
         Me.LayoutControl2.Controls.Add(Me.LookUpEdit1)
         Me.LayoutControl2.Controls.Add(Me.DateEdit1)
-        Me.LayoutControl2.Controls.Add(Me.TextEdit3)
-        Me.LayoutControl2.Controls.Add(Me.TextEdit1)
+        Me.LayoutControl2.Controls.Add(Me.TextEditОтчество)
+        Me.LayoutControl2.Controls.Add(Me.TextEditФамилия)
         Me.LayoutControl2.Controls.Add(Me.MemoEditПримечание)
         Me.LayoutControl2.Controls.Add(Me.DateEditДатаИсправил)
-        Me.LayoutControl2.Controls.Add(Me.TextEdit2)
+        Me.LayoutControl2.Controls.Add(Me.TextEditИмя)
         Me.LayoutControl2.Controls.Add(Me.DateEditДатаЗаписал)
         Me.LayoutControl2.Controls.Add(Me.TextEditИсправил)
         Me.LayoutControl2.Controls.Add(Me.LookUpEditФакультет)
@@ -577,33 +580,33 @@ Partial Class XtraUCPersonRecord
         Me.SetBoundFieldName(Me.DateEdit1, "ДатаРождения")
         Me.SetBoundPropertyName(Me.DateEdit1, "EditValue")
         Me.DateEdit1.EditValue = Nothing
-        Me.DateEdit1.Location = New System.Drawing.Point(95, 36)
+        Me.DateEdit1.Location = New System.Drawing.Point(117, 36)
         Me.DateEdit1.Name = "DateEdit1"
         Me.DateEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit1.Size = New System.Drawing.Size(95, 20)
+        Me.DateEdit1.Size = New System.Drawing.Size(73, 20)
         Me.DateEdit1.StyleController = Me.LayoutControl2
         Me.DateEdit1.TabIndex = 16
         '
-        'TextEdit3
+        'TextEditОтчество
         '
-        Me.SetBoundFieldName(Me.TextEdit3, "Фамилия")
-        Me.SetBoundPropertyName(Me.TextEdit3, "EditValue")
-        Me.TextEdit3.Location = New System.Drawing.Point(760, 12)
-        Me.TextEdit3.Name = "TextEdit3"
-        Me.TextEdit3.Size = New System.Drawing.Size(369, 20)
-        Me.TextEdit3.StyleController = Me.LayoutControl2
-        Me.TextEdit3.TabIndex = 6
+        Me.SetBoundFieldName(Me.TextEditОтчество, "Отчество")
+        Me.SetBoundPropertyName(Me.TextEditОтчество, "EditValue")
+        Me.TextEditОтчество.Location = New System.Drawing.Point(760, 12)
+        Me.TextEditОтчество.Name = "TextEditОтчество"
+        Me.TextEditОтчество.Size = New System.Drawing.Size(369, 20)
+        Me.TextEditОтчество.StyleController = Me.LayoutControl2
+        Me.TextEditОтчество.TabIndex = 6
         '
-        'TextEdit1
+        'TextEditФамилия
         '
-        Me.SetBoundFieldName(Me.TextEdit1, "Отчество")
-        Me.SetBoundPropertyName(Me.TextEdit1, "EditValue")
-        Me.TextEdit1.Location = New System.Drawing.Point(95, 12)
-        Me.TextEdit1.Name = "TextEdit1"
-        Me.TextEdit1.Size = New System.Drawing.Size(265, 20)
-        Me.TextEdit1.StyleController = Me.LayoutControl2
-        Me.TextEdit1.TabIndex = 4
+        Me.SetBoundFieldName(Me.TextEditФамилия, "Фамилия")
+        Me.SetBoundPropertyName(Me.TextEditФамилия, "EditValue")
+        Me.TextEditФамилия.Location = New System.Drawing.Point(117, 12)
+        Me.TextEditФамилия.Name = "TextEditФамилия"
+        Me.TextEditФамилия.Size = New System.Drawing.Size(243, 20)
+        Me.TextEditФамилия.StyleController = Me.LayoutControl2
+        Me.TextEditФамилия.TabIndex = 4
         '
         'MemoEditПримечание
         '
@@ -611,7 +614,7 @@ Partial Class XtraUCPersonRecord
         Me.SetBoundPropertyName(Me.MemoEditПримечание, "EditValue")
         Me.MemoEditПримечание.Location = New System.Drawing.Point(12, 124)
         Me.MemoEditПримечание.Name = "MemoEditПримечание"
-        Me.MemoEditПримечание.Size = New System.Drawing.Size(1117, 74)
+        Me.MemoEditПримечание.Size = New System.Drawing.Size(1117, 50)
         Me.MemoEditПримечание.StyleController = Me.LayoutControl2
         Me.MemoEditПримечание.TabIndex = 13
         '
@@ -628,15 +631,15 @@ Partial Class XtraUCPersonRecord
         Me.DateEditДатаИсправил.StyleController = Me.LayoutControl2
         Me.DateEditДатаИсправил.TabIndex = 15
         '
-        'TextEdit2
+        'TextEditИмя
         '
-        Me.SetBoundFieldName(Me.TextEdit2, "Имя")
-        Me.SetBoundPropertyName(Me.TextEdit2, "EditValue")
-        Me.TextEdit2.Location = New System.Drawing.Point(418, 12)
-        Me.TextEdit2.Name = "TextEdit2"
-        Me.TextEdit2.Size = New System.Drawing.Size(284, 20)
-        Me.TextEdit2.StyleController = Me.LayoutControl2
-        Me.TextEdit2.TabIndex = 5
+        Me.SetBoundFieldName(Me.TextEditИмя, "Имя")
+        Me.SetBoundPropertyName(Me.TextEditИмя, "EditValue")
+        Me.TextEditИмя.Location = New System.Drawing.Point(418, 12)
+        Me.TextEditИмя.Name = "TextEditИмя"
+        Me.TextEditИмя.Size = New System.Drawing.Size(284, 20)
+        Me.TextEditИмя.StyleController = Me.LayoutControl2
+        Me.TextEditИмя.TabIndex = 5
         '
         'DateEditДатаЗаписал
         '
@@ -665,7 +668,7 @@ Partial Class XtraUCPersonRecord
         '
         Me.SetBoundFieldName(Me.LookUpEditФакультет, "кодФакультет")
         Me.SetBoundPropertyName(Me.LookUpEditФакультет, "EditValue")
-        Me.LookUpEditФакультет.Location = New System.Drawing.Point(95, 60)
+        Me.LookUpEditФакультет.Location = New System.Drawing.Point(117, 60)
         Me.LookUpEditФакультет.Name = "LookUpEditФакультет"
         Me.LookUpEditФакультет.Properties.AutoSearchColumnIndex = 1
         Me.LookUpEditФакультет.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
@@ -675,7 +678,7 @@ Partial Class XtraUCPersonRecord
         Me.LookUpEditФакультет.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete
         Me.LookUpEditФакультет.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
         Me.LookUpEditФакультет.Properties.ValueMember = "row"
-        Me.LookUpEditФакультет.Size = New System.Drawing.Size(292, 20)
+        Me.LookUpEditФакультет.Size = New System.Drawing.Size(270, 20)
         Me.LookUpEditФакультет.StyleController = Me.LayoutControl2
         Me.LookUpEditФакультет.TabIndex = 7
         '
@@ -714,9 +717,9 @@ Partial Class XtraUCPersonRecord
         '
         Me.SetBoundFieldName(Me.TextEditЗаписал, "Записал")
         Me.SetBoundPropertyName(Me.TextEditЗаписал, "EditValue")
-        Me.TextEditЗаписал.Location = New System.Drawing.Point(95, 84)
+        Me.TextEditЗаписал.Location = New System.Drawing.Point(117, 84)
         Me.TextEditЗаписал.Name = "TextEditЗаписал"
-        Me.TextEditЗаписал.Size = New System.Drawing.Size(292, 20)
+        Me.TextEditЗаписал.Size = New System.Drawing.Size(270, 20)
         Me.TextEditЗаписал.StyleController = Me.LayoutControl2
         Me.TextEditЗаписал.TabIndex = 11
         '
@@ -739,7 +742,7 @@ Partial Class XtraUCPersonRecord
         '
         Me.LayoutControlGroup2.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.LayoutControlGroup2.GroupBordersVisible = False
-        Me.LayoutControlGroup2.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem1, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem8, Me.LayoutControlItem11, Me.LayoutControlItem10, Me.LayoutControlItem9, Me.LayoutControlItem12, Me.LayoutControlItem6, Me.LayoutControlItem7, Me.LayoutControlItem15, Me.LayoutControlItem16, Me.LayoutControlItem17, Me.LayoutControlItem18, Me.LayoutControlItem19})
+        Me.LayoutControlGroup2.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem1, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem8, Me.LayoutControlItem11, Me.LayoutControlItem10, Me.LayoutControlItem9, Me.LayoutControlItem12, Me.LayoutControlItem6, Me.LayoutControlItem7, Me.LayoutControlItem15, Me.LayoutControlItem16, Me.LayoutControlItem17, Me.LayoutControlItem18, Me.LayoutControlItem19, Me.LayoutControlItem20})
         Me.LayoutControlGroup2.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup2.Name = "Root"
         Me.LayoutControlGroup2.Size = New System.Drawing.Size(1141, 210)
@@ -749,7 +752,7 @@ Partial Class XtraUCPersonRecord
         '
         Me.LayoutControlItem2.AppearanceItemCaption.Options.UseTextOptions = True
         Me.LayoutControlItem2.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far
-        Me.LayoutControlItem2.Control = Me.TextEdit2
+        Me.LayoutControlItem2.Control = Me.TextEditИмя
         Me.LayoutControlItem2.Location = New System.Drawing.Point(352, 0)
         Me.LayoutControlItem2.Name = "LayoutControlItem2"
         Me.LayoutControlItem2.Size = New System.Drawing.Size(342, 24)
@@ -762,7 +765,7 @@ Partial Class XtraUCPersonRecord
         '
         Me.LayoutControlItem3.AppearanceItemCaption.Options.UseTextOptions = True
         Me.LayoutControlItem3.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far
-        Me.LayoutControlItem3.Control = Me.TextEdit3
+        Me.LayoutControlItem3.Control = Me.TextEditОтчество
         Me.LayoutControlItem3.Location = New System.Drawing.Point(694, 0)
         Me.LayoutControlItem3.Name = "LayoutControlItem3"
         Me.LayoutControlItem3.Size = New System.Drawing.Size(427, 24)
@@ -775,12 +778,12 @@ Partial Class XtraUCPersonRecord
         '
         Me.LayoutControlItem1.AppearanceItemCaption.Options.UseTextOptions = True
         Me.LayoutControlItem1.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far
-        Me.LayoutControlItem1.Control = Me.TextEdit1
+        Me.LayoutControlItem1.Control = Me.TextEditФамилия
         Me.LayoutControlItem1.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem1.Name = "LayoutControlItem1"
         Me.LayoutControlItem1.Size = New System.Drawing.Size(352, 24)
         Me.LayoutControlItem1.Text = "Фамилия"
-        Me.LayoutControlItem1.TextSize = New System.Drawing.Size(80, 13)
+        Me.LayoutControlItem1.TextSize = New System.Drawing.Size(102, 13)
         '
         'LayoutControlItem4
         '
@@ -791,7 +794,7 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem4.Name = "LayoutControlItem4"
         Me.LayoutControlItem4.Size = New System.Drawing.Size(379, 24)
         Me.LayoutControlItem4.Text = "Факультет"
-        Me.LayoutControlItem4.TextSize = New System.Drawing.Size(80, 13)
+        Me.LayoutControlItem4.TextSize = New System.Drawing.Size(102, 13)
         '
         'LayoutControlItem5
         '
@@ -816,7 +819,7 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem8.Name = "LayoutControlItem8"
         Me.LayoutControlItem8.Size = New System.Drawing.Size(379, 24)
         Me.LayoutControlItem8.Text = "Записал"
-        Me.LayoutControlItem8.TextSize = New System.Drawing.Size(80, 13)
+        Me.LayoutControlItem8.TextSize = New System.Drawing.Size(102, 13)
         '
         'LayoutControlItem11
         '
@@ -836,10 +839,10 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem10.Control = Me.MemoEditПримечание
         Me.LayoutControlItem10.Location = New System.Drawing.Point(0, 96)
         Me.LayoutControlItem10.Name = "LayoutControlItem10"
-        Me.LayoutControlItem10.Size = New System.Drawing.Size(1121, 94)
+        Me.LayoutControlItem10.Size = New System.Drawing.Size(1121, 70)
         Me.LayoutControlItem10.Text = "Примечание"
         Me.LayoutControlItem10.TextLocation = DevExpress.Utils.Locations.Top
-        Me.LayoutControlItem10.TextSize = New System.Drawing.Size(80, 13)
+        Me.LayoutControlItem10.TextSize = New System.Drawing.Size(102, 13)
         '
         'LayoutControlItem9
         '
@@ -903,7 +906,7 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem15.Name = "LayoutControlItem15"
         Me.LayoutControlItem15.Size = New System.Drawing.Size(182, 24)
         Me.LayoutControlItem15.Text = "Дата рождения"
-        Me.LayoutControlItem15.TextSize = New System.Drawing.Size(80, 13)
+        Me.LayoutControlItem15.TextSize = New System.Drawing.Size(102, 13)
         '
         'LayoutControlItem16
         '
@@ -953,6 +956,14 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem19.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem19.TextVisible = False
         '
+        'LayoutControlItem20
+        '
+        Me.LayoutControlItem20.Control = Me.TextEditКодСотрудник
+        Me.LayoutControlItem20.Location = New System.Drawing.Point(0, 166)
+        Me.LayoutControlItem20.Name = "LayoutControlItem20"
+        Me.LayoutControlItem20.Size = New System.Drawing.Size(1121, 24)
+        Me.LayoutControlItem20.TextSize = New System.Drawing.Size(102, 13)
+        '
         'XtraUCPersonRecord
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1000,12 +1011,12 @@ Partial Class XtraUCPersonRecord
         CType(Me.LookUpEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit3.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEditОтчество.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEditФамилия.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MemoEditПримечание.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEditДатаИсправил.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEditДатаИсправил.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEditИмя.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEditДатаЗаписал.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEditДатаЗаписал.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TextEditИсправил.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1032,6 +1043,7 @@ Partial Class XtraUCPersonRecord
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1075,9 +1087,9 @@ Partial Class XtraUCPersonRecord
     Friend WithEvents LookUpEditСтепень As DevExpress.XtraEditors.LookUpEdit
     Friend WithEvents LookUpEditКафедра As DevExpress.XtraEditors.LookUpEdit
     Friend WithEvents LookUpEditФакультет As DevExpress.XtraEditors.LookUpEdit
-    Friend WithEvents TextEdit3 As DevExpress.XtraEditors.TextEdit
-    Friend WithEvents TextEdit2 As DevExpress.XtraEditors.TextEdit
-    Friend WithEvents TextEdit1 As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents TextEditОтчество As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents TextEditИмя As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents TextEditФамилия As DevExpress.XtraEditors.TextEdit
     Friend WithEvents LayoutControlGroup1 As DevExpress.XtraLayout.LayoutControlGroup
     Friend WithEvents LayoutControlItem13 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents TextEditКодСотрудник As DevExpress.XtraEditors.TextEdit
@@ -1108,4 +1120,5 @@ Partial Class XtraUCPersonRecord
     Friend WithEvents LayoutControlItem18 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents LookUpEdit4 As DevExpress.XtraEditors.LookUpEdit
     Friend WithEvents LayoutControlItem19 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents LayoutControlItem20 As DevExpress.XtraLayout.LayoutControlItem
 End Class

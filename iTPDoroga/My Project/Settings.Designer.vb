@@ -63,6 +63,17 @@ Partial Friend NotInheritable Class Settings
             Return CType(Me("DorogaConnectionString"),String)
         End Get
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=WIN-D7I77FTTK5U\MSSQL2016;Initial Catalog=Doroga;Persist Security Inf"& _ 
+        "o=True;User ID=ReshelieMain;Password=Lolitazik13")>  _
+    Public ReadOnly Property DorogaConnectionString1() As String
+        Get
+            Return CType(Me("DorogaConnectionString1"),String)
+        End Get
+    End Property
 End Class
 
 Namespace My

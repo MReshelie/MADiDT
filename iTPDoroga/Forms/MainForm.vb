@@ -145,6 +145,14 @@ Partial Public Class MainForm
     ''' Функция: Проверка существования соединения с БД на SQL server
     ''' </summary>
     Private Function ConnectionDB() As Boolean
+        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration("iTPDoroga.exe")
+        Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+
+        If section.SectionInformation.IsProtected Then
+            ' Удаление криптования секции файла конфигурации.
+            section.SectionInformation.UnprotectSection()
+        End If
+
         gConnMain.ConnectionString = My.Settings.DorogaConnectionString
 
         Try
