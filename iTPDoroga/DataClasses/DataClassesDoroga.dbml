@@ -327,6 +327,7 @@
       <Column Name="кодСотрудник" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="[Тип фото]" Member="Тип_фото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Фото" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="База" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -671,6 +672,37 @@
       <Column Name="[Код подразделения]" Member="Код_подразделения" Type="System.String" DbType="NVarChar(7)" CanBeNull="true" />
       <Column Name="Когда" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Кем" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.p_GetКонтактПароль" Method="p_GetКонтактПароль" IsComposable="true">
+    <Parameter Name="КодСотрудник" Parameter="кодСотрудник" Type="System.Int32" DbType="Int" />
+    <ElementType Name="p_GetКонтактПарольResult">
+      <Column Name="IDPassport" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Passport1" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Passport2" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="IDUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDAuthor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDLevel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Дата записи]" Member="Дата_записи" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Дата исправления]" Member="Дата_исправления" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.p_GetКонтактФото" Method="p_GetКонтактФото" IsComposable="true">
+    <Parameter Name="КодСотрудник" Parameter="кодСотрудник" Type="System.Int32" DbType="Int" />
+    <ElementType Name="p_GetКонтактФотоResult">
+      <Column Name="кодФото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="кодСотрудник" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Тип фото]" Member="Тип_фото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Фото" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="База" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />

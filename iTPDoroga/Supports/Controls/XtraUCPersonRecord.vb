@@ -25,7 +25,11 @@ Public Class XtraUCPersonRecord
     Dim riLookUpEditEmail As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditEmail"}
     Dim riMemoEditEmail As New RepositoryItemMemoEdit() With {.Name = "riMemoEditEmail", .WordWrap = True}
     Dim riLookUpEditФото As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditФото"}
+    Dim riButtonEditФото As New RepositoryItemButtonEdit() With {.Name = "riButtonEditФото"}
+    Dim riCheckEditФото As New RepositoryItemCheckEdit() With {.Name = "riCheckEditФото"}
+    Dim riMemoEditФото As New RepositoryItemMemoEdit() With {.Name = "riMemoEditФото", .WordWrap = True}
     Dim riLookUpEditПароль As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditПароль"}
+    Dim riMemoEditПароль As New RepositoryItemMemoEdit() With {.Name = "riMemoEditПароль", .WordWrap = True}
     Dim riTextEditПаспорт As New RepositoryItemTextEdit() With {.Name = "riTextEditПаспорт"}
     Dim riMemoEditПаспорт As New RepositoryItemMemoEdit() With {.Name = "riMemoEditПаспорт", .WordWrap = True}
 
@@ -72,16 +76,22 @@ Public Class XtraUCPersonRecord
         Dim Email = From p In db.p_GetEmailСотрудник(iСотрудник)
         Dim Address = From p In db.p_GetКонтактАдрес(iСотрудник)
         Dim Passport = From p In db.p_GetКонтактПаспорт(iСотрудник)
+        Dim Photo = From p In db.p_GetКонтактФото(iСотрудник)
+        Dim Password = From p In db.p_GetКонтактПароль(iСотрудник)
 
         Me.GridControlКонтакт.DataSource = Kontakt
         Me.GridControlEmail.DataSource = Email
         Me.GridControlАдрес.DataSource = Address
         Me.GridControlПаспорт.DataSource = Passport
+        Me.GridControlФото.DataSource = Photo
+        Me.GridControlБезопасность.DataSource = Password
 
         Call GVSetings(Me.GridViewКонтакт)
         Call GVSetings(Me.GridViewEmail)
         Call GVSetings(Me.GridViewАдрес)
         Call GVSetings(Me.GridViewПаспорт)
+        Call GVSetings(Me.GridViewФото)
+        Call GVSetings(Me.GridViewБезопасность)
         Return True
     End Function
 
@@ -168,6 +178,49 @@ Public Class XtraUCPersonRecord
                 _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditПаспорт
                 _gv.Columns("кодПаспорт").Visible = False
                 _gv.Columns("кодСотрудник").Visible = False
+            Case "GridViewФото"
+                Call InitRILookUpEdit(Me.riLookUpEditФото)
+                Call riLookUpEditData1(5, Me.riLookUpEditФото)
+
+                _gv.Columns("Тип_фото").ColumnEdit = Me.riLookUpEditФото
+                _gv.Columns("Тип_фото").Caption = "Тип фотографии"
+                _gv.Columns("Фото").ColumnEdit = Me.riButtonEditФото
+                _gv.Columns("Фото").Caption = "Папка хранения пользовательской фотографии"
+                _gv.Columns("База").ColumnEdit = Me.riCheckEditФото
+                _gv.Columns("База").Caption = "Основное"
+                _gv.Columns("датаЗаписал").Caption = "Дата записи"
+                _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
+                _gv.Columns("датаИсправил").Caption = "Дата исправления"
+                _gv.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                _gv.Columns("датаИсправил").OptionsColumn.AllowEdit = False
+                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
+                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
+                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditФото
+                _gv.Columns("кодФото").Visible = False
+                _gv.Columns("кодСотрудник").Visible = False
+            Case "GridViewБезопасность"
+                Call InitRILookUpEdit(Me.riLookUpEditПароль)
+                Call riLookUpEditData1(4, Me.riLookUpEditПароль)
+
+                _gv.Columns("IDAuthor").Caption = "Руководитель"
+                _gv.Columns("IDAuthor").VisibleIndex = 1
+                _gv.Columns("IDLevel").ColumnEdit = Me.riLookUpEditПароль
+                _gv.Columns("IDLevel").Caption = "Статус пользователя"
+                _gv.Columns("IDLevel").VisibleIndex = 2
+                _gv.Columns("Passport1").Caption = "Пароль"
+                _gv.Columns("Passport2").Caption = "Пароль (повтор)"
+                _gv.Columns("Дата_записи").Caption = "Дата записи"
+                _gv.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                _gv.Columns("Дата_записи").OptionsColumn.AllowEdit = False
+                _gv.Columns("Дата_исправления").Caption = "Дата исправления"
+                _gv.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                _gv.Columns("Дата_исправления").OptionsColumn.AllowEdit = False
+                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
+                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
+                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditПароль
+                _gv.Columns("IDPassport").Visible = False
+                _gv.Columns("IDUser").Visible = False
 
         End Select
 
