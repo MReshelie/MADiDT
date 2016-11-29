@@ -1,4 +1,5 @@
-﻿Imports System.Data.Linq
+﻿Imports System.ComponentModel
+Imports System.Data.Linq
 Imports DevExpress.XtraBars.Navigation
 Imports DevExpress.XtraEditors
 Imports DevExpress.XtraEditors.Controls
@@ -26,6 +27,7 @@ Public Class XtraUCPersonRecord
     Dim riMemoEditEmail As New RepositoryItemMemoEdit() With {.Name = "riMemoEditEmail", .WordWrap = True}
     Dim riLookUpEditФото As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditФото"}
     Dim riButtonEditФото As New RepositoryItemButtonEdit() With {.Name = "riButtonEditФото"}
+    Dim riPopupCEdit As New RepositoryItemPopupContainerEdit() With {.Name = "riPopupCEdit"}
     Dim riCheckEditФото As New RepositoryItemCheckEdit() With {.Name = "riCheckEditФото"}
     Dim riMemoEditФото As New RepositoryItemMemoEdit() With {.Name = "riMemoEditФото", .WordWrap = True}
     Dim riLookUpEditПароль As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditПароль"}
@@ -37,6 +39,7 @@ Public Class XtraUCPersonRecord
         InitializeComponent()
 
         Me.NavBarControlPersona.Visible = False
+        Me.riPopupCEdit.Properties.PopupControl = Me.PopupContainerControlФото
     End Sub
 
     Private Sub XtraUCPersonRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -44,6 +47,9 @@ Public Class XtraUCPersonRecord
         Me.LayoutControlItem20.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
 
         If (Not DBConnect()) Then Return
+
+        AddHandler riPopupCEdit.QueryPopUp, AddressOf riPopupCEdit_QueryPopUp
+        AddHandler riPopupCEdit.QueryResultValue, AddressOf riPopupCEdit_QueryResultValue
     End Sub
 
     Private Sub NavBarControlPersona_ActiveGroupChanged(sender As Object, e As NavBarGroupEventArgs) Handles NavBarControlPersona.ActiveGroupChanged
@@ -179,13 +185,17 @@ Public Class XtraUCPersonRecord
                 _gv.Columns("кодПаспорт").Visible = False
                 _gv.Columns("кодСотрудник").Visible = False
             Case "GridViewФото"
+                'http://metanit.com/sharp/adonet/2.14.php
                 Call InitRILookUpEdit(Me.riLookUpEditФото)
                 Call riLookUpEditData1(5, Me.riLookUpEditФото)
 
                 _gv.Columns("Тип_фото").ColumnEdit = Me.riLookUpEditФото
                 _gv.Columns("Тип_фото").Caption = "Тип фотографии"
-                _gv.Columns("Фото").ColumnEdit = Me.riButtonEditФото
+
+                '_gv.Columns("Фото").ColumnEdit = Me.riButtonEditФото
+                _gv.Columns("Фото").ColumnEdit = Me.riPopupCEdit
                 _gv.Columns("Фото").Caption = "Папка хранения пользовательской фотографии"
+
                 _gv.Columns("База").ColumnEdit = Me.riCheckEditФото
                 _gv.Columns("База").Caption = "Основное"
                 _gv.Columns("датаЗаписал").Caption = "Дата записи"
@@ -277,6 +287,17 @@ Public Class XtraUCPersonRecord
     Private Sub riLookUpEditData1(ByVal i As Integer, ByVal riLookUpEdit As RepositoryItemLookUpEdit)
         riLookUpEdit.DataSource = Nothing
         riLookUpEdit.DataSource = db.GetParameters(i).ToList()
+    End Sub
+
+    Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
+
+    End Sub
+
+    Private Sub riPopupCEdit_QueryPopUp(ByVal sender As Object, ByVal e As CancelEventArgs)
+        Dim cntrFolders As New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"}
+
+        Me.PopupContainerControlФото.Controls.Add(cntrFolders)
+
     End Sub
 #End Region
 End Class

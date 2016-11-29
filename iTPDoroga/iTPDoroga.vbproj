@@ -132,11 +132,18 @@
     </Compile>
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="Supports\Classes\ImageFileInfo.vb" />
     <Compile Include="Supports\Classes\PersonInfo.vb" />
     <Compile Include="Supports\Controls\XtraUCEditFormTable.Designer.vb">
       <DependentUpon>XtraUCEditFormTable.vb</DependentUpon>
     </Compile>
     <Compile Include="Supports\Controls\XtraUCEditFormTable.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Controls\XtraUCFileExplorer.Designer.vb">
+      <DependentUpon>XtraUCFileExplorer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Controls\XtraUCFileExplorer.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Supports\Controls\XtraUCLogin.Designer.vb">
@@ -229,6 +236,9 @@
     </Compile>
     <EmbeddedResource Include="Supports\Controls\XtraUCEditFormTable.resx">
       <DependentUpon>XtraUCEditFormTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Controls\XtraUCFileExplorer.resx">
+      <DependentUpon>XtraUCFileExplorer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Supports\Controls\XtraUCLogin.resx">
       <DependentUpon>XtraUCLogin.vb</DependentUpon>

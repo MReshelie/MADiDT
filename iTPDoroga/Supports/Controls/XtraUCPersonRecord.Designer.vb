@@ -19,7 +19,6 @@ Partial Class XtraUCPersonRecord
     Private Sub InitializeComponent()
         Me.SplitContainerControl1 = New DevExpress.XtraEditors.SplitContainerControl()
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
-        Me.TextEditКодСотрудник = New DevExpress.XtraEditors.TextEdit()
         Me.ImageSlider1 = New DevExpress.XtraEditors.Controls.ImageSlider()
         Me.LayoutControlItem14 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
@@ -54,6 +53,7 @@ Partial Class XtraUCPersonRecord
         Me.GridViewБезопасность = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.NavigationPageПользователь = New DevExpress.XtraBars.Navigation.NavigationPage()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
+        Me.TextEditКодСотрудник = New DevExpress.XtraEditors.TextEdit()
         Me.LookUpEdit4 = New DevExpress.XtraEditors.LookUpEdit()
         Me.LookUpEdit3 = New DevExpress.XtraEditors.LookUpEdit()
         Me.LookUpEdit2 = New DevExpress.XtraEditors.LookUpEdit()
@@ -90,11 +90,11 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.PopupContainerControlФото = New DevExpress.XtraEditors.PopupContainerControl()
         CType(Me.SplitContainerControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainerControl1.SuspendLayout()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
-        CType(Me.TextEditКодСотрудник.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ImageSlider1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -124,6 +124,7 @@ Partial Class XtraUCPersonRecord
         Me.NavigationPageПользователь.SuspendLayout()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl2.SuspendLayout()
+        CType(Me.TextEditКодСотрудник.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LookUpEdit4.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LookUpEdit3.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LookUpEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -163,6 +164,7 @@ Partial Class XtraUCPersonRecord
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PopupContainerControlФото, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainerControl1
@@ -194,16 +196,6 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControl1.Size = New System.Drawing.Size(203, 261)
         Me.LayoutControl1.TabIndex = 0
         Me.LayoutControl1.Text = "LayoutControl1"
-        '
-        'TextEditКодСотрудник
-        '
-        Me.SetBoundFieldName(Me.TextEditКодСотрудник, "КодСотрудник")
-        Me.SetBoundPropertyName(Me.TextEditКодСотрудник, "EditValue")
-        Me.TextEditКодСотрудник.Location = New System.Drawing.Point(117, 178)
-        Me.TextEditКодСотрудник.Name = "TextEditКодСотрудник"
-        Me.TextEditКодСотрудник.Size = New System.Drawing.Size(1012, 20)
-        Me.TextEditКодСотрудник.StyleController = Me.LayoutControl2
-        Me.TextEditКодСотрудник.TabIndex = 17
         '
         'ImageSlider1
         '
@@ -443,6 +435,7 @@ Partial Class XtraUCPersonRecord
         'NavigationPageФото
         '
         Me.SetBoundPropertyName(Me.NavigationPageФото, "")
+        Me.NavigationPageФото.Controls.Add(Me.PopupContainerControlФото)
         Me.NavigationPageФото.Controls.Add(Me.GridControlФото)
         Me.NavigationPageФото.Name = "NavigationPageФото"
         Me.NavigationPageФото.Size = New System.Drawing.Size(1141, 261)
@@ -531,6 +524,16 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControl2.Size = New System.Drawing.Size(1141, 210)
         Me.LayoutControl2.TabIndex = 0
         Me.LayoutControl2.Text = "LayoutControl2"
+        '
+        'TextEditКодСотрудник
+        '
+        Me.SetBoundFieldName(Me.TextEditКодСотрудник, "КодСотрудник")
+        Me.SetBoundPropertyName(Me.TextEditКодСотрудник, "EditValue")
+        Me.TextEditКодСотрудник.Location = New System.Drawing.Point(117, 178)
+        Me.TextEditКодСотрудник.Name = "TextEditКодСотрудник"
+        Me.TextEditКодСотрудник.Size = New System.Drawing.Size(1012, 20)
+        Me.TextEditКодСотрудник.StyleController = Me.LayoutControl2
+        Me.TextEditКодСотрудник.TabIndex = 17
         '
         'LookUpEdit4
         '
@@ -964,6 +967,14 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem20.Size = New System.Drawing.Size(1121, 24)
         Me.LayoutControlItem20.TextSize = New System.Drawing.Size(102, 13)
         '
+        'PopupContainerControlФото
+        '
+        Me.SetBoundPropertyName(Me.PopupContainerControlФото, "")
+        Me.PopupContainerControlФото.Location = New System.Drawing.Point(239, 107)
+        Me.PopupContainerControlФото.Name = "PopupContainerControlФото"
+        Me.PopupContainerControlФото.Size = New System.Drawing.Size(398, 100)
+        Me.PopupContainerControlФото.TabIndex = 1
+        '
         'XtraUCPersonRecord
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -975,7 +986,6 @@ Partial Class XtraUCPersonRecord
         Me.SplitContainerControl1.ResumeLayout(False)
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
-        CType(Me.TextEditКодСотрудник.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ImageSlider1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1005,6 +1015,7 @@ Partial Class XtraUCPersonRecord
         Me.NavigationPageПользователь.ResumeLayout(False)
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl2.ResumeLayout(False)
+        CType(Me.TextEditКодСотрудник.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LookUpEdit4.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LookUpEdit3.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LookUpEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1044,6 +1055,7 @@ Partial Class XtraUCPersonRecord
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PopupContainerControlФото, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1121,4 +1133,5 @@ Partial Class XtraUCPersonRecord
     Friend WithEvents LookUpEdit4 As DevExpress.XtraEditors.LookUpEdit
     Friend WithEvents LayoutControlItem19 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents LayoutControlItem20 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents PopupContainerControlФото As DevExpress.XtraEditors.PopupContainerControl
 End Class

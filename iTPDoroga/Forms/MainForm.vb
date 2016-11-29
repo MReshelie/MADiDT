@@ -156,7 +156,7 @@ Partial Public Class MainForm
         gConnMain.ConnectionString = My.Settings.DorogaConnectionString
 
         Try
-            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Устанавливается соединения с сервером БД"
+            Me.windowsUIViewMain.SplashScreenProperties.LoadingDescription = "Устанавливается соединение с сервером БД"
 
             Call ConnectDBExtracted(25)
 

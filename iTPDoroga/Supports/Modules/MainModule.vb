@@ -3,6 +3,7 @@ Imports DevExpress.XtraEditors
 Imports System.IO
 Imports System.Xml
 Imports System.Configuration
+Imports System.Drawing.Imaging
 
 Module MainModule
     ''' <summary>
@@ -207,6 +208,43 @@ Module MainModule
             Case "GridViewКонтакт"
                 Return "Контакты пользователя [dbo.Контакт]"
         End Select
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="imageIn"></param>
+    ''' <returns></returns>
+    Public Function ImageToByteArray(ByVal imageIn As System.Drawing.Image) As Byte()
+        Using ms As MemoryStream = New MemoryStream()
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp)
+            Return ms.ToArray()
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="_image"></param>
+    ''' <returns></returns>
+    Public Function GetImageExt(ByVal _image As Image) As String
+        If _image Is Nothing Then
+            Return String.Empty
+        End If
+
+        If ImageFormat.Jpeg.Equals(_image.RawFormat) Then
+            Return ".jpeg"
+        ElseIf ImageFormat.Tiff.Equals(_image.RawFormat) Then
+            Return ".tiff"
+        ElseIf ImageFormat.Png.Equals(_image.RawFormat) Then
+            Return ".png"
+        ElseIf ImageFormat.Gif.Equals(_image.RawFormat) Then
+            Return ".gif"
+        ElseIf ImageFormat.Bmp.Equals(_image.RawFormat) Then
+            Return ".bmp"
+        End If
+
+        Return String.Empty
     End Function
 #End Region
 End Module

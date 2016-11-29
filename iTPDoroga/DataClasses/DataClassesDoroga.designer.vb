@@ -130,8 +130,8 @@ Partial Public Class DataClassesDorogaDataContext
   #End Region
 	
 	Public Sub New()
-		MyBase.New(Global.iTPDoroga.Settings.Default.DorogaConnectionString1, mappingSource)
-		OnCreated
+        MyBase.New(Global.iTPDoroga.Settings.Default.DorogaConnectionString, mappingSource)
+        OnCreated()
 	End Sub
 	
 	Public Sub New(ByVal connection As String)
