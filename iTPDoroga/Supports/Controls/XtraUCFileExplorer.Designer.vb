@@ -20,27 +20,31 @@ Partial Class XtraUCFileExplorer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim ContextButton1 As DevExpress.Utils.ContextButton = New DevExpress.Utils.ContextButton()
+        Dim ContextButton2 As DevExpress.Utils.ContextButton = New DevExpress.Utils.ContextButton()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(XtraUCFileExplorer))
+        Dim CheckContextButton1 As DevExpress.Utils.CheckContextButton = New DevExpress.Utils.CheckContextButton()
+        Dim RatingContextButton1 As DevExpress.Utils.RatingContextButton = New DevExpress.Utils.RatingContextButton()
         Dim BreadCrumbNode1 As DevExpress.XtraEditors.BreadCrumbNode = New DevExpress.XtraEditors.BreadCrumbNode()
         Dim BreadCrumbNode2 As DevExpress.XtraEditors.BreadCrumbNode = New DevExpress.XtraEditors.BreadCrumbNode()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(XtraUCFileExplorer))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.GridControlФото = New DevExpress.XtraGrid.GridControl()
+        Me.WinExplorerViewФото = New DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView()
         Me.breadCrumbEdit = New DevExpress.XtraEditors.BreadCrumbEdit()
         Me.sharedImageCollection = New DevExpress.Utils.SharedImageCollection(Me.components)
         Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem1 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem2 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.WinExplorerViewФото = New DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.GridControlФото, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.WinExplorerViewФото, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.breadCrumbEdit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.sharedImageCollection, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.sharedImageCollection.ImageSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.WinExplorerViewФото, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
@@ -63,6 +67,45 @@ Partial Class XtraUCFileExplorer
         Me.GridControlФото.Size = New System.Drawing.Size(626, 264)
         Me.GridControlФото.TabIndex = 5
         Me.GridControlФото.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.WinExplorerViewФото})
+        '
+        'WinExplorerViewФото
+        '
+        Me.WinExplorerViewФото.ContextButtonOptions.BottomPanelColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.WinExplorerViewФото.ContextButtonOptions.BottomPanelPadding = New System.Windows.Forms.Padding(3)
+        Me.WinExplorerViewФото.ContextButtonOptions.TopPanelColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.WinExplorerViewФото.ContextButtonOptions.TopPanelPadding = New System.Windows.Forms.Padding(3)
+        ContextButton1.Alignment = DevExpress.Utils.ContextItemAlignment.MiddleTop
+        ContextButton1.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
+        ContextButton1.AppearanceNormal.ForeColor = System.Drawing.Color.Gainsboro
+        ContextButton1.AppearanceNormal.Options.UseForeColor = True
+        ContextButton1.Caption = "Персональное фото"
+        ContextButton1.Id = New System.Guid("e6731505-a36d-4467-8c6b-13f1cff45c55")
+        ContextButton1.Name = "ContextTileButton"
+        ContextButton2.Alignment = DevExpress.Utils.ContextItemAlignment.TopFar
+        ContextButton2.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[False]
+        ContextButton2.AppearanceNormal.ForeColor = System.Drawing.Color.Gainsboro
+        ContextButton2.AppearanceNormal.Options.UseForeColor = True
+        ContextButton2.Glyph = CType(resources.GetObject("ContextButton2.Glyph"), System.Drawing.Image)
+        ContextButton2.Id = New System.Guid("afcc1d3b-cb9e-471f-9cf2-17a8f94bbf60")
+        ContextButton2.Name = "ContextButton"
+        CheckContextButton1.AppearanceNormal.ForeColor = System.Drawing.Color.Gainsboro
+        CheckContextButton1.AppearanceNormal.Options.UseForeColor = True
+        CheckContextButton1.HoverCheckedGlyph = CType(resources.GetObject("CheckContextButton1.HoverCheckedGlyph"), System.Drawing.Image)
+        CheckContextButton1.Id = New System.Guid("3fb7b23e-c837-4571-bd66-5e0daaa592a6")
+        CheckContextButton1.Name = "CheckContextButton"
+        RatingContextButton1.Alignment = DevExpress.Utils.ContextItemAlignment.MiddleBottom
+        RatingContextButton1.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
+        RatingContextButton1.Id = New System.Guid("9a53d9a1-007e-4cfa-9d69-7f09efcc5fb2")
+        RatingContextButton1.ItemCount = 1
+        RatingContextButton1.Name = "RatingContextButton"
+        RatingContextButton1.Rating = New Decimal(New Integer() {0, 0, 0, 0})
+        RatingContextButton1.Visibility = DevExpress.Utils.ContextItemVisibility.Hidden
+        Me.WinExplorerViewФото.ContextButtons.Add(ContextButton1)
+        Me.WinExplorerViewФото.ContextButtons.Add(ContextButton2)
+        Me.WinExplorerViewФото.ContextButtons.Add(CheckContextButton1)
+        Me.WinExplorerViewФото.ContextButtons.Add(RatingContextButton1)
+        Me.WinExplorerViewФото.GridControl = Me.GridControlФото
+        Me.WinExplorerViewФото.Name = "WinExplorerViewФото"
         '
         'breadCrumbEdit
         '
@@ -127,11 +170,6 @@ Partial Class XtraUCFileExplorer
         Me.LayoutControlItem2.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem2.TextVisible = False
         '
-        'WinExplorerViewФото
-        '
-        Me.WinExplorerViewФото.GridControl = Me.GridControlФото
-        Me.WinExplorerViewФото.Name = "WinExplorerViewФото"
-        '
         'XtraUCFileExplorer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -142,13 +180,13 @@ Partial Class XtraUCFileExplorer
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
         CType(Me.GridControlФото, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.WinExplorerViewФото, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.breadCrumbEdit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.sharedImageCollection.ImageSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.sharedImageCollection, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.WinExplorerViewФото, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

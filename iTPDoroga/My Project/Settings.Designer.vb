@@ -56,8 +56,8 @@ Partial Friend NotInheritable Class Settings
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=WIN-HU6CR2E5753\ASUSQLH;Initial Catalog=Doroga;Persist Security Info="& _ 
-        "True;User ID=ReshelieMain;Password=Lolitazik13")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=WIN2012R2HOME\ASUSQLH;Initial Catalog=Doroga;Persist Security Info=Tr"& _ 
+        "ue;User ID=ReshelieMain;Password=Lolitazik13")>  _
     Public ReadOnly Property DorogaConnectionString() As String
         Get
             Return CType(Me("DorogaConnectionString"),String)
