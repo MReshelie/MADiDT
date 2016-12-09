@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Doroga" Class="DataClassesDorogaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN-D7I77FTTK5U\MSSQL2016;Initial Catalog=Doroga;Persist Security Info=True;User ID=ReshelieMain" SettingsObjectName="iTPDoroga.Settings" SettingsPropertyName="DorogaConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN2012R2HOME\ASUSQLH;Initial Catalog=Doroga;Persist Security Info=True;User ID=ReshelieMain" SettingsObjectName="iTPDoroga.Settings" SettingsPropertyName="DorogaConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.address" Member="address">
     <Type Name="address">
       <Column Name="counter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -326,8 +326,10 @@
       <Column Name="кодФото" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="кодСотрудник" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="[Тип фото]" Member="Тип_фото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Фото" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Источник" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Хранилище" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="База" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Оригинал" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -701,8 +703,10 @@
       <Column Name="кодФото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="кодСотрудник" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="[Тип фото]" Member="Тип_фото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Фото" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Источник" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Хранилище" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="База" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Оригинал" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />

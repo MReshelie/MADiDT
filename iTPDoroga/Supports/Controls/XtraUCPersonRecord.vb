@@ -193,11 +193,11 @@ Public Class XtraUCPersonRecord
                 _gv.Columns("Тип_фото").Caption = "Тип фотографии"
 
                 '_gv.Columns("Фото").ColumnEdit = Me.riButtonEditФото
-                _gv.Columns("Фото").ColumnEdit = Me.riPopupCEdit
-                _gv.Columns("Фото").Caption = "Папка хранения пользовательской фотографии"
-
+                _gv.Columns("Источник").ColumnEdit = Me.riPopupCEdit
+                _gv.Columns("Источник").Caption = "Папка пользовательских фотографий"
+                _gv.Columns("Хранилище").Caption = "Папка на сервере БД"
                 _gv.Columns("База").ColumnEdit = Me.riCheckEditФото
-                _gv.Columns("База").Caption = "Основное"
+                _gv.Columns("База").Caption = "Основная"
                 _gv.Columns("датаЗаписал").Caption = "Дата записи"
                 _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
                 _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
@@ -209,6 +209,7 @@ Public Class XtraUCPersonRecord
                 _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditФото
                 _gv.Columns("кодФото").Visible = False
                 _gv.Columns("кодСотрудник").Visible = False
+                _gv.Columns("Оригинал").Visible = False
             Case "GridViewБезопасность"
                 Call InitRILookUpEdit(Me.riLookUpEditПароль)
                 Call riLookUpEditData1(4, Me.riLookUpEditПароль)

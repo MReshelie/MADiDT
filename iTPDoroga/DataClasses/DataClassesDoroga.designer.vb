@@ -130,8 +130,8 @@ Partial Public Class DataClassesDorogaDataContext
   #End Region
 	
 	Public Sub New()
-        MyBase.New(Global.iTPDoroga.Settings.Default.DorogaConnectionString, mappingSource)
-        OnCreated()
+		MyBase.New(Global.iTPDoroga.Settings.Default.DorogaConnectionString, mappingSource)
+		OnCreated
 	End Sub
 	
 	Public Sub New(ByVal connection As String)
@@ -3165,7 +3165,7 @@ Partial Public Class Страна
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Флаг", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Флаг", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Флаг() As System.Data.Linq.Binary
 		Get
 			Return Me._Флаг
@@ -3181,7 +3181,7 @@ Partial Public Class Страна
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 1]", Storage:="_Флаг_1", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 1]", Storage:="_Флаг_1", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Флаг_1() As System.Data.Linq.Binary
 		Get
 			Return Me._Флаг_1
@@ -3197,7 +3197,7 @@ Partial Public Class Страна
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 2]", Storage:="_Флаг_2", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 2]", Storage:="_Флаг_2", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Флаг_2() As System.Data.Linq.Binary
 		Get
 			Return Me._Флаг_2
@@ -6125,9 +6125,13 @@ Partial Public Class Фото
 	
 	Private _Тип_фото As Integer
 	
-	Private _Фото As String
+	Private _Источник As String
+	
+	Private _Хранилище As String
 	
 	Private _База As System.Nullable(Of Boolean)
+	
+	Private _Оригинал As System.Data.Linq.Binary
 	
 	Private _Записал As String
 	
@@ -6160,13 +6164,21 @@ Partial Public Class Фото
     End Sub
     Partial Private Sub OnТип_фотоChanged()
     End Sub
-    Partial Private Sub OnФотоChanging(value As String)
+    Partial Private Sub OnИсточникChanging(value As String)
     End Sub
-    Partial Private Sub OnФотоChanged()
+    Partial Private Sub OnИсточникChanged()
+    End Sub
+    Partial Private Sub OnХранилищеChanging(value As String)
+    End Sub
+    Partial Private Sub OnХранилищеChanged()
     End Sub
     Partial Private Sub OnБазаChanging(value As System.Nullable(Of Boolean))
     End Sub
     Partial Private Sub OnБазаChanged()
+    End Sub
+    Partial Private Sub OnОригиналChanging(value As System.Data.Linq.Binary)
+    End Sub
+    Partial Private Sub OnОригиналChanged()
     End Sub
     Partial Private Sub OnЗаписалChanging(value As String)
     End Sub
@@ -6249,18 +6261,34 @@ Partial Public Class Фото
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Фото", DbType:="NVarChar(MAX)")>  _
-	Public Property Фото() As String
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Источник", DbType:="NVarChar(MAX)")>  _
+	Public Property Источник() As String
 		Get
-			Return Me._Фото
+			Return Me._Источник
 		End Get
 		Set
-			If (String.Equals(Me._Фото, value) = false) Then
-				Me.OnФотоChanging(value)
+			If (String.Equals(Me._Источник, value) = false) Then
+				Me.OnИсточникChanging(value)
 				Me.SendPropertyChanging
-				Me._Фото = value
-				Me.SendPropertyChanged("Фото")
-				Me.OnФотоChanged
+				Me._Источник = value
+				Me.SendPropertyChanged("Источник")
+				Me.OnИсточникChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Хранилище", DbType:="NVarChar(MAX)")>  _
+	Public Property Хранилище() As String
+		Get
+			Return Me._Хранилище
+		End Get
+		Set
+			If (String.Equals(Me._Хранилище, value) = false) Then
+				Me.OnХранилищеChanging(value)
+				Me.SendPropertyChanging
+				Me._Хранилище = value
+				Me.SendPropertyChanged("Хранилище")
+				Me.OnХранилищеChanged
 			End If
 		End Set
 	End Property
@@ -6277,6 +6305,22 @@ Partial Public Class Фото
 				Me._База = value
 				Me.SendPropertyChanged("База")
 				Me.OnБазаChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	Public Property Оригинал() As System.Data.Linq.Binary
+		Get
+			Return Me._Оригинал
+		End Get
+		Set
+			If (Object.Equals(Me._Оригинал, value) = false) Then
+				Me.OnОригиналChanging(value)
+				Me.SendPropertyChanging
+				Me._Оригинал = value
+				Me.SendPropertyChanged("Оригинал")
+				Me.OnОригиналChanged
 			End If
 		End Set
 	End Property
@@ -8971,9 +9015,13 @@ Partial Public Class p_GetКонтактФотоResult
 	
 	Private _Тип_фото As Integer
 	
-	Private _Фото As String
+	Private _Источник As String
+	
+	Private _Хранилище As String
 	
 	Private _База As System.Nullable(Of Boolean)
+	
+	Private _Оригинал As System.Data.Linq.Binary
 	
 	Private _Записал As String
 	
@@ -9027,14 +9075,26 @@ Partial Public Class p_GetКонтактФотоResult
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Фото", DbType:="NVarChar(MAX)")>  _
-	Public Property Фото() As String
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Источник", DbType:="NVarChar(MAX)")>  _
+	Public Property Источник() As String
 		Get
-			Return Me._Фото
+			Return Me._Источник
 		End Get
 		Set
-			If (String.Equals(Me._Фото, value) = false) Then
-				Me._Фото = value
+			If (String.Equals(Me._Источник, value) = false) Then
+				Me._Источник = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Хранилище", DbType:="NVarChar(MAX)")>  _
+	Public Property Хранилище() As String
+		Get
+			Return Me._Хранилище
+		End Get
+		Set
+			If (String.Equals(Me._Хранилище, value) = false) Then
+				Me._Хранилище = value
 			End If
 		End Set
 	End Property
@@ -9047,6 +9107,18 @@ Partial Public Class p_GetКонтактФотоResult
 		Set
 			If (Me._База.Equals(value) = false) Then
 				Me._База = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	Public Property Оригинал() As System.Data.Linq.Binary
+		Get
+			Return Me._Оригинал
+		End Get
+		Set
+			If (Object.Equals(Me._Оригинал, value) = false) Then
+				Me._Оригинал = value
 			End If
 		End Set
 	End Property
