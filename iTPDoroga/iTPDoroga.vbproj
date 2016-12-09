@@ -101,11 +101,6 @@
       <DependentUpon>DataClassesDoroga.dbml</DependentUpon>
     </Compile>
     <Compile Include="Data\SampleData.vb" />
-    <Compile Include="DorogaDataSet.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DorogaDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +169,12 @@
       <DependentUpon>XtraUCPersonRecord.vb</DependentUpon>
     </Compile>
     <Compile Include="Supports\Controls\XtraUCPersonRecord.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Supports\Controls\XtraUCPhoto.Designer.vb">
+      <DependentUpon>XtraUCPhoto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Supports\Controls\XtraUCPhoto.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Supports\Controls\XtraUCServers.Designer.vb">
@@ -255,6 +256,9 @@
     <EmbeddedResource Include="Supports\Controls\XtraUCPersonRecord.resx">
       <DependentUpon>XtraUCPersonRecord.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Supports\Controls\XtraUCPhoto.resx">
+      <DependentUpon>XtraUCPhoto.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Supports\Controls\XtraUCServers.resx">
       <DependentUpon>XtraUCServers.vb</DependentUpon>
     </EmbeddedResource>
@@ -277,17 +281,6 @@
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataClassesDoroga.designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="DorogaDataSet.xsc">
-      <DependentUpon>DorogaDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DorogaDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DorogaDataSet.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DorogaDataSet.xss">
-      <DependentUpon>DorogaDataSet.xsd</DependentUpon>
     </None>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

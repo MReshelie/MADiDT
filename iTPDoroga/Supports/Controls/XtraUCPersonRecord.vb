@@ -294,10 +294,8 @@ Public Class XtraUCPersonRecord
     End Sub
 
     Private Sub riPopupCEdit_QueryPopUp(ByVal sender As Object, ByVal e As CancelEventArgs)
-        Dim cntrFolders As New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"}
-
-        Me.PopupContainerControlФото.Controls.Add(cntrFolders)
-
+        Me.PopupContainerControlФото.Size = New Size(620, 330)
+        Me.PopupContainerControlФото.Controls.Add(New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"})
     End Sub
 #End Region
 End Class

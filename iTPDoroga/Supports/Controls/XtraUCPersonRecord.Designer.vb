@@ -46,6 +46,7 @@ Partial Class XtraUCPersonRecord
         Me.GridControlПаспорт = New DevExpress.XtraGrid.GridControl()
         Me.GridViewПаспорт = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.NavigationPageФото = New DevExpress.XtraBars.Navigation.NavigationPage()
+        Me.PopupContainerControlФото = New DevExpress.XtraEditors.PopupContainerControl()
         Me.GridControlФото = New DevExpress.XtraGrid.GridControl()
         Me.GridViewФото = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.NavigationPageБезопасность = New DevExpress.XtraBars.Navigation.NavigationPage()
@@ -90,7 +91,6 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.PopupContainerControlФото = New DevExpress.XtraEditors.PopupContainerControl()
         CType(Me.SplitContainerControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainerControl1.SuspendLayout()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,6 +116,7 @@ Partial Class XtraUCPersonRecord
         CType(Me.GridControlПаспорт, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewПаспорт, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.NavigationPageФото.SuspendLayout()
+        CType(Me.PopupContainerControlФото, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControlФото, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewФото, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.NavigationPageБезопасность.SuspendLayout()
@@ -164,7 +165,6 @@ Partial Class XtraUCPersonRecord
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PopupContainerControlФото, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainerControl1
@@ -440,6 +440,15 @@ Partial Class XtraUCPersonRecord
         Me.NavigationPageФото.Name = "NavigationPageФото"
         Me.NavigationPageФото.Size = New System.Drawing.Size(1141, 261)
         Me.NavigationPageФото.Tag = "Фото"
+        '
+        'PopupContainerControlФото
+        '
+        Me.PopupContainerControlФото.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.SetBoundPropertyName(Me.PopupContainerControlФото, "")
+        Me.PopupContainerControlФото.Location = New System.Drawing.Point(239, 107)
+        Me.PopupContainerControlФото.Name = "PopupContainerControlФото"
+        Me.PopupContainerControlФото.Size = New System.Drawing.Size(400, 100)
+        Me.PopupContainerControlФото.TabIndex = 1
         '
         'GridControlФото
         '
@@ -967,14 +976,6 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem20.Size = New System.Drawing.Size(1121, 24)
         Me.LayoutControlItem20.TextSize = New System.Drawing.Size(102, 13)
         '
-        'PopupContainerControlФото
-        '
-        Me.SetBoundPropertyName(Me.PopupContainerControlФото, "")
-        Me.PopupContainerControlФото.Location = New System.Drawing.Point(239, 107)
-        Me.PopupContainerControlФото.Name = "PopupContainerControlФото"
-        Me.PopupContainerControlФото.Size = New System.Drawing.Size(398, 100)
-        Me.PopupContainerControlФото.TabIndex = 1
-        '
         'XtraUCPersonRecord
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1007,6 +1008,7 @@ Partial Class XtraUCPersonRecord
         CType(Me.GridControlПаспорт, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewПаспорт, System.ComponentModel.ISupportInitialize).EndInit()
         Me.NavigationPageФото.ResumeLayout(False)
+        CType(Me.PopupContainerControlФото, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControlФото, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewФото, System.ComponentModel.ISupportInitialize).EndInit()
         Me.NavigationPageБезопасность.ResumeLayout(False)
@@ -1055,7 +1057,6 @@ Partial Class XtraUCPersonRecord
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PopupContainerControlФото, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

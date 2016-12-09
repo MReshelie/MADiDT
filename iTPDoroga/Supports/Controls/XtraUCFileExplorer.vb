@@ -14,16 +14,22 @@ Imports DevExpress.XtraEditors
 Imports DevExpress.XtraEditors.Repository
 Imports DevExpress.XtraSplashScreen
 Imports DevExpress.Utils
+Imports DevExpress.XtraBars
 
 Public Class XtraUCFileExplorer
     Public Shared ReadOnly MaxEntitiesCount As Integer = 80
 
+    Dim ucPhoto As XtraUCPhoto
+
     Public Sub New()
         InitializeComponent()
+        'Me.PanelControlPhoto.Size = New Size(Me.breadCrumbEdit.Width, 0)
 
         Call Initialize()
+    End Sub
 
-        'Me.LayoutControlItem2.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
+    Private Sub XtraUCFileExplorer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        '
     End Sub
 
     Private Sub myItem_Click(ByVal sender As Object, ByVal e As EventArgs)
@@ -48,6 +54,11 @@ Public Class XtraUCFileExplorer
     End Sub
 
     Private Sub breadCrumbEdit_Properties_QueryChildNodes(sender As Object, e As BreadCrumbQueryChildNodesEventArgs) Handles breadCrumbEdit.Properties.QueryChildNodes
+        If ucPhoto IsNot Nothing Then
+            'Me.PanelControlPhoto.Size = New Size(Me.breadCrumbEdit.Width, 0)
+            ucPhoto.Dispose()
+        End If
+
         'Add custom shortcuts to the 'Root' node
         If String.Equals(e.Node.Caption, "Root", StringComparison.Ordinal) Then
             InitBreadCrumbRootNode(e.Node)
@@ -61,75 +72,30 @@ Public Class XtraUCFileExplorer
         End If
 
         'Populate dynamic nodes
-        Dim dir As String = e.Node.Path
-
-        If (Not Directory.Exists(dir)) Then
-            Return
-        End If
-
-        Dim subDirs As String() = GetSubFolders(dir)
-
-        If subDirs.Length <= 0 Then
-            SplashScreenManager.ShowForm(GetType(WaitFormLoadRec))
-            SplashScreenManager.Default.SetWaitFormCaption("Ожидайте...")
-            SplashScreenManager.Default.SetWaitFormDescription("Идет загрузка изображений.")
-
-            Dim list As BindingList(Of ImageFileInfo) = New BindingList(Of ImageFileInfo)
-
-            For Each fl As FileInfo In (New DirectoryInfo(dir)).GetFiles()
-                list.Add(New ImageFileInfo(fl.Name, fl.FullName, fl.Extension.Substring(1), fl.CreationTime, Image.FromFile(fl.FullName), False))
-            Next
-
-            Me.GridControlФото.DataSource = list
-            Me.WinExplorerViewФото.RefreshData()
-            Me.WinExplorerViewФото.ColumnSet.ExtraLargeImageColumn = Me.WinExplorerViewФото.Columns("FileImg")
-            'Me.WinExplorerViewФото.ColumnSet.DescriptionColumn = Me.WinExplorerViewФото.Columns("FilePath")
-            'Me.WinExplorerViewФото.ColumnSet.TextColumn = Me.WinExplorerViewФото.Columns("FileName")
-            'Me.WinExplorerViewФото.ColumnSet.CheckBoxColumn = Me.WinExplorerViewФото.Columns("FileCheck")
-            'Me.WinExplorerViewФото.OptionsView.ShowCheckBoxes = True
-            Me.WinExplorerViewФото.OptionsView.Style = DevExpress.XtraGrid.Views.WinExplorer.WinExplorerViewStyle.ExtraLarge
-            'Me.LayoutControlItem2.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always
-            SplashScreenManager.CloseForm(False)
+        If (Not Directory.Exists(e.Node.Path)) Then
             Return
         End If
 
         Dim i As Integer = 0
 
-        Do While i < subDirs.Length
-            e.Node.ChildNodes.Add(CreateNode(subDirs(i)))
-            i += 1
-        Loop
+        If GetSubFolders(e.Node.Path).Length <= 0 Then
+            ucPhoto = New XtraUCPhoto(e.Node.Path) With {.Parent = Me.PanelControlPhoto, .Dock = DockStyle.Fill, .Name = "ucPhoto"}
+
+            'If PanelSize(620, 320) Then
+            '    Return
+            'End If
+        Else
+            Do While i < GetSubFolders(e.Node.Path).Length
+                e.Node.ChildNodes.Add(CreateNode((GetSubFolders(e.Node.Path))(i)))
+                i += 1
+            Loop
+        End If
     End Sub
 
     'Private Sub breadCrumbEdit_Click(sender As Object, e As EventArgs) Handles breadCrumbEdit.Click
     '    Me.LayoutControlItem2.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
     '    Me.GridControlФото.DataSource = Nothing
     'End Sub
-
-    Private Sub WinExplorerViewФото_ContextButtonCustomize(sender As Object, e As DevExpress.XtraGrid.Views.WinExplorer.WinExplorerViewContextButtonCustomizeEventArgs) Handles WinExplorerViewФото.ContextButtonCustomize
-        If e.Item.Name = "ContextTileButton" Then
-            DirectCast(e.Item, ContextButton).Caption = DirectCast(Me.WinExplorerViewФото.GetRowCellValue(e.RowHandle, Me.WinExplorerViewФото.Columns("FileName")), String)
-        End If
-
-        If e.Item.Name = "CheckContextButton" Then
-            DirectCast(e.Item, CheckContextButton).Checked = DirectCast(Me.WinExplorerViewФото.GetRowCellValue(e.RowHandle, Me.WinExplorerViewФото.Columns("FileCheck")), Boolean)
-        End If
-    End Sub
-
-    Private Sub WinExplorerViewФото_ContextButtonClick(sender As Object, e As ContextItemClickEventArgs) Handles WinExplorerViewФото.ContextButtonClick
-        Dim caption As String = e.Item.Name
-        Select Case caption
-            Case "ContextButton"
-                Dim Description As String = Me.WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), Me.WinExplorerViewФото.Columns("FilePath")).ToString
-                'Dim cilinders As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colCilinders).ToString
-                'Dim doors As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colDoors).ToString
-                'Dim mpgCity As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colMPGCity).ToString
-                'Dim mpgHighway As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colMPGHighway).ToString
-                'XtraMessageBox.Show(Convert.ToString((Convert.ToString((Convert.ToString((Convert.ToString((Convert.ToString("Horsepower: ") & horsepower) + vbLf & "Cilinders: ") & cilinders) + vbLf & "Doors: ") & doors) + vbLf & "MPG City: ") & mpgCity) + vbLf & "MPG Highway: ") & mpgHighway, "Additional Info")
-
-                XtraMessageBox.Show("Description : " & Description)
-        End Select
-    End Sub
 
 #Region "Пользовательские процелуры и функции"
     ''' <summary>
@@ -140,6 +106,26 @@ Public Class XtraUCFileExplorer
 
         For Each driveInfo As DriveInfo In GetFixedDrives()
             breadCrumbEdit.Properties.History.Add(New BreadCrumbHistoryItem(driveInfo.RootDirectory.ToString()))
+        Next driveInfo
+    End Sub
+
+    ''' <summary>
+    ''' Процедура: Инициализация главных ветвей
+    ''' </summary>
+    ''' <param name="node"></param>
+    Private Sub InitBreadCrumbRootNode(ByVal node As BreadCrumbNode)
+        node.ChildNodes.Add(New BreadCrumbNode("Рабочий стол", Environment.GetFolderPath(Environment.SpecialFolder.Desktop)))
+        node.ChildNodes.Add(New BreadCrumbNode("Windows", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
+        node.ChildNodes.Add(New BreadCrumbNode("Program Files", Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)))
+    End Sub
+
+    ''' <summary>
+    ''' Процедура: Инициализация ветви компьютер
+    ''' </summary>
+    ''' <param name="node"></param>
+    Private Sub InitBreadCrumbComputerNode(ByVal node As BreadCrumbNode)
+        For Each driveInfo As DriveInfo In GetFixedDrives()
+            node.ChildNodes.Add(New BreadCrumbNode(driveInfo.Name, driveInfo.RootDirectory))
         Next driveInfo
     End Sub
 
@@ -188,27 +174,7 @@ Public Class XtraUCFileExplorer
     End Function
 
     ''' <summary>
-    ''' Процедура: Инициализация главных ветвей
-    ''' </summary>
-    ''' <param name="node"></param>
-    Private Sub InitBreadCrumbRootNode(ByVal node As BreadCrumbNode)
-        node.ChildNodes.Add(New BreadCrumbNode("Рабочий стол", Environment.GetFolderPath(Environment.SpecialFolder.Desktop)))
-        node.ChildNodes.Add(New BreadCrumbNode("Windows", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
-        node.ChildNodes.Add(New BreadCrumbNode("Program Files", Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)))
-    End Sub
-
-    ''' <summary>
-    ''' Процедура: Инициализация ветви компьютер
-    ''' </summary>
-    ''' <param name="node"></param>
-    Private Sub InitBreadCrumbComputerNode(ByVal node As BreadCrumbNode)
-        For Each driveInfo As DriveInfo In GetFixedDrives()
-            node.ChildNodes.Add(New BreadCrumbNode(driveInfo.Name, driveInfo.RootDirectory))
-        Next driveInfo
-    End Sub
-
-    ''' <summary>
-    ''' Функция: создание ветви
+    ''' Функция: создание ветви для компонента BreadCrumbNode
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
@@ -216,6 +182,24 @@ Public Class XtraUCFileExplorer
         Dim folderName As String = New DirectoryInfo(path).Name
 
         Return New BreadCrumbNode(folderName, folderName, True)
+    End Function
+
+    Private Function PanelSize(ByVal iW As Integer, ByVal iH As Integer) As Boolean
+        For Each cntrl As Control In Me.Parent.Controls
+            If cntrl.Name = "cntrFolders" Then
+                For Each ccntrl As Control In cntrl.Parent.Parent.Controls
+                    If ccntrl.Name = "PopupContainerControlФото" Then
+                        Console.WriteLine(String.Format("0.ccntrl.Name = {0}, ccntrl.Width = {1}, ccntrl.Height = {2}", ccntrl.Name, ccntrl.Width, ccntrl.Height))
+                        'cntrl.Size = New Size(iW - 20, iH - 10)
+                        ccntrl.Size = New Size(iW, iH)
+                        Console.WriteLine(String.Format("1.ccntrl.Name = {0}, ccntrl.Width = {1}, ccntrl.Height = {2}", ccntrl.Name, ccntrl.Width, ccntrl.Height))
+                        Exit For
+                    End If
+                Next
+            End If
+        Next
+
+        Return True
     End Function
 #End Region
 End Class
