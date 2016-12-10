@@ -6,6 +6,16 @@ Imports DevExpress.XtraSplashScreen
 
 Public Class XtraUCPhoto
     Dim _dir As String
+    Dim _description As String
+
+    Public Property DescriptionPhoto As String
+        Get
+            Return _description
+        End Get
+        Set(value As String)
+            _description = value
+        End Set
+    End Property
 
     Public Sub New(ByVal dir As String)
         ' Этот вызов является обязательным для конструктора.
@@ -35,24 +45,11 @@ Public Class XtraUCPhoto
         If e.Item.Name = "contextTitleButton" Then
             DirectCast(e.Item, ContextButton).Caption = DirectCast(Me.WinExplorerViewPhoto.GetRowCellValue(e.RowHandle, Me.WinExplorerViewPhoto.Columns("FileName")), String)
         End If
-
-        'If e.Item.Name = "CheckContextButton" Then
-        '    DirectCast(e.Item, CheckContextButton).Checked = DirectCast(Me.WinExplorerViewPhoto.GetRowCellValue(e.RowHandle, Me.WinExplorerViewPhoto.Columns("FileCheck")), Boolean)
-        'End If
     End Sub
 
     Private Sub WinExplorerViewPhoto_ContextButtonClick(sender As Object, e As ContextItemClickEventArgs) Handles WinExplorerViewPhoto.ContextButtonClick
-        Dim caption As String = e.Item.Name
-        Select Case caption
-            Case "ContextButton"
-                Dim Description As String = Me.WinExplorerViewPhoto.GetRowCellValue(DirectCast(e.DataItem, Int32), Me.WinExplorerViewPhoto.Columns("FilePath")).ToString
-                'Dim cilinders As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colCilinders).ToString
-                'Dim doors As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colDoors).ToString
-                'Dim mpgCity As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colMPGCity).ToString
-                'Dim mpgHighway As String = WinExplorerViewФото.GetRowCellValue(DirectCast(e.DataItem, Int32), colMPGHighway).ToString
-                'XtraMessageBox.Show(Convert.ToString((Convert.ToString((Convert.ToString((Convert.ToString((Convert.ToString("Horsepower: ") & horsepower) + vbLf & "Cilinders: ") & cilinders) + vbLf & "Doors: ") & doors) + vbLf & "MPG City: ") & mpgCity) + vbLf & "MPG Highway: ") & mpgHighway, "Additional Info")
-
-                XtraMessageBox.Show("Description : " & Description)
-        End Select
+        If e.Item.Name = "ContextButton" Then
+            _description = Me.WinExplorerViewPhoto.GetRowCellValue(DirectCast(e.DataItem, Int32), Me.WinExplorerViewPhoto.Columns("FilePath")).ToString
+        End If
     End Sub
 End Class

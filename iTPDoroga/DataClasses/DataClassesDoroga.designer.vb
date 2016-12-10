@@ -486,6 +486,11 @@ Partial Public Class DataClassesDorogaDataContext
 	Public Function p_GetКонтактФото(<Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="КодСотрудник", DbType:="Int")> ByVal кодСотрудник As System.Nullable(Of Integer)) As IQueryable(Of p_GetКонтактФотоResult)
 		Return Me.CreateMethodCallQuery(Of p_GetКонтактФотоResult)(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодСотрудник)
 	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.CountФото_сотрудников", IsComposable:=true)>  _
+	Public Function CountФото_сотрудников(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодСотрудник As System.Nullable(Of Integer)) As System.Nullable(Of Integer)
+		Return CType(Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодСотрудник).ReturnValue,System.Nullable(Of Integer))
+	End Function
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.address")>  _
@@ -3165,7 +3170,7 @@ Partial Public Class Страна
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Флаг", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Флаг", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Флаг() As System.Data.Linq.Binary
 		Get
 			Return Me._Флаг
@@ -3181,7 +3186,7 @@ Partial Public Class Страна
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 1]", Storage:="_Флаг_1", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 1]", Storage:="_Флаг_1", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Флаг_1() As System.Data.Linq.Binary
 		Get
 			Return Me._Флаг_1
@@ -3197,7 +3202,7 @@ Partial Public Class Страна
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 2]", Storage:="_Флаг_2", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Флаг 2]", Storage:="_Флаг_2", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Флаг_2() As System.Data.Linq.Binary
 		Get
 			Return Me._Флаг_2
@@ -6309,7 +6314,7 @@ Partial Public Class Фото
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Оригинал() As System.Data.Linq.Binary
 		Get
 			Return Me._Оригинал
@@ -9111,7 +9116,7 @@ Partial Public Class p_GetКонтактФотоResult
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)", UpdateCheck:=UpdateCheck.Never)>  _
 	Public Property Оригинал() As System.Data.Linq.Binary
 		Get
 			Return Me._Оригинал

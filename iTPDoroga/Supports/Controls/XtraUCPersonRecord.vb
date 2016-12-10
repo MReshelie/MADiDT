@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Data.Linq
+Imports DevExpress.Utils.Win
+Imports DevExpress.XtraBars.Forms
 Imports DevExpress.XtraBars.Navigation
 Imports DevExpress.XtraEditors
 Imports DevExpress.XtraEditors.Controls
@@ -15,6 +17,7 @@ Public Class XtraUCPersonRecord
 
     Dim db As New DataClassesDorogaDataContext
     Dim iСотрудник As Integer
+    Dim newRow As Boolean = False
     Dim riLookUpEditСтепень As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditСтепень"}
     Dim riLookUpEditДолжность As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditДолжность"}
     Dim riLookUpEditФакультет As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditФакультет"}
@@ -48,6 +51,7 @@ Public Class XtraUCPersonRecord
 
         If (Not DBConnect()) Then Return
 
+        AddHandler riPopupCEdit.CloseUp, AddressOf riPopupCEdit_CloseUp
         AddHandler riPopupCEdit.QueryPopUp, AddressOf riPopupCEdit_QueryPopUp
         AddHandler riPopupCEdit.QueryResultValue, AddressOf riPopupCEdit_QueryResultValue
     End Sub
@@ -56,50 +60,116 @@ Public Class XtraUCPersonRecord
         Me.NavigationFramePersona.SelectedPage = CType(Me.NavigationFramePersona.Pages.FindFirst(Function(x) CStr(x.Tag) = e.Group.Caption), NavigationPage)
     End Sub
 
-#Region "Пользовательские процедуры и функции"
-    Private Function DBConnect() As Boolean
-        db = New DataClassesDorogaDataContext()
+    Private Sub riPopupCEdit_CloseUp(ByVal sender As Object, ByVal e As CloseUpEventArgs)
+        If e.CloseMode = PopupCloseMode.Immediate And Not e.AcceptValue Then
+            Me.GridViewФото.SetFocusedValue(e.AcceptValue)
+        End If
+    End Sub
 
-        Me.LookUpEditФакультет.Properties.DataSource = Nothing
-        Me.LookUpEditФакультет.Properties.DataSource = db.p_GetListOfFullФакультет().ToList()
-        Me.LookUpEditСтепень.Properties.DataSource = Nothing
-        Me.LookUpEditСтепень.Properties.DataSource = db.p_GetListOfFullСтепень().ToList()
-        Me.LookUpEditДолжность.Properties.DataSource = Nothing
-        Me.LookUpEditДолжность.Properties.DataSource = db.p_GetListOfFullДолжность().ToList()
-
-        Dim Kafedra = From tKS In db.p_GetКафедраФакультет(CType(Me.LookUpEditФакультет.EditValue, Integer))
-
-        Me.LookUpEditКафедра.Properties.DataSource = Nothing
-        Me.LookUpEditКафедра.Properties.DataSource = Kafedra
-
-        Dim iKafedra = From tKS In db.p_GetКафедра_Сотрудник(iСотрудник) Take 1 Select tKS.кодКафедра
-
-        For Each iK As Integer In iKafedra
-            Me.LookUpEditКафедра.EditValue = iK
+    Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
+        For Each cntrl As Control In Me.PopupContainerControlФото.Controls
+            If cntrl.Name = "cntrFolders" Then
+                For Each ccntrl As Control In cntrl.Controls
+                    If ccntrl.Name = "LayoutControlUCFE" Then
+                        For Each cccntrl As Control In ccntrl.Controls
+                            If cccntrl.Name = "PanelControlPhoto" Then
+                                For Each ccccntrl As Control In cccntrl.Controls
+                                    If ccccntrl.Name = "ucPhoto" Then
+                                        For Each _property In ccccntrl.GetType().GetProperties()
+                                            If _property.Name = "DescriptionPhoto" Then
+                                                e.Value = String.Format("{0}", ccccntrl.GetType().GetProperty(_property.Name).GetValue(ccccntrl, Nothing))
+                                                Exit Sub
+                                            End If
+                                        Next
+                                    End If
+                                Next
+                            End If
+                        Next
+                    End If
+                Next
+            End If
         Next
+    End Sub
 
-        Dim Kontakt = From p In db.p_GetКонтактСотрудник(iСотрудник)
-        Dim Email = From p In db.p_GetEmailСотрудник(iСотрудник)
-        Dim Address = From p In db.p_GetКонтактАдрес(iСотрудник)
-        Dim Passport = From p In db.p_GetКонтактПаспорт(iСотрудник)
-        Dim Photo = From p In db.p_GetКонтактФото(iСотрудник)
-        Dim Password = From p In db.p_GetКонтактПароль(iСотрудник)
+    Private Sub riPopupCEdit_QueryPopUp(ByVal sender As Object, ByVal e As CancelEventArgs)
+        Me.PopupContainerControlФото.Size = New Size(620, 330)
+        Me.PopupContainerControlФото.Controls.Add(New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"})
+    End Sub
 
-        Me.GridControlКонтакт.DataSource = Kontakt
-        Me.GridControlEmail.DataSource = Email
-        Me.GridControlАдрес.DataSource = Address
-        Me.GridControlПаспорт.DataSource = Passport
-        Me.GridControlФото.DataSource = Photo
-        Me.GridControlБезопасность.DataSource = Password
+#Region "Процедуры работы с записями SQL Server"
+    Private Sub GridControlФото_EmbeddedNavigator_ButtonClick(sender As Object, e As NavigatorButtonClickEventArgs) Handles GridControlФото.EmbeddedNavigator.ButtonClick
+        Dim view As ColumnView = CType(Me.GridControlФото.FocusedView, ColumnView)
 
-        Call GVSetings(Me.GridViewКонтакт)
-        Call GVSetings(Me.GridViewEmail)
-        Call GVSetings(Me.GridViewАдрес)
-        Call GVSetings(Me.GridViewПаспорт)
-        Call GVSetings(Me.GridViewФото)
-        Call GVSetings(Me.GridViewБезопасность)
-        Return True
-    End Function
+        Select Case e.Button.ButtonType
+            Case NavigatorButtonType.EndEdit
+                If view.UpdateCurrentRow() Then
+                    Try
+                        If newRow = False Then
+                            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"), Date.Today)
+
+                            If pUserF = "Администратор системы" Then
+                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
+                            Else
+                                view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+                            End If
+                        End If
+
+                        Try
+                            db.SubmitChanges(ConflictMode.FailOnFirstConflict)
+                            newRow = False
+                        Catch ex As Exception
+                            XtraMessageBox.Show(String.Format("Ошибка при записи в БД: таблица [{2}] БД:{0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex, SourceName(view.Name)),
+                                       "Система: новая запись в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+                        End Try
+                    Catch ex As ChangeConflictException
+                        XtraMessageBox.Show(String.Format("Конфликты при записи в БД: таблица [{2}] БД:{0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message, SourceName(view.Name)),
+                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+
+                        For Each occ As ObjectChangeConflict In db.ChangeConflicts
+                            occ.Resolve(RefreshMode.OverwriteCurrentValues)
+                        Next
+                    Catch ex As Exception
+                        XtraMessageBox.Show(String.Format("Попытка записи в таблицу [{2}] БД завершилась с ошибкой: {0}{0}{1}.",
+                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message, SourceName(view.Name)),
+                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+
+                        If (Not DBConnect()) Then Return
+                    End Try
+                End If
+        End Select
+
+    End Sub
+
+    Private Sub GridViewФото_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewФото.InitNewRow
+        Dim view As GridView = CType(sender, GridView)
+
+        newRow = True
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"), Date.Today)
+
+        ' Проверка наличия фото
+        If (New DataClassesDorogaDataContext()).CountФото_сотрудников(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник")), Integer)) = 0 Then
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("База"), True)
+        Else
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("База"), False)
+        End If
+
+        If pUserF = "Администратор системы" Then
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
+        Else
+            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0} {1}.", Trim(pUserF), Mid(Trim(pUserS), 1, 1)))
+        End If
+
+        view.Columns("Записал").OptionsColumn.ReadOnly = True
+        view.Columns("датаЗаписал").OptionsColumn.ReadOnly = True
+        view.Columns("Исправил").OptionsColumn.ReadOnly = True
+        view.Columns("датаИсправил").OptionsColumn.ReadOnly = True
+        view.FocusedColumn = view.Columns("Тип_фото")
+    End Sub
+#End Region
+
+#Region "Пользовательские процедуры и функции"
 
     Private Sub GVSetings(ByVal _gv As GridView)
         Select Case _gv.Name
@@ -191,8 +261,6 @@ Public Class XtraUCPersonRecord
 
                 _gv.Columns("Тип_фото").ColumnEdit = Me.riLookUpEditФото
                 _gv.Columns("Тип_фото").Caption = "Тип фотографии"
-
-                '_gv.Columns("Фото").ColumnEdit = Me.riButtonEditФото
                 _gv.Columns("Источник").ColumnEdit = Me.riPopupCEdit
                 _gv.Columns("Источник").Caption = "Папка пользовательских фотографий"
                 _gv.Columns("Хранилище").Caption = "Папка на сервере БД"
@@ -290,13 +358,48 @@ Public Class XtraUCPersonRecord
         riLookUpEdit.DataSource = db.GetParameters(i).ToList()
     End Sub
 
-    Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
+    Private Function DBConnect() As Boolean
+        db = New DataClassesDorogaDataContext()
 
-    End Sub
+        Me.LookUpEditФакультет.Properties.DataSource = Nothing
+        Me.LookUpEditФакультет.Properties.DataSource = db.p_GetListOfFullФакультет().ToList()
+        Me.LookUpEditСтепень.Properties.DataSource = Nothing
+        Me.LookUpEditСтепень.Properties.DataSource = db.p_GetListOfFullСтепень().ToList()
+        Me.LookUpEditДолжность.Properties.DataSource = Nothing
+        Me.LookUpEditДолжность.Properties.DataSource = db.p_GetListOfFullДолжность().ToList()
 
-    Private Sub riPopupCEdit_QueryPopUp(ByVal sender As Object, ByVal e As CancelEventArgs)
-        Me.PopupContainerControlФото.Size = New Size(620, 330)
-        Me.PopupContainerControlФото.Controls.Add(New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"})
-    End Sub
+        Dim Kafedra = From tKS In db.p_GetКафедраФакультет(CType(Me.LookUpEditФакультет.EditValue, Integer))
+
+        Me.LookUpEditКафедра.Properties.DataSource = Nothing
+        Me.LookUpEditКафедра.Properties.DataSource = Kafedra
+
+        Dim iKafedra = From tKS In db.p_GetКафедра_Сотрудник(iСотрудник) Take 1 Select tKS.кодКафедра
+
+        For Each iK As Integer In iKafedra
+            Me.LookUpEditКафедра.EditValue = iK
+        Next
+
+        Dim Kontakt = From p In db.p_GetКонтактСотрудник(iСотрудник)
+        Dim Email = From p In db.p_GetEmailСотрудник(iСотрудник)
+        Dim Address = From p In db.p_GetКонтактАдрес(iСотрудник)
+        Dim Passport = From p In db.p_GetКонтактПаспорт(iСотрудник)
+        Dim Photo = From p In db.p_GetКонтактФото(iСотрудник)
+        Dim Password = From p In db.p_GetКонтактПароль(iСотрудник)
+
+        Me.GridControlКонтакт.DataSource = Kontakt
+        Me.GridControlEmail.DataSource = Email
+        Me.GridControlАдрес.DataSource = Address
+        Me.GridControlПаспорт.DataSource = Passport
+        Me.GridControlФото.DataSource = Photo
+        Me.GridControlБезопасность.DataSource = Password
+
+        Call GVSetings(Me.GridViewКонтакт)
+        Call GVSetings(Me.GridViewEmail)
+        Call GVSetings(Me.GridViewАдрес)
+        Call GVSetings(Me.GridViewПаспорт)
+        Call GVSetings(Me.GridViewФото)
+        Call GVSetings(Me.GridViewБезопасность)
+        Return True
+    End Function
 #End Region
 End Class

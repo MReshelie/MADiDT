@@ -80,10 +80,6 @@ Public Class XtraUCFileExplorer
 
         If GetSubFolders(e.Node.Path).Length <= 0 Then
             ucPhoto = New XtraUCPhoto(e.Node.Path) With {.Parent = Me.PanelControlPhoto, .Dock = DockStyle.Fill, .Name = "ucPhoto"}
-
-            'If PanelSize(620, 320) Then
-            '    Return
-            'End If
         Else
             Do While i < GetSubFolders(e.Node.Path).Length
                 e.Node.ChildNodes.Add(CreateNode((GetSubFolders(e.Node.Path))(i)))
