@@ -170,7 +170,10 @@ Public Class XtraUCPersonRecord
 #End Region
 
 #Region "Пользовательские процедуры и функции"
-
+    ''' <summary>
+    ''' Процедура: Настройка свойств, наименований и механизмов колонок таблиц контролера
+    ''' </summary>
+    ''' <param name="_gv"></param>
     Private Sub GVSetings(ByVal _gv As GridView)
         Select Case _gv.Name
             Case "GridViewКонтакт"
@@ -300,7 +303,6 @@ Public Class XtraUCPersonRecord
                 _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditПароль
                 _gv.Columns("IDPassport").Visible = False
                 _gv.Columns("IDUser").Visible = False
-
         End Select
 
         For Each column As GridColumn In _gv.Columns
@@ -311,6 +313,10 @@ Public Class XtraUCPersonRecord
         _gv.OptionsView.ColumnAutoWidth = True
     End Sub
 
+    ''' <summary>
+    ''' Процедура: Инициализация полей таблиц контролера
+    ''' </summary>
+    ''' <param name="riLUEF">служебное поле</param>
     Private Sub InitRILookUpEdit(ByVal riLUEF As RepositoryItemLookUpEdit)
         Dim coll As LookUpColumnInfoCollection = riLUEF.Columns
 
@@ -344,6 +350,12 @@ Public Class XtraUCPersonRecord
         riLUEF.DisplayMember = "NAME"
     End Sub
 
+    ''' <summary>
+    ''' Процедура: заполнение полей должность, степенб, факультет
+    ''' </summary>
+    ''' <param name="riLookUpEditD">Список: стандартные наименование должностей</param>
+    ''' <param name="riLookUpEditS">Список: стандартные наименования ученых степеней</param>
+    ''' <param name="riLookUpEditF">Список: наименования факультетов</param>
     Private Sub riLookUpEditData0(ByVal riLookUpEditD As RepositoryItemLookUpEdit, ByVal riLookUpEditS As RepositoryItemLookUpEdit, ByVal riLookUpEditF As RepositoryItemLookUpEdit)
         riLookUpEditD.DataSource = Nothing
         riLookUpEditS.DataSource = Nothing
@@ -353,11 +365,20 @@ Public Class XtraUCPersonRecord
         riLookUpEditF.DataSource = db.p_GetListOfФакультет.ToList()
     End Sub
 
+    ''' <summary>
+    ''' Процедура: заполенение данными служебных полей таблиц
+    ''' </summary>
+    ''' <param name="i">номер поля</param>
+    ''' <param name="riLookUpEdit">имя поля</param>
     Private Sub riLookUpEditData1(ByVal i As Integer, ByVal riLookUpEdit As RepositoryItemLookUpEdit)
         riLookUpEdit.DataSource = Nothing
         riLookUpEdit.DataSource = db.GetParameters(i).ToList()
     End Sub
 
+    ''' <summary>
+    ''' Функция: подключение к БД
+    ''' </summary>
+    ''' <returns></returns>
     Private Function DBConnect() As Boolean
         db = New DataClassesDorogaDataContext()
 

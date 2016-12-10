@@ -88,11 +88,6 @@ Public Class XtraUCFileExplorer
         End If
     End Sub
 
-    'Private Sub breadCrumbEdit_Click(sender As Object, e As EventArgs) Handles breadCrumbEdit.Click
-    '    Me.LayoutControlItem2.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
-    '    Me.GridControlФото.DataSource = Nothing
-    'End Sub
-
 #Region "Пользовательские процелуры и функции"
     ''' <summary>
     ''' Установка начального пути
@@ -139,7 +134,11 @@ Public Class XtraUCFileExplorer
         Next driveInfo
     End Function
 
-    'Get all subfolders contained within the target directory
+    ''' <summary>
+    ''' Функция: Get all subfolders contained within the target directory 
+    ''' </summary>
+    ''' <param name="rootDir"></param>
+    ''' <returns></returns>
     Public Shared Function GetSubFolders(ByVal rootDir As String) As String()
         Dim subDirs As String() = GetSubDirs(rootDir)
 
@@ -157,7 +156,11 @@ Public Class XtraUCFileExplorer
         Return res
     End Function
 
-    'Get the names of the subdirectories
+    ''' <summary>
+    ''' Функция: Get the names of the subdirectories
+    ''' </summary>
+    ''' <param name="dir">имя текущей директории</param>
+    ''' <returns></returns>
     Public Shared Function GetSubDirs(ByVal dir As String) As String()
         Dim subDirs As String() = Nothing
 
@@ -172,30 +175,12 @@ Public Class XtraUCFileExplorer
     ''' <summary>
     ''' Функция: создание ветви для компонента BreadCrumbNode
     ''' </summary>
-    ''' <param name="path"></param>
+    ''' <param name="path">имя ветви (текущая директория)</param>
     ''' <returns></returns>
     Protected Function CreateNode(ByVal path As String) As BreadCrumbNode
         Dim folderName As String = New DirectoryInfo(path).Name
 
         Return New BreadCrumbNode(folderName, folderName, True)
-    End Function
-
-    Private Function PanelSize(ByVal iW As Integer, ByVal iH As Integer) As Boolean
-        For Each cntrl As Control In Me.Parent.Controls
-            If cntrl.Name = "cntrFolders" Then
-                For Each ccntrl As Control In cntrl.Parent.Parent.Controls
-                    If ccntrl.Name = "PopupContainerControlФото" Then
-                        Console.WriteLine(String.Format("0.ccntrl.Name = {0}, ccntrl.Width = {1}, ccntrl.Height = {2}", ccntrl.Name, ccntrl.Width, ccntrl.Height))
-                        'cntrl.Size = New Size(iW - 20, iH - 10)
-                        ccntrl.Size = New Size(iW, iH)
-                        Console.WriteLine(String.Format("1.ccntrl.Name = {0}, ccntrl.Width = {1}, ccntrl.Height = {2}", ccntrl.Name, ccntrl.Width, ccntrl.Height))
-                        Exit For
-                    End If
-                Next
-            End If
-        Next
-
-        Return True
     End Function
 #End Region
 End Class
