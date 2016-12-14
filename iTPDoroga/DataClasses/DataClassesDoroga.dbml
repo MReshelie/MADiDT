@@ -718,4 +718,24 @@
     <Parameter Name="кодСотрудник" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.p_GetDBInfo" Method="p_GetDBInfo" IsComposable="true">
+    <ElementType Name="p_GetDBInfoResult">
+      <Column Name="SERVER" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="DB_NAME" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="FILE_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Type_desc" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="NAME" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Drive" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Physical_Name" Type="System.String" DbType="NVarChar(260) NOT NULL" CanBeNull="false" />
+      <Column Name="Ext" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="SIZE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Growth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.CheckCreateDirectory" Method="CheckCreateDirectory">
+    <Parameter Name="checkdir" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="CheckCreateDirectoryResult">
+      <Column Name="[Результат: ]" Member="Результат__" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

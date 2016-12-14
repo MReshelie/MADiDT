@@ -19,6 +19,57 @@ Module MainModule
 
 #Region "Пользовательские процедуры и функции"
     ''' <summary>
+    ''' Процедура: Задержка строки сообщения на экране заставки загрузки прграммы
+    ''' </summary>
+    ''' <param name="interval">Величина интервала задержки в милисекунлах</param>
+    Public Sub ConnectDBExtracted(ByVal interval As Integer)
+        For i As Integer = 1 To 100
+            System.Threading.Thread.Sleep(interval)
+        Next i
+    End Sub
+
+    ''' <summary>
+    ''' Процедура: Обновление строки подключения к БД в app.config
+    ''' </summary>
+    ''' <param name="exeConfigName">Имя выполняемого модуля</param>
+    ''' <param name="sConnStr">Строка подключения</param>
+    ''' <param name="strNameConnStr">Имя строки подключения</param>
+    Public Sub ToggleConfigEncryption(ByVal exeConfigName As String, ByVal sConnStr As String, ByVal strNameConnStr As String)
+        ' Передавать имя файла конфигурации для выполняемого модуля без расширения .config
+        Try
+            ' Открытие файла конфигурации и получение значений для секции connectionStrings.
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(exeConfigName)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+
+            If section.SectionInformation.IsProtected Then
+                ' Удаление криптования секции файла конфигурации.
+                section.SectionInformation.UnprotectSection()
+            End If
+
+            For i As Integer = 0 To section.ConnectionStrings.Count - 1
+                If section.ConnectionStrings(i).ToString = Settings.Default.Item(strNameConnStr).ToString Then
+                    section.ConnectionStrings(i).ConnectionString = Trim(sConnStr)
+                    config.Save(ConfigurationSaveMode.Modified)
+                    Settings.Default.Item(strNameConnStr) = section.ConnectionStrings(i).ToString
+                    Exit For
+                End If
+            Next
+
+            'If section.SectionInformation.IsProtected = False Then
+            '    ' Криптование секции файла конфигурации.
+            '    section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider")
+            'End If
+
+            ' Сохранение текущей конфигурации
+            config.Save()
+            XtraMessageBox.Show(String.Format("Файл с конфигурацией и новой строкой подключения: {0}{0}{1}{0}{0}успешно сохранен и перезаписан.{0}{0}Система будет перезапущена.",
+                                              Global.Microsoft.VisualBasic.ChrW(10), strPassword(sConnStr)),
+                                            "Система: перезапуск.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    ''' <summary>
     ''' Функция: Загрузка данных в объект DataTable
     ''' </summary>
     ''' <param name="parIList">Объект List, данные из которго перезаписываются в Datatable</param>
@@ -62,16 +113,6 @@ Module MainModule
 
         Return ret
     End Function
-
-    ''' <summary>
-    ''' Процедура: Задержка строки сообщения на экране заставки загрузки прграммы
-    ''' </summary>
-    ''' <param name="interval">Величина интервала задержки в милисекунлах</param>
-    Public Sub ConnectDBExtracted(ByVal interval As Integer)
-        For i As Integer = 1 To 100
-            System.Threading.Thread.Sleep(interval)
-        Next i
-    End Sub
 
     ''' <summary>
     ''' Функция: Получение списка доступных БД с сервера (SQL server)
@@ -137,47 +178,6 @@ Module MainModule
     End Function
 
     ''' <summary>
-    ''' Процедура: Обновление строки подключения к БД в app.config
-    ''' </summary>
-    ''' <param name="exeConfigName">Имя выполняемого модуля</param>
-    ''' <param name="sConnStr">Строка подключения</param>
-    ''' <param name="strNameConnStr">Имя строки подключения</param>
-    Public Sub ToggleConfigEncryption(ByVal exeConfigName As String, ByVal sConnStr As String, ByVal strNameConnStr As String)
-        ' Передавать имя файла конфигурации для выполняемого модуля без расширения .config
-        Try
-            ' Открытие файла конфигурации и получение значений для секции connectionStrings.
-            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(exeConfigName)
-            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
-
-            If section.SectionInformation.IsProtected Then
-                ' Удаление криптования секции файла конфигурации.
-                section.SectionInformation.UnprotectSection()
-            End If
-
-            For i As Integer = 0 To section.ConnectionStrings.Count - 1
-                If section.ConnectionStrings(i).ToString = Settings.Default.Item(strNameConnStr).ToString Then
-                    section.ConnectionStrings(i).ConnectionString = Trim(sConnStr)
-                    config.Save(ConfigurationSaveMode.Modified)
-                    Settings.Default.Item(strNameConnStr) = section.ConnectionStrings(i).ToString
-                    Exit For
-                End If
-            Next
-
-            'If section.SectionInformation.IsProtected = False Then
-            '    ' Криптование секции файла конфигурации.
-            '    section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider")
-            'End If
-
-            ' Сохранение текущей конфигурации
-            config.Save()
-            XtraMessageBox.Show(String.Format("Файл с конфигурацией и новой строкой подключения: {0}{0}{1}{0}{0}успешно сохранен и перезаписан.{0}{0}Система будет перезапущена.",
-                                              Global.Microsoft.VisualBasic.ChrW(10), strPassword(sConnStr)),
-                                            "Система: перезапуск.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
-        Catch ex As Exception
-        End Try
-    End Sub
-
-    ''' <summary>
     ''' Функция: Скрытие пароля в строке connectionString
     ''' </summary>
     ''' <param name="_strConn">Исходная строка подключения</param>
@@ -211,9 +211,9 @@ Module MainModule
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Функция: Преобразование изображения в массив байтов
     ''' </summary>
-    ''' <param name="imageIn"></param>
+    ''' <param name="imageIn">файл с изображением</param>
     ''' <returns></returns>
     Public Function ImageToByteArray(ByVal imageIn As System.Drawing.Image) As Byte()
         Using ms As MemoryStream = New MemoryStream()
@@ -223,9 +223,9 @@ Module MainModule
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Функция: Определение расширения файла с изображением
     ''' </summary>
-    ''' <param name="_image"></param>
+    ''' <param name="_image">файл с изображением</param>
     ''' <returns></returns>
     Public Function GetImageExt(ByVal _image As Image) As String
         If _image Is Nothing Then

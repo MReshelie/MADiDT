@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Data.Linq
+Imports System.IO
 Imports DevExpress.Utils.Win
 Imports DevExpress.XtraBars.Forms
 Imports DevExpress.XtraBars.Navigation
@@ -61,9 +62,20 @@ Public Class XtraUCPersonRecord
     End Sub
 
     Private Sub riPopupCEdit_CloseUp(ByVal sender As Object, ByVal e As CloseUpEventArgs)
-        If e.CloseMode = PopupCloseMode.Immediate And Not e.AcceptValue Then
-            Me.GridViewФото.SetFocusedValue(e.AcceptValue)
-        End If
+        db = New DataClassesDorogaDataContext()
+
+        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+        Dim res As String() = (From _res In db.CheckCreateDirectory((From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo") Select _res.Результат__).First().Split(New Char() {"|"c})
+
+        XtraMessageBox.Show(String.Format("{1}{0}{2}{0}{3}", Global.Microsoft.VisualBasic.ChrW(10), res(0), res(1), res(2)),
+                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}\[{1} {2} {3} {4}]{5}",
+                                                                             (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
+                                                                                             Me.TextEditФамилия.Text,
+                                                                                             Me.TextEditИмя.Text,
+                                                                                             Me.TextEditОтчество.Text,
+                                                                                             Date.Now,
+                                                                                             Path.GetExtension(CType(e.Value, String))))
     End Sub
 
     Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
@@ -267,6 +279,7 @@ Public Class XtraUCPersonRecord
                 _gv.Columns("Источник").ColumnEdit = Me.riPopupCEdit
                 _gv.Columns("Источник").Caption = "Папка пользовательских фотографий"
                 _gv.Columns("Хранилище").Caption = "Папка на сервере БД"
+                _gv.Columns("Хранилище").OptionsColumn.AllowEdit = False
                 _gv.Columns("База").ColumnEdit = Me.riCheckEditФото
                 _gv.Columns("База").Caption = "Основная"
                 _gv.Columns("датаЗаписал").Caption = "Дата записи"

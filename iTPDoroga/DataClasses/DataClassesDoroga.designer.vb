@@ -491,6 +491,17 @@ Partial Public Class DataClassesDorogaDataContext
 	Public Function CountФото_сотрудников(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодСотрудник As System.Nullable(Of Integer)) As System.Nullable(Of Integer)
 		Return CType(Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодСотрудник).ReturnValue,System.Nullable(Of Integer))
 	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.p_GetDBInfo", IsComposable:=true)>  _
+	Public Function p_GetDBInfo() As IQueryable(Of p_GetDBInfoResult)
+		Return Me.CreateMethodCallQuery(Of p_GetDBInfoResult)(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo))
+	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.CheckCreateDirectory")>  _
+	Public Function CheckCreateDirectory(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="NVarChar(MAX)")> ByVal checkdir As String) As ISingleResult(Of CheckCreateDirectoryResult)
+		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), checkdir)
+		Return CType(result.ReturnValue,ISingleResult(Of CheckCreateDirectoryResult))
+	End Function
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.address")>  _
@@ -9184,6 +9195,177 @@ Partial Public Class p_GetКонтактФотоResult
 		Set
 			If (String.Equals(Me._Примечание, value) = false) Then
 				Me._Примечание = value
+			End If
+		End Set
+	End Property
+End Class
+
+Partial Public Class p_GetDBInfoResult
+	
+	Private _SERVER As String
+	
+	Private _DB_NAME As String
+	
+	Private _FILE_ID As Integer
+	
+	Private _Type_desc As String
+	
+	Private _NAME As String
+	
+	Private _Drive As String
+	
+	Private _Physical_Name As String
+	
+	Private _Ext As String
+	
+	Private _SIZE As Integer
+	
+	Private _Growth As Integer
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_SERVER", DbType:="NVarChar(128)")>  _
+	Public Property SERVER() As String
+		Get
+			Return Me._SERVER
+		End Get
+		Set
+			If (String.Equals(Me._SERVER, value) = false) Then
+				Me._SERVER = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_DB_NAME", DbType:="NVarChar(128)")>  _
+	Public Property DB_NAME() As String
+		Get
+			Return Me._DB_NAME
+		End Get
+		Set
+			If (String.Equals(Me._DB_NAME, value) = false) Then
+				Me._DB_NAME = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_FILE_ID", DbType:="Int NOT NULL")>  _
+	Public Property FILE_ID() As Integer
+		Get
+			Return Me._FILE_ID
+		End Get
+		Set
+			If ((Me._FILE_ID = value)  _
+						= false) Then
+				Me._FILE_ID = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Type_desc", DbType:="NVarChar(60)")>  _
+	Public Property Type_desc() As String
+		Get
+			Return Me._Type_desc
+		End Get
+		Set
+			If (String.Equals(Me._Type_desc, value) = false) Then
+				Me._Type_desc = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_NAME", DbType:="NVarChar(128) NOT NULL", CanBeNull:=false)>  _
+	Public Property NAME() As String
+		Get
+			Return Me._NAME
+		End Get
+		Set
+			If (String.Equals(Me._NAME, value) = false) Then
+				Me._NAME = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Drive", DbType:="NVarChar(1)")>  _
+	Public Property Drive() As String
+		Get
+			Return Me._Drive
+		End Get
+		Set
+			If (String.Equals(Me._Drive, value) = false) Then
+				Me._Drive = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Physical_Name", DbType:="NVarChar(260) NOT NULL", CanBeNull:=false)>  _
+	Public Property Physical_Name() As String
+		Get
+			Return Me._Physical_Name
+		End Get
+		Set
+			If (String.Equals(Me._Physical_Name, value) = false) Then
+				Me._Physical_Name = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Ext", DbType:="NVarChar(3)")>  _
+	Public Property Ext() As String
+		Get
+			Return Me._Ext
+		End Get
+		Set
+			If (String.Equals(Me._Ext, value) = false) Then
+				Me._Ext = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_SIZE", DbType:="Int NOT NULL")>  _
+	Public Property SIZE() As Integer
+		Get
+			Return Me._SIZE
+		End Get
+		Set
+			If ((Me._SIZE = value)  _
+						= false) Then
+				Me._SIZE = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Growth", DbType:="Int NOT NULL")>  _
+	Public Property Growth() As Integer
+		Get
+			Return Me._Growth
+		End Get
+		Set
+			If ((Me._Growth = value)  _
+						= false) Then
+				Me._Growth = value
+			End If
+		End Set
+	End Property
+End Class
+
+Partial Public Class CheckCreateDirectoryResult
+	
+	Private _Результат__ As String
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Результат: ]", Storage:="_Результат__", DbType:="NVarChar(MAX)")>  _
+	Public Property Результат__() As String
+		Get
+			Return Me._Результат__
+		End Get
+		Set
+			If (String.Equals(Me._Результат__, value) = false) Then
+				Me._Результат__ = value
 			End If
 		End Set
 	End Property
