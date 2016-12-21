@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="Supports\Classes\DrawImplementer.vb" />
     <Compile Include="Supports\Classes\ImageFileInfo.vb" />
     <Compile Include="Supports\Classes\PersonInfo.vb" />
     <Compile Include="Supports\Controls\XtraUCEditFormTable.Designer.vb">

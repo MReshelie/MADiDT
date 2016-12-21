@@ -12,6 +12,7 @@ Imports DevExpress.XtraGrid.Columns
 Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraGrid.Views.Grid
 Imports DevExpress.XtraNavBar
+Imports DevExpress.XtraSplashScreen
 
 Public Class XtraUCPersonRecord
     Inherits EditFormUserControl
@@ -30,7 +31,7 @@ Public Class XtraUCPersonRecord
     Dim riLookUpEditEmail As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditEmail"}
     Dim riMemoEditEmail As New RepositoryItemMemoEdit() With {.Name = "riMemoEditEmail", .WordWrap = True}
     Dim riLookUpEditФото As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditФото"}
-    Dim riButtonEditФото As New RepositoryItemButtonEdit() With {.Name = "riButtonEditФото"}
+    Dim riPictureEditФото As New RepositoryItemPictureEdit() With {.Name = "riPictureEditФото"}
     Dim riPopupCEdit As New RepositoryItemPopupContainerEdit() With {.Name = "riPopupCEdit"}
     Dim riCheckEditФото As New RepositoryItemCheckEdit() With {.Name = "riCheckEditФото"}
     Dim riMemoEditФото As New RepositoryItemMemoEdit() With {.Name = "riMemoEditФото", .WordWrap = True}
@@ -44,6 +45,7 @@ Public Class XtraUCPersonRecord
 
         Me.NavBarControlPersona.Visible = False
         Me.riPopupCEdit.Properties.PopupControl = Me.PopupContainerControlФото
+        Me.riPictureEditФото.SizeMode = PictureSizeMode.Stretch
     End Sub
 
     Private Sub XtraUCPersonRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -52,6 +54,10 @@ Public Class XtraUCPersonRecord
 
         If (Not DBConnect()) Then Return
 
+        AddHandler riLookUpEditФото.Leave, AddressOf riLookUpEditФото_Leave
+        AddHandler riPictureEditФото.MouseHover, AddressOf riPictureEditФото_MouseHover
+        AddHandler riPictureEditФото.MouseLeave, AddressOf riPictureEditФото_MouseLeave
+        AddHandler riPopupCEdit.Popup, AddressOf riPopupCEdit_Popup
         AddHandler riPopupCEdit.CloseUp, AddressOf riPopupCEdit_CloseUp
         AddHandler riPopupCEdit.QueryPopUp, AddressOf riPopupCEdit_QueryPopUp
         AddHandler riPopupCEdit.QueryResultValue, AddressOf riPopupCEdit_QueryResultValue
@@ -61,14 +67,66 @@ Public Class XtraUCPersonRecord
         Me.NavigationFramePersona.SelectedPage = CType(Me.NavigationFramePersona.Pages.FindFirst(Function(x) CStr(x.Tag) = e.Group.Caption), NavigationPage)
     End Sub
 
+    Private Sub riLookUpEditФото_Leave(sender As Object, e As System.EventArgs)
+        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+
+        ' Проверка выбора типа фотографи
+        If Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото")), String)) <> "0" Then
+            view.Columns("Источник").OptionsColumn.AllowEdit = True
+        End If
+    End Sub
+    Private Sub riPictureEditФото_MouseHover(sender As Object, e As EventArgs)
+        Dim editor As PictureEdit = TryCast(sender, PictureEdit)
+
+        If editor.Image IsNot Nothing Then
+            SplashScreenManager.ShowImage(ResizeImage(editor.Image, New Size(512, 384)), True, True, SplashImagePainter.Painter)
+            SplashImagePainter.Painter.ViewInfo.Stage = String.Empty
+            SplashScreenManager.Default.Invalidate()
+        End If
+    End Sub
+
+    Private Sub riPictureEditФото_MouseLeave(sender As Object, e As EventArgs)
+        Dim editor As PictureEdit = TryCast(sender, PictureEdit)
+
+        If editor.Image IsNot Nothing Then
+            SplashScreenManager.HideImage()
+        End If
+    End Sub
+
+    Private Sub riPopupCEdit_Popup(sender As Object, e As System.EventArgs)
+        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+        Dim edit As PopupContainerEdit = TryCast(sender, PopupContainerEdit)
+
+        ' Проверка заполненности полей идентификации пользователя
+        If Trim(Me.TextEditФамилия.Text).Length = 0 Then
+            If edit.IsPopupOpen Then
+                edit.ClosePopup()
+            End If
+
+            XtraMessageBox.Show(String.Format("Не внесена фамилия пользователя!!!"),
+                                           "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+            Exit Sub
+        End If
+
+        If Trim(Me.TextEditИмя.Text).Length = 0 Then
+            If edit.IsPopupOpen Then
+                edit.ClosePopup()
+            End If
+
+            XtraMessageBox.Show(String.Format("Не внесено имя пользователя!!!"),
+                                           "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+            Exit Sub
+        End If
+    End Sub
+
     Private Sub riPopupCEdit_CloseUp(ByVal sender As Object, ByVal e As CloseUpEventArgs)
+        If e.Value Is Nothing Then Exit Sub
+
         db = New DataClassesDorogaDataContext()
 
         Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
         Dim res As String() = (From _res In db.CheckCreateDirectory((From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo") Select _res.Результат__).First().Split(New Char() {"|"c})
 
-        XtraMessageBox.Show(String.Format("{1}{0}{2}{0}{3}", Global.Microsoft.VisualBasic.ChrW(10), res(0), res(1), res(2)),
-                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
         view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}\[{1} {2} {3} {4}]{5}",
                                                                              (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
                                                                                              Me.TextEditФамилия.Text,
@@ -76,6 +134,8 @@ Public Class XtraUCPersonRecord
                                                                                              Me.TextEditОтчество.Text,
                                                                                              Date.Now,
                                                                                              Path.GetExtension(CType(e.Value, String))))
+
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"), New System.Data.Linq.Binary(ImageToByteArray(Image.FromFile(CType(e.Value, String)))))
     End Sub
 
     Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
@@ -112,6 +172,8 @@ Public Class XtraUCPersonRecord
     Private Sub GridControlФото_EmbeddedNavigator_ButtonClick(sender As Object, e As NavigatorButtonClickEventArgs) Handles GridControlФото.EmbeddedNavigator.ButtonClick
         Dim view As ColumnView = CType(Me.GridControlФото.FocusedView, ColumnView)
 
+        db = New DataClassesDorogaDataContext()
+
         Select Case e.Button.ButtonType
             Case NavigatorButtonType.EndEdit
                 If view.UpdateCurrentRow() Then
@@ -126,15 +188,28 @@ Public Class XtraUCPersonRecord
                             End If
                         End If
 
+
                         Try
-                            db.SubmitChanges(ConflictMode.FailOnFirstConflict)
+                            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"), CType(Me.TextEditКодСотрудник.Text, Integer))
+                            db.p_SaveФото(IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодФото"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодФото"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Источник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Источник"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("База"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("База"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Исправил"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("датаИсправил"))),
+                                     IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Примечание"))))
                             newRow = False
-                        Catch ex As Exception
+                        Catch ex As ChangeConflictException
                             XtraMessageBox.Show(String.Format("Ошибка при записи в БД: таблица [{2}] БД:{0}{0}{1}.",
                                          Global.Microsoft.VisualBasic.ChrW(10), ex, SourceName(view.Name)),
                                        "Система: новая запись в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
                         End Try
-                    Catch ex As ChangeConflictException
+                    Catch ex As Exception
                         XtraMessageBox.Show(String.Format("Конфликты при записи в БД: таблица [{2}] БД:{0}{0}{1}.",
                                          Global.Microsoft.VisualBasic.ChrW(10), ex.Message, SourceName(view.Name)),
                                        "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
@@ -142,13 +217,23 @@ Public Class XtraUCPersonRecord
                         For Each occ As ObjectChangeConflict In db.ChangeConflicts
                             occ.Resolve(RefreshMode.OverwriteCurrentValues)
                         Next
-                    Catch ex As Exception
-                        XtraMessageBox.Show(String.Format("Попытка записи в таблицу [{2}] БД завершилась с ошибкой: {0}{0}{1}.",
-                                         Global.Microsoft.VisualBasic.ChrW(10), ex.Message, SourceName(view.Name)),
-                                       "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
 
                         If (Not DBConnect()) Then Return
                     End Try
+                End If
+
+                e.Handled = True
+            Case NavigatorButtonType.Remove
+                If XtraMessageBox.Show(String.Format("Таблица: {0}{1}Удалить текущую запись ?", SourceName(view.Name), Global.Microsoft.VisualBasic.ChrW(10)),
+                             "Система: удаление записи из БД", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                             MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
+
+                    If DeleteRec(view.Name, db, CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns.ColumnByFieldName("кодФото")), Integer)) Then
+                        view.DeleteRow(view.FocusedRowHandle)
+                        Me.GridControlФото.RefreshDataSource()
+                    End If
+
+                    e.Handled = True
                 End If
         End Select
 
@@ -158,6 +243,7 @@ Public Class XtraUCPersonRecord
         Dim view As GridView = CType(sender, GridView)
 
         newRow = True
+        view.Columns("Источник").OptionsColumn.AllowEdit = False
         view.SetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"), Date.Today)
 
         ' Проверка наличия фото
@@ -185,145 +271,150 @@ Public Class XtraUCPersonRecord
     ''' <summary>
     ''' Процедура: Настройка свойств, наименований и механизмов колонок таблиц контролера
     ''' </summary>
-    ''' <param name="_gv"></param>
-    Private Sub GVSetings(ByVal _gv As GridView)
-        Select Case _gv.Name
+    ''' <param name="view"></param>
+    Private Sub GVSetings(ByVal view As GridView)
+        Select Case view.Name
             Case "GridViewКонтакт"
                 Call InitRILookUpEdit(Me.riLookUpEditКонтакт)
                 Call riLookUpEditData1(1, Me.riLookUpEditКонтакт)
 
-                _gv.Columns("Тип_Контакт").ColumnEdit = Me.riLookUpEditКонтакт
-                _gv.Columns("Тип_Контакт").Caption = "Тип контакта"
+                view.Columns("Тип_Контакт").ColumnEdit = Me.riLookUpEditКонтакт
+                view.Columns("Тип_Контакт").Caption = "Тип контакта"
                 Me.riTextEditКонтакт.Mask.MaskType = Mask.MaskType.RegEx
                 Me.riTextEditКонтакт.Mask.EditMask = "((\+\d)?\(\d{3}\))?\d{3}-\d\d-\d\d"
-                _gv.Columns("Контакт").ColumnEdit = Me.riTextEditКонтакт
-                _gv.Columns("Контакт").Caption = "Номер контакта"
-                _gv.Columns("датаЗаписал").Caption = "Дата записи"
-                _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
-                _gv.Columns("датаИсправил").Caption = "Дата исправления"
-                _gv.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаИсправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
-                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditКонтакт
-                _gv.Columns("кодКонтакт").Visible = False
-                _gv.Columns("кодСотрудник").Visible = False
+                view.Columns("Контакт").ColumnEdit = Me.riTextEditКонтакт
+                view.Columns("Контакт").Caption = "Номер контакта"
+                view.Columns("датаЗаписал").Caption = "Дата записи"
+                view.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
+                view.Columns("датаИсправил").Caption = "Дата исправления"
+                view.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаИсправил").OptionsColumn.AllowEdit = False
+                view.Columns("Записал").OptionsColumn.AllowEdit = False
+                view.Columns("Исправил").OptionsColumn.AllowEdit = False
+                view.Columns("Примечание").ColumnEdit = Me.riMemoEditКонтакт
+                view.Columns("кодКонтакт").Visible = False
+                view.Columns("кодСотрудник").Visible = False
             Case "GridViewEmail"
                 Call InitRILookUpEdit(Me.riLookUpEditEmail)
                 Call riLookUpEditData1(3, Me.riLookUpEditEmail)
 
-                _gv.Columns("Тип_email").ColumnEdit = Me.riLookUpEditEmail
-                _gv.Columns("Тип_email").Caption = "Тип электронной почты"
-                _gv.Columns("email").Caption = "Электронная почта"
-                _gv.Columns("датаЗаписал").Caption = "Дата записи"
-                _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
-                _gv.Columns("датаИсправил").Caption = "Дата исправления"
-                _gv.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаИсправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
-                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditEmail
-                _gv.Columns("кодEmail").Visible = False
-                _gv.Columns("кодСотрудник").Visible = False
+                view.Columns("Тип_email").ColumnEdit = Me.riLookUpEditEmail
+                view.Columns("Тип_email").Caption = "Тип электронной почты"
+                view.Columns("email").Caption = "Электронная почта"
+                view.Columns("датаЗаписал").Caption = "Дата записи"
+                view.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
+                view.Columns("датаИсправил").Caption = "Дата исправления"
+                view.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаИсправил").OptionsColumn.AllowEdit = False
+                view.Columns("Записал").OptionsColumn.AllowEdit = False
+                view.Columns("Исправил").OptionsColumn.AllowEdit = False
+                view.Columns("Примечание").ColumnEdit = Me.riMemoEditEmail
+                view.Columns("кодEmail").Visible = False
+                view.Columns("кодСотрудник").Visible = False
             Case "GridViewАдрес"
                 Call InitRILookUpEdit(Me.riLookUpEditАдрес)
                 Call riLookUpEditData1(2, Me.riLookUpEditАдрес)
 
-                _gv.Columns("типАдрес").ColumnEdit = Me.riLookUpEditАдрес
-                _gv.Columns("типАдрес").Caption = "Тип адреса"
-                _gv.Columns("Почтовый_индекс").Caption = "Почтовый индекс"
-                _gv.Columns("Субъект_РФ__регион_").Caption = "Субъект РФ (регион)"
-                _gv.Columns("Наименование_района").Caption = "Район"
-                _gv.Columns("Наименование_города").Caption = "Город"
-                _gv.Columns("Наименование_населенного_пункта").Caption = "Населенный пункт"
-                _gv.Columns("Наименование_улицы").Caption = "Улица"
-                _gv.Columns("Номер_дома__владение_").Caption = "Д (влд)"
-                _gv.Columns("Корпус__строение_").Caption = "К (стр)"
-                _gv.Columns("Квартира__офис_").Caption = "Кв (оф)"
-                _gv.Columns("датаЗаписал").Caption = "Дата записи"
-                _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
-                _gv.Columns("датаИсправил").Caption = "Дата исправления"
-                _gv.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаИсправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
-                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditEmail
-                _gv.Columns("кодАдрес").Visible = False
-                _gv.Columns("кодСотрудник").Visible = False
+                view.Columns("типАдрес").ColumnEdit = Me.riLookUpEditАдрес
+                view.Columns("типАдрес").Caption = "Тип адреса"
+                view.Columns("Почтовый_индекс").Caption = "Почтовый индекс"
+                view.Columns("Субъект_РФ__регион_").Caption = "Субъект РФ (регион)"
+                view.Columns("Наименование_района").Caption = "Район"
+                view.Columns("Наименование_города").Caption = "Город"
+                view.Columns("Наименование_населенного_пункта").Caption = "Населенный пункт"
+                view.Columns("Наименование_улицы").Caption = "Улица"
+                view.Columns("Номер_дома__владение_").Caption = "Д (влд)"
+                view.Columns("Корпус__строение_").Caption = "К (стр)"
+                view.Columns("Квартира__офис_").Caption = "Кв (оф)"
+                view.Columns("датаЗаписал").Caption = "Дата записи"
+                view.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
+                view.Columns("датаИсправил").Caption = "Дата исправления"
+                view.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаИсправил").OptionsColumn.AllowEdit = False
+                view.Columns("Записал").OptionsColumn.AllowEdit = False
+                view.Columns("Исправил").OptionsColumn.AllowEdit = False
+                view.Columns("Примечание").ColumnEdit = Me.riMemoEditEmail
+                view.Columns("кодАдрес").Visible = False
+                view.Columns("кодСотрудник").Visible = False
             Case "GridViewПаспорт"
-                _gv.Columns("Код_подразделения").ColumnEdit = Me.riTextEditПаспорт
-                _gv.Columns("Код_подразделения").Caption = "Код подразделения"
+                view.Columns("Код_подразделения").ColumnEdit = Me.riTextEditПаспорт
+                view.Columns("Код_подразделения").Caption = "Код подразделения"
                 Me.riTextEditПаспорт.Mask.MaskType = Mask.MaskType.RegEx
                 Me.riTextEditПаспорт.Mask.EditMask = "\d{3}-\d{3}"
-                _gv.Columns("датаЗаписал").Caption = "Дата записи"
-                _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
-                _gv.Columns("датаИсправил").Caption = "Дата исправления"
-                _gv.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаИсправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
-                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditПаспорт
-                _gv.Columns("кодПаспорт").Visible = False
-                _gv.Columns("кодСотрудник").Visible = False
+                view.Columns("датаЗаписал").Caption = "Дата записи"
+                view.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
+                view.Columns("датаИсправил").Caption = "Дата исправления"
+                view.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаИсправил").OptionsColumn.AllowEdit = False
+                view.Columns("Записал").OptionsColumn.AllowEdit = False
+                view.Columns("Исправил").OptionsColumn.AllowEdit = False
+                view.Columns("Примечание").ColumnEdit = Me.riMemoEditПаспорт
+                view.Columns("кодПаспорт").Visible = False
+                view.Columns("кодСотрудник").Visible = False
             Case "GridViewФото"
                 'http://metanit.com/sharp/adonet/2.14.php
                 Call InitRILookUpEdit(Me.riLookUpEditФото)
                 Call riLookUpEditData1(5, Me.riLookUpEditФото)
 
-                _gv.Columns("Тип_фото").ColumnEdit = Me.riLookUpEditФото
-                _gv.Columns("Тип_фото").Caption = "Тип фотографии"
-                _gv.Columns("Источник").ColumnEdit = Me.riPopupCEdit
-                _gv.Columns("Источник").Caption = "Папка пользовательских фотографий"
-                _gv.Columns("Хранилище").Caption = "Папка на сервере БД"
-                _gv.Columns("Хранилище").OptionsColumn.AllowEdit = False
-                _gv.Columns("База").ColumnEdit = Me.riCheckEditФото
-                _gv.Columns("База").Caption = "Основная"
-                _gv.Columns("датаЗаписал").Caption = "Дата записи"
-                _gv.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
-                _gv.Columns("датаИсправил").Caption = "Дата исправления"
-                _gv.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("датаИсправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
-                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditФото
-                _gv.Columns("кодФото").Visible = False
-                _gv.Columns("кодСотрудник").Visible = False
-                _gv.Columns("Оригинал").Visible = False
+                Me.riLookUpEditФото.SearchMode = SearchMode.AutoComplete
+                Me.riLookUpEditФото.AutoSearchColumnIndex = 1
+
+                view.Columns("Тип_фото").ColumnEdit = Me.riLookUpEditФото
+                view.Columns("Тип_фото").Caption = "Тип фотографии"
+                view.Columns("Источник").ColumnEdit = Me.riPopupCEdit
+                view.Columns("Источник").Caption = "Папка пользовательских фотографий"
+                view.Columns("Источник").OptionsColumn.AllowEdit = False
+                view.Columns("Хранилище").Caption = "Папка на сервере БД"
+                view.Columns("Хранилище").OptionsColumn.AllowEdit = False
+                view.Columns("База").ColumnEdit = Me.riCheckEditФото
+                view.Columns("База").Caption = "Основная"
+                view.Columns("Оригинал").ColumnEdit = riPictureEditФото
+                view.Columns("Оригинал").Caption = "Оригинал"
+                view.Columns("датаЗаписал").Caption = "Дата записи"
+                view.Columns("датаЗаписал").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаЗаписал").OptionsColumn.AllowEdit = False
+                view.Columns("датаИсправил").Caption = "Дата исправления"
+                view.Columns("датаИсправил").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("датаИсправил").OptionsColumn.AllowEdit = False
+                view.Columns("Записал").OptionsColumn.AllowEdit = False
+                view.Columns("Исправил").OptionsColumn.AllowEdit = False
+                view.Columns("Примечание").ColumnEdit = Me.riMemoEditФото
+                view.Columns("кодФото").Visible = False
+                view.Columns("кодСотрудник").Visible = False
             Case "GridViewБезопасность"
                 Call InitRILookUpEdit(Me.riLookUpEditПароль)
                 Call riLookUpEditData1(4, Me.riLookUpEditПароль)
 
-                _gv.Columns("IDAuthor").Caption = "Руководитель"
-                _gv.Columns("IDAuthor").VisibleIndex = 1
-                _gv.Columns("IDLevel").ColumnEdit = Me.riLookUpEditПароль
-                _gv.Columns("IDLevel").Caption = "Статус пользователя"
-                _gv.Columns("IDLevel").VisibleIndex = 2
-                _gv.Columns("Passport1").Caption = "Пароль"
-                _gv.Columns("Passport2").Caption = "Пароль (повтор)"
-                _gv.Columns("Дата_записи").Caption = "Дата записи"
-                _gv.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("Дата_записи").OptionsColumn.AllowEdit = False
-                _gv.Columns("Дата_исправления").Caption = "Дата исправления"
-                _gv.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
-                _gv.Columns("Дата_исправления").OptionsColumn.AllowEdit = False
-                _gv.Columns("Записал").OptionsColumn.AllowEdit = False
-                _gv.Columns("Исправил").OptionsColumn.AllowEdit = False
-                _gv.Columns("Примечание").ColumnEdit = Me.riMemoEditПароль
-                _gv.Columns("IDPassport").Visible = False
-                _gv.Columns("IDUser").Visible = False
+                view.Columns("IDAuthor").Caption = "Руководитель"
+                view.Columns("IDAuthor").VisibleIndex = 1
+                view.Columns("IDLevel").ColumnEdit = Me.riLookUpEditПароль
+                view.Columns("IDLevel").Caption = "Статус пользователя"
+                view.Columns("IDLevel").VisibleIndex = 2
+                view.Columns("Passport1").Caption = "Пароль"
+                view.Columns("Passport2").Caption = "Пароль (повтор)"
+                view.Columns("Дата_записи").Caption = "Дата записи"
+                view.Columns("Дата_записи").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("Дата_записи").OptionsColumn.AllowEdit = False
+                view.Columns("Дата_исправления").Caption = "Дата исправления"
+                view.Columns("Дата_исправления").AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
+                view.Columns("Дата_исправления").OptionsColumn.AllowEdit = False
+                view.Columns("Записал").OptionsColumn.AllowEdit = False
+                view.Columns("Исправил").OptionsColumn.AllowEdit = False
+                view.Columns("Примечание").ColumnEdit = Me.riMemoEditПароль
+                view.Columns("IDPassport").Visible = False
+                view.Columns("IDUser").Visible = False
         End Select
 
-        For Each column As GridColumn In _gv.Columns
+        For Each column As GridColumn In view.Columns
             column.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Next
 
-        _gv.BestFitColumns()
-        _gv.OptionsView.ColumnAutoWidth = True
+        view.BestFitColumns()
+        view.OptionsView.ColumnAutoWidth = True
     End Sub
 
     ''' <summary>
@@ -434,6 +525,31 @@ Public Class XtraUCPersonRecord
         Call GVSetings(Me.GridViewФото)
         Call GVSetings(Me.GridViewБезопасность)
         Return True
+    End Function
+
+    ''' <summary>
+    ''' Функция: удаление записи из таблицы БД
+    ''' </summary>
+    ''' <param name="viewName">имя GridView</param>
+    ''' <param name="db">определение набора данных</param>
+    ''' <param name="iRec">номер записи для удаления</param>
+    ''' <returns>истина - успешно, ложь - запись не удалилась</returns>
+    Private Function DeleteRec(ByVal viewName As String, ByVal db As DataClassesDorogaDataContext, ByVal iRec As Integer) As Boolean
+        Select Case viewName
+            Case "GridViewФото"
+                Try
+                    db.p_DeleteФото(iRec)
+                    db.SubmitChanges()
+                    Return True
+                    Exit Function
+                Catch ex As Exception
+                    XtraMessageBox.Show(String.Format("Таблица: {0}{1}Попытка удаления записи из БД:{1}Ошибка: {2}{0}Повторить попытку - [ОК].", SourceName(viewName),
+                                                      Global.Microsoft.VisualBasic.ChrW(10), ex.Message), "Система: запись данных в БД.",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1)
+                End Try
+        End Select
+
+        Return False
     End Function
 #End Region
 End Class
