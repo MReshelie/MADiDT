@@ -19,6 +19,7 @@ Public Class XtraUCPersonRecord
 
     Dim db As New DataClassesDorogaDataContext
     Dim iСотрудник As Integer
+    Dim iSlider As Integer = 0
     Dim newRow As Boolean = False
     Dim riLookUpEditСтепень As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditСтепень"}
     Dim riLookUpEditДолжность As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditДолжность"}
@@ -45,14 +46,16 @@ Public Class XtraUCPersonRecord
 
         Me.NavBarControlPersona.Visible = False
         Me.riPopupCEdit.Properties.PopupControl = Me.PopupContainerControlФото
-        Me.riPictureEditФото.SizeMode = PictureSizeMode.Stretch
+        Me.riPictureEditФото.SizeMode = PictureSizeMode.Zoom
     End Sub
 
     Private Sub XtraUCPersonRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         iСотрудник = CType(Me.TextEditКодСотрудник.EditValue, Integer)
         Me.LayoutControlItem20.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
+        Me.TimerSlider.Enabled = True
 
         If (Not DBConnect()) Then Return
+        If (Not SliderPhoto(New DataClassesDorogaDataContext(), CType(Me.TextEditКодСотрудник.Text, Integer))) Then Return
 
         AddHandler riLookUpEditФото.Leave, AddressOf riLookUpEditФото_Leave
         AddHandler riPictureEditФото.MouseHover, AddressOf riPictureEditФото_MouseHover
@@ -63,109 +66,29 @@ Public Class XtraUCPersonRecord
         AddHandler riPopupCEdit.QueryResultValue, AddressOf riPopupCEdit_QueryResultValue
     End Sub
 
+    Private Sub XtraUCPersonRecord_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        Me.TimerSlider.Enabled = False
+    End Sub
+
     Private Sub NavBarControlPersona_ActiveGroupChanged(sender As Object, e As NavBarGroupEventArgs) Handles NavBarControlPersona.ActiveGroupChanged
         Me.NavigationFramePersona.SelectedPage = CType(Me.NavigationFramePersona.Pages.FindFirst(Function(x) CStr(x.Tag) = e.Group.Caption), NavigationPage)
     End Sub
 
-    Private Sub riLookUpEditФото_Leave(sender As Object, e As System.EventArgs)
-        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+    Private Sub TimerSlider_Tick(sender As Object, e As EventArgs) Handles TimerSlider.Tick
+        If Me.ImageSliderPersona.Images.Count = 1 Then Exit Sub
 
-        ' Проверка выбора типа фотографи
-        If Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото")), String)) <> "0" Then
-            view.Columns("Источник").OptionsColumn.AllowEdit = True
-        End If
-    End Sub
-    Private Sub riPictureEditФото_MouseHover(sender As Object, e As EventArgs)
-        Dim editor As PictureEdit = TryCast(sender, PictureEdit)
-
-        If editor.Image IsNot Nothing Then
-            SplashScreenManager.ShowImage(ResizeImage(editor.Image, New Size(512, 384)), True, True, SplashImagePainter.Painter)
-            SplashImagePainter.Painter.ViewInfo.Stage = String.Empty
-            SplashScreenManager.Default.Invalidate()
-        End If
-    End Sub
-
-    Private Sub riPictureEditФото_MouseLeave(sender As Object, e As EventArgs)
-        Dim editor As PictureEdit = TryCast(sender, PictureEdit)
-
-        If editor.Image IsNot Nothing Then
-            SplashScreenManager.HideImage()
-        End If
-    End Sub
-
-    Private Sub riPopupCEdit_Popup(sender As Object, e As System.EventArgs)
-        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
-        Dim edit As PopupContainerEdit = TryCast(sender, PopupContainerEdit)
-
-        ' Проверка заполненности полей идентификации пользователя
-        If Trim(Me.TextEditФамилия.Text).Length = 0 Then
-            If edit.IsPopupOpen Then
-                edit.ClosePopup()
+        If iSlider > 30 Then
+            If Me.ImageSliderPersona.GetCurrentImageIndex + 1 = Me.ImageSliderPersona.Images.Count Then
+                Me.ImageSliderPersona.SlideFirst()
+                Me.ImageSliderPersona.SetCurrentImageIndex(0)
+            Else
+                Me.ImageSliderPersona.SlideNext()
             End If
 
-            XtraMessageBox.Show(String.Format("Не внесена фамилия пользователя!!!"),
-                                           "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
-            Exit Sub
+            iSlider = 0
+        Else
+            iSlider += 1
         End If
-
-        If Trim(Me.TextEditИмя.Text).Length = 0 Then
-            If edit.IsPopupOpen Then
-                edit.ClosePopup()
-            End If
-
-            XtraMessageBox.Show(String.Format("Не внесено имя пользователя!!!"),
-                                           "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
-            Exit Sub
-        End If
-    End Sub
-
-    Private Sub riPopupCEdit_CloseUp(ByVal sender As Object, ByVal e As CloseUpEventArgs)
-        If e.Value Is Nothing Then Exit Sub
-
-        db = New DataClassesDorogaDataContext()
-
-        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
-        Dim res As String() = (From _res In db.CheckCreateDirectory((From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo") Select _res.Результат__).First().Split(New Char() {"|"c})
-
-        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}\[{1} {2} {3} {4}]{5}",
-                                                                             (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
-                                                                                             Me.TextEditФамилия.Text,
-                                                                                             Me.TextEditИмя.Text,
-                                                                                             Me.TextEditОтчество.Text,
-                                                                                             Date.Now,
-                                                                                             Path.GetExtension(CType(e.Value, String))))
-
-        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"), New System.Data.Linq.Binary(ImageToByteArray(Image.FromFile(CType(e.Value, String)))))
-    End Sub
-
-    Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
-        For Each cntrl As Control In Me.PopupContainerControlФото.Controls
-            If cntrl.Name = "cntrFolders" Then
-                For Each ccntrl As Control In cntrl.Controls
-                    If ccntrl.Name = "LayoutControlUCFE" Then
-                        For Each cccntrl As Control In ccntrl.Controls
-                            If cccntrl.Name = "PanelControlPhoto" Then
-                                For Each ccccntrl As Control In cccntrl.Controls
-                                    If ccccntrl.Name = "ucPhoto" Then
-                                        For Each _property In ccccntrl.GetType().GetProperties()
-                                            If _property.Name = "DescriptionPhoto" Then
-                                                e.Value = String.Format("{0}", ccccntrl.GetType().GetProperty(_property.Name).GetValue(ccccntrl, Nothing))
-                                                Exit Sub
-                                            End If
-                                        Next
-                                    End If
-                                Next
-                            End If
-                        Next
-                    End If
-                Next
-            End If
-        Next
-    End Sub
-
-    Private Sub riPopupCEdit_QueryPopUp(ByVal sender As Object, ByVal e As CancelEventArgs)
-        Me.PopupContainerControlФото.Size = New Size(620, 330)
-        Me.PopupContainerControlФото.Controls.Add(New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"})
     End Sub
 
 #Region "Процедуры работы с записями SQL Server"
@@ -237,6 +160,7 @@ Public Class XtraUCPersonRecord
                 End If
         End Select
 
+        If (Not SliderPhoto(db, CType(Me.TextEditКодСотрудник.Text, Integer))) Then Return
     End Sub
 
     Private Sub GridViewФото_InitNewRow(sender As Object, e As InitNewRowEventArgs) Handles GridViewФото.InitNewRow
@@ -245,13 +169,7 @@ Public Class XtraUCPersonRecord
         newRow = True
         view.Columns("Источник").OptionsColumn.AllowEdit = False
         view.SetRowCellValue(view.FocusedRowHandle, view.Columns("датаЗаписал"), Date.Today)
-
-        ' Проверка наличия фото
-        If (New DataClassesDorogaDataContext()).CountФото_сотрудников(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("кодСотрудник")), Integer)) = 0 Then
-            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("База"), True)
-        Else
-            view.SetRowCellValue(view.FocusedRowHandle, view.Columns("База"), False)
-        End If
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("База"), TotalPhoto(CType(Me.TextEditКодСотрудник.Text, Integer)))
 
         If pUserF = "Администратор системы" Then
             view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"), String.Format("{0}, [{1}]", Trim(pUserF), Trim(pUserS)))
@@ -264,6 +182,105 @@ Public Class XtraUCPersonRecord
         view.Columns("Исправил").OptionsColumn.ReadOnly = True
         view.Columns("датаИсправил").OptionsColumn.ReadOnly = True
         view.FocusedColumn = view.Columns("Тип_фото")
+    End Sub
+#End Region
+
+#Region "Пользовательские методы для компонентов Repository"
+    Private Sub riLookUpEditФото_Leave(sender As Object, e As System.EventArgs)
+        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+
+        ' Проверка выбора типа фотографии
+        If Trim(CType(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото")), String)) <> "0" Then
+            view.Columns("Источник").OptionsColumn.AllowEdit = True
+        End If
+    End Sub
+    Private Sub riPictureEditФото_MouseHover(sender As Object, e As EventArgs)
+        If (TryCast(sender, PictureEdit)).Image IsNot Nothing Then
+            SplashScreenManager.ShowImage(ResizeImage((TryCast(sender, PictureEdit)).Image, New Size(512, 384)), True, True, SplashImagePainter.Painter)
+            SplashImagePainter.Painter.ViewInfo.Stage = String.Empty
+            SplashScreenManager.Default.Invalidate()
+        End If
+    End Sub
+    Private Sub riPictureEditФото_MouseLeave(sender As Object, e As EventArgs)
+        If (TryCast(sender, PictureEdit)).Image IsNot Nothing Then
+            SplashScreenManager.HideImage()
+        End If
+    End Sub
+    Private Sub riPopupCEdit_Popup(sender As Object, e As System.EventArgs)
+        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+        Dim edit As PopupContainerEdit = TryCast(sender, PopupContainerEdit)
+
+        ' Проверка заполненности полей идентификации пользователя
+        If Trim(Me.TextEditФамилия.Text).Length = 0 Then
+            If edit.IsPopupOpen Then
+                edit.ClosePopup()
+            End If
+
+            XtraMessageBox.Show(String.Format("Не внесена фамилия пользователя!!!"),
+                                           "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+            Exit Sub
+        End If
+
+        If Trim(Me.TextEditИмя.Text).Length = 0 Then
+            If edit.IsPopupOpen Then
+                edit.ClosePopup()
+            End If
+
+            XtraMessageBox.Show(String.Format("Не внесено имя пользователя!!!"),
+                                           "Система: запись данных в БД.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
+            Exit Sub
+        End If
+    End Sub
+    Private Sub riPopupCEdit_CloseUp(ByVal sender As Object, ByVal e As CloseUpEventArgs)
+        If e.Value Is Nothing Then Exit Sub
+
+        db = New DataClassesDorogaDataContext()
+
+        Dim edit As PopupContainerEdit = TryCast(sender, PopupContainerEdit)
+        Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+        Dim res As String() = (From _res In db.CheckCreateDirectory((From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo") Select _res.Результат__).First().Split(New Char() {"|"c})
+
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}\[{1} {2} {3} {4}]{5}",
+                                                                             (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
+                                                                                             Me.TextEditФамилия.Text,
+                                                                                             Me.TextEditИмя.Text,
+                                                                                             Me.TextEditОтчество.Text,
+                                                                                             Date.Now,
+                                                                                             Path.GetExtension(CType(e.Value, String))))
+
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"), New System.Data.Linq.Binary(ImageToByteArray(Image.FromFile(CType(e.Value, String)))))
+
+        If edit.IsPopupOpen Then
+            edit.ClosePopup()
+        End If
+    End Sub
+    Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
+        For Each cntrl As Control In Me.PopupContainerControlФото.Controls
+            If cntrl.Name = "cntrFolders" Then
+                For Each ccntrl As Control In cntrl.Controls
+                    If ccntrl.Name = "LayoutControlUCFE" Then
+                        For Each cccntrl As Control In ccntrl.Controls
+                            If cccntrl.Name = "PanelControlPhoto" Then
+                                For Each ccccntrl As Control In cccntrl.Controls
+                                    If ccccntrl.Name = "ucPhoto" Then
+                                        For Each _property In ccccntrl.GetType().GetProperties()
+                                            If _property.Name = "DescriptionPhoto" Then
+                                                e.Value = String.Format("{0}", ccccntrl.GetType().GetProperty(_property.Name).GetValue(ccccntrl, Nothing))
+                                                Exit Sub
+                                            End If
+                                        Next
+                                    End If
+                                Next
+                            End If
+                        Next
+                    End If
+                Next
+            End If
+        Next
+    End Sub
+    Private Sub riPopupCEdit_QueryPopUp(ByVal sender As Object, ByVal e As CancelEventArgs)
+        Me.PopupContainerControlФото.Size = New Size(620, 330)
+        Me.PopupContainerControlФото.Controls.Add(New XtraUCFileExplorer() With {.Dock = DockStyle.Fill, .Name = "cntrFolders"})
     End Sub
 #End Region
 
@@ -416,7 +433,6 @@ Public Class XtraUCPersonRecord
         view.BestFitColumns()
         view.OptionsView.ColumnAutoWidth = True
     End Sub
-
     ''' <summary>
     ''' Процедура: Инициализация полей таблиц контролера
     ''' </summary>
@@ -453,7 +469,6 @@ Public Class XtraUCPersonRecord
         riLUEF.ValueMember = "row"
         riLUEF.DisplayMember = "NAME"
     End Sub
-
     ''' <summary>
     ''' Процедура: заполнение полей должность, степенб, факультет
     ''' </summary>
@@ -468,7 +483,6 @@ Public Class XtraUCPersonRecord
         riLookUpEditS.DataSource = db.p_GetListOfСтепень.ToList()
         riLookUpEditF.DataSource = db.p_GetListOfФакультет.ToList()
     End Sub
-
     ''' <summary>
     ''' Процедура: заполенение данными служебных полей таблиц
     ''' </summary>
@@ -478,7 +492,6 @@ Public Class XtraUCPersonRecord
         riLookUpEdit.DataSource = Nothing
         riLookUpEdit.DataSource = db.GetParameters(i).ToList()
     End Sub
-
     ''' <summary>
     ''' Функция: подключение к БД
     ''' </summary>
@@ -526,7 +539,6 @@ Public Class XtraUCPersonRecord
         Call GVSetings(Me.GridViewБезопасность)
         Return True
     End Function
-
     ''' <summary>
     ''' Функция: удаление записи из таблицы БД
     ''' </summary>
@@ -550,6 +562,46 @@ Public Class XtraUCPersonRecord
         End Select
 
         Return False
+    End Function
+    ''' <summary>
+    ''' Функция: установка признака основной фотографии сотрудника
+    ''' </summary>
+    ''' <param name="view">GridViewФото_InitNewRow</param>
+    ''' <returns>Истина - основная фотография, False - фотографий много</returns>
+    Private Function TotalPhoto(ByVal nUser As Integer) As Boolean
+        If (New DataClassesDorogaDataContext()).CountФото_сотрудников(nUser) <> 0 Then
+            Return False
+            Exit Function
+        End If
+
+        Return True
+    End Function
+    ''' <summary>
+    ''' Функция: Заполнение иллюстрациями ImageSlider
+    ''' </summary>
+    ''' <param name="view">GridViewФото</param>
+    ''' <returns>заполненный ImageSlider</returns>
+    Private Function SliderPhoto(ByVal db As DataClassesDorogaDataContext, ByVal nUser As Integer) As Boolean
+        SplashScreenManager.ShowForm(GetType(WaitFormLoadRec))
+        SplashScreenManager.Default.SetWaitFormCaption("Ожидайте...")
+        SplashScreenManager.Default.SetWaitFormDescription("Идет обновление изображений.")
+
+        If Me.ImageSliderPersona.Images.Count > 0 Then
+            Me.ImageSliderPersona.Images.Clear()
+        End If
+
+        If TotalPhoto(nUser) Then
+            Me.ImageSliderPersona.Images.Add(My.Resources.Нет_фото)
+        Else
+            For Each pPhoto In From dP In db.p_GetФото_Сотрудник(nUser)
+                If pPhoto.Оригинал IsNot Nothing Then
+                    Me.ImageSliderPersona.Images.Add(ByteArrayToImage(pPhoto.Оригинал.ToArray()))
+                End If
+            Next
+        End If
+
+        SplashScreenManager.CloseForm(False)
+        Return True
     End Function
 #End Region
 End Class

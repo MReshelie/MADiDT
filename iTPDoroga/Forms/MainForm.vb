@@ -100,7 +100,7 @@ Partial Public Class MainForm
                 If e.Result = System.Windows.Forms.DialogResult.OK Then
                     If _ucLogin.ComboBoxEditPerson.Properties.Items.Count > 1 Then
                         ' Проверка доступа пользователя и его права
-                        If Trim(_ucLogin.ComboBoxEditPerson.Text).Split(" ")(0) = "Администратор" AndAlso Trim(_ucLogin.TextEditPassword.Text) = "sandozik" Then
+                        If Trim(_ucLogin.ComboBoxEditPerson.Text).Split(CType(" ", Char))(0) = "Администратор" AndAlso Trim(_ucLogin.TextEditPassword.Text) = "sandozik" Then
                             pUserL = "A"
                             pUserF = "Администратор системы"
                             pUserS = "Полный доступ"
@@ -110,7 +110,7 @@ Partial Public Class MainForm
 
                         Call CreateLayout()
                     Else
-                        If Trim(_ucLogin.ComboBoxEditPerson.Text).Split(" ")(0) = "Администратор" AndAlso Trim(_ucLogin.TextEditPassword.Text) = "sandozik" Then
+                        If Trim(_ucLogin.ComboBoxEditPerson.Text).Split(CType(" ", Char))(0) = "Администратор" AndAlso Trim(_ucLogin.TextEditPassword.Text) = "sandozik" Then
                             blUCServers = True
                         Else
                             XtraMessageBox.Show(String.Format("Ошибка при вводе пароля.{0}{0}Система будет перезапущена.",
@@ -203,17 +203,13 @@ Partial Public Class MainForm
 
                     itemDetailPage.Dock = DockStyle.Fill
 
-                    Dim document As BaseDocument = windowsUIViewMain.AddDocument(itemDetailPage)
-
-                    Call CreateDetailItem(document, item, pageGroup)
+                    Call CreateDetailItem(windowsUIViewMain.AddDocument(itemDetailPage), item, pageGroup)
                 Else
                     Dim itemDetailPage As New ItemDetailPage(item)
 
                     itemDetailPage.Dock = DockStyle.Fill
 
-                    Dim document As BaseDocument = windowsUIViewMain.AddDocument(itemDetailPage)
-
-                    Call CreateDetailItem(document, item, pageGroup)
+                    Call CreateDetailItem(windowsUIViewMain.AddDocument(itemDetailPage), item, pageGroup)
                 End If
             Next item
         Next group

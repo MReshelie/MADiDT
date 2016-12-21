@@ -17,9 +17,10 @@ Partial Class XtraUCPersonRecord
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.SplitContainerControl1 = New DevExpress.XtraEditors.SplitContainerControl()
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
-        Me.ImageSlider1 = New DevExpress.XtraEditors.Controls.ImageSlider()
+        Me.ImageSliderPersona = New DevExpress.XtraEditors.Controls.ImageSlider()
         Me.LayoutControlItem14 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem13 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -91,11 +92,12 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.TimerSlider = New System.Windows.Forms.Timer(Me.components)
         CType(Me.SplitContainerControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainerControl1.SuspendLayout()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
-        CType(Me.ImageSlider1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ImageSliderPersona, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem13, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -186,7 +188,7 @@ Partial Class XtraUCPersonRecord
         'LayoutControl1
         '
         Me.SetBoundPropertyName(Me.LayoutControl1, "")
-        Me.LayoutControl1.Controls.Add(Me.ImageSlider1)
+        Me.LayoutControl1.Controls.Add(Me.ImageSliderPersona)
         Me.LayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.LayoutControl1.HiddenItems.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem14})
         Me.LayoutControl1.Location = New System.Drawing.Point(0, 0)
@@ -197,18 +199,18 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControl1.TabIndex = 0
         Me.LayoutControl1.Text = "LayoutControl1"
         '
-        'ImageSlider1
+        'ImageSliderPersona
         '
-        Me.SetBoundPropertyName(Me.ImageSlider1, "")
-        Me.ImageSlider1.CurrentImageIndex = -1
-        Me.ImageSlider1.LayoutMode = DevExpress.Utils.Drawing.ImageLayoutMode.Stretch
-        Me.ImageSlider1.Location = New System.Drawing.Point(12, 12)
-        Me.ImageSlider1.Name = "ImageSlider1"
-        Me.ImageSlider1.Size = New System.Drawing.Size(179, 237)
-        Me.ImageSlider1.StyleController = Me.LayoutControl1
-        Me.ImageSlider1.TabIndex = 16
-        Me.ImageSlider1.Text = "ImageSlider1"
-        Me.ImageSlider1.UseDisabledStatePainter = True
+        Me.SetBoundPropertyName(Me.ImageSliderPersona, "")
+        Me.ImageSliderPersona.CurrentImageIndex = -1
+        Me.ImageSliderPersona.LayoutMode = DevExpress.Utils.Drawing.ImageLayoutMode.Stretch
+        Me.ImageSliderPersona.Location = New System.Drawing.Point(12, 12)
+        Me.ImageSliderPersona.Name = "ImageSliderPersona"
+        Me.ImageSliderPersona.Size = New System.Drawing.Size(179, 237)
+        Me.ImageSliderPersona.StyleController = Me.LayoutControl1
+        Me.ImageSliderPersona.TabIndex = 16
+        Me.ImageSliderPersona.Text = "ImageSlider1"
+        Me.ImageSliderPersona.UseDisabledStatePainter = True
         '
         'LayoutControlItem14
         '
@@ -231,7 +233,7 @@ Partial Class XtraUCPersonRecord
         '
         'LayoutControlItem13
         '
-        Me.LayoutControlItem13.Control = Me.ImageSlider1
+        Me.LayoutControlItem13.Control = Me.ImageSliderPersona
         Me.LayoutControlItem13.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem13.MinSize = New System.Drawing.Size(54, 20)
         Me.LayoutControlItem13.Name = "LayoutControlItem13"
@@ -976,6 +978,10 @@ Partial Class XtraUCPersonRecord
         Me.LayoutControlItem20.Size = New System.Drawing.Size(1121, 24)
         Me.LayoutControlItem20.TextSize = New System.Drawing.Size(102, 13)
         '
+        'TimerSlider
+        '
+        Me.TimerSlider.Interval = 400
+        '
         'XtraUCPersonRecord
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -987,7 +993,7 @@ Partial Class XtraUCPersonRecord
         Me.SplitContainerControl1.ResumeLayout(False)
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
-        CType(Me.ImageSlider1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ImageSliderPersona, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem13, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1090,7 +1096,7 @@ Partial Class XtraUCPersonRecord
     Friend WithEvents GridControlБезопасность As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridViewБезопасность As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents LayoutControl1 As DevExpress.XtraLayout.LayoutControl
-    Friend WithEvents ImageSlider1 As DevExpress.XtraEditors.Controls.ImageSlider
+    Friend WithEvents ImageSliderPersona As DevExpress.XtraEditors.Controls.ImageSlider
     Friend WithEvents DateEditДатаИсправил As DevExpress.XtraEditors.DateEdit
     Friend WithEvents DateEditДатаЗаписал As DevExpress.XtraEditors.DateEdit
     Friend WithEvents MemoEditПримечание As DevExpress.XtraEditors.MemoEdit
@@ -1135,4 +1141,5 @@ Partial Class XtraUCPersonRecord
     Friend WithEvents LayoutControlItem19 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents LayoutControlItem20 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents PopupContainerControlФото As DevExpress.XtraEditors.PopupContainerControl
+    Friend WithEvents TimerSlider As Timer
 End Class

@@ -759,4 +759,21 @@
     <Parameter Name="кодФото" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.p_GetФото_Сотрудник" Method="p_GetФото_Сотрудник">
+    <Parameter Name="кодСотрудник" Type="System.Int32" DbType="Int" />
+    <ElementType Name="p_GetФото_СотрудникResult">
+      <Column Name="кодФото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="кодСотрудник" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Тип фото]" Member="Тип_фото" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Источник" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Хранилище" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="База" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Оригинал" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" />
+      <Column Name="Записал" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Исправил" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

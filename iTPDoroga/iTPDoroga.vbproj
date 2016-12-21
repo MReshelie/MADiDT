@@ -299,6 +299,7 @@
     <EmbeddedResource Include="Supports\Assets\DarkGray.png" />
     <EmbeddedResource Include="Supports\Assets\LightGray.png" />
     <EmbeddedResource Include="Supports\Assets\MediumGray.png" />
+    <Content Include="Supports\Icons\bmp\Нет фото.bmp" />
     <Content Include="Supports\Icons\gif\construccio.gif" />
     <Content Include="Supports\Icons\ico\books.ico" />
     <Content Include="Supports\Icons\jpeg\sec00.jpeg" />

@@ -28,7 +28,6 @@ Module MainModule
             System.Threading.Thread.Sleep(interval)
         Next i
     End Sub
-
     ''' <summary>
     ''' Процедура: Обновление строки подключения к БД в app.config
     ''' </summary>
@@ -69,7 +68,6 @@ Module MainModule
         Catch ex As Exception
         End Try
     End Sub
-
     ''' <summary>
     ''' Функция: Загрузка данных в объект DataTable
     ''' </summary>
@@ -114,7 +112,6 @@ Module MainModule
 
         Return ret
     End Function
-
     ''' <summary>
     ''' Функция: Получение списка доступных БД с сервера (SQL server)
     ''' </summary>
@@ -151,7 +148,6 @@ Module MainModule
 
         Return DBlist
     End Function
-
     ''' <summary>
     ''' Функция: Формирование строки подключения к серверу БД
     ''' </summary>
@@ -177,7 +173,6 @@ Module MainModule
 
         Return sqlBuilder.ConnectionString
     End Function
-
     ''' <summary>
     ''' Функция: Скрытие пароля в строке connectionString
     ''' </summary>
@@ -194,7 +189,6 @@ Module MainModule
 
         Return Mid(_strConn, 1, Len(_strConn) - 1)
     End Function
-
     ''' <summary>
     ''' Функция: Информация о назначении GridView
     ''' </summary>
@@ -223,7 +217,17 @@ Module MainModule
             Return ms.ToArray()
         End Using
     End Function
-
+    ''' <summary>
+    ''' Функция: Преобразование массива байтов в изображение
+    ''' </summary>
+    ''' <param name="byteArrayIn">массив байтов</param>
+    ''' <returns>изображение</returns>
+    Public Function ByteArrayToImage(ByVal byteArrayIn As Byte()) As Image
+        Using ms As MemoryStream = New MemoryStream(byteArrayIn)
+            Dim returnImage As Image = Image.FromStream(ms)
+            Return returnImage
+        End Using
+    End Function
     ''' <summary>
     ''' Функция: Определение расширения файла с изображением
     ''' </summary>
@@ -248,7 +252,6 @@ Module MainModule
 
         Return String.Empty
     End Function
-
     ''' <summary>
     ''' Функция: перерисовка избражения по новым размерам
     ''' </summary>

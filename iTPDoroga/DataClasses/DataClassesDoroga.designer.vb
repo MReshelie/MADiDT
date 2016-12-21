@@ -514,6 +514,12 @@ Partial Public Class DataClassesDorogaDataContext
 		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодФото)
 		Return CType(result.ReturnValue,Integer)
 	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.p_GetФото_Сотрудник")>  _
+	Public Function p_GetФото_Сотрудник(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодСотрудник As System.Nullable(Of Integer)) As ISingleResult(Of p_GetФото_СотрудникResult)
+		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодСотрудник)
+		Return CType(result.ReturnValue,ISingleResult(Of p_GetФото_СотрудникResult))
+	End Function
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.address")>  _
@@ -9399,6 +9405,183 @@ Partial Public Class p_SaveФотоResult
 		Set
 			If (Me._NewRecordID.Equals(value) = false) Then
 				Me._NewRecordID = value
+			End If
+		End Set
+	End Property
+End Class
+
+Partial Public Class p_GetФото_СотрудникResult
+	
+	Private _кодФото As Integer
+	
+	Private _кодСотрудник As System.Nullable(Of Integer)
+	
+	Private _Тип_фото As Integer
+	
+	Private _Источник As String
+	
+	Private _Хранилище As String
+	
+	Private _База As System.Nullable(Of Boolean)
+	
+	Private _Оригинал As System.Data.Linq.Binary
+	
+	Private _Записал As String
+	
+	Private _датаЗаписал As System.Nullable(Of Date)
+	
+	Private _Исправил As String
+	
+	Private _датаИсправил As System.Nullable(Of Date)
+	
+	Private _Примечание As String
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_кодФото", DbType:="Int NOT NULL")>  _
+	Public Property кодФото() As Integer
+		Get
+			Return Me._кодФото
+		End Get
+		Set
+			If ((Me._кодФото = value)  _
+						= false) Then
+				Me._кодФото = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_кодСотрудник", DbType:="Int")>  _
+	Public Property кодСотрудник() As System.Nullable(Of Integer)
+		Get
+			Return Me._кодСотрудник
+		End Get
+		Set
+			If (Me._кодСотрудник.Equals(value) = false) Then
+				Me._кодСотрудник = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Name:="[Тип фото]", Storage:="_Тип_фото", DbType:="Int NOT NULL")>  _
+	Public Property Тип_фото() As Integer
+		Get
+			Return Me._Тип_фото
+		End Get
+		Set
+			If ((Me._Тип_фото = value)  _
+						= false) Then
+				Me._Тип_фото = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Источник", DbType:="NVarChar(MAX)")>  _
+	Public Property Источник() As String
+		Get
+			Return Me._Источник
+		End Get
+		Set
+			If (String.Equals(Me._Источник, value) = false) Then
+				Me._Источник = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Хранилище", DbType:="NVarChar(MAX)")>  _
+	Public Property Хранилище() As String
+		Get
+			Return Me._Хранилище
+		End Get
+		Set
+			If (String.Equals(Me._Хранилище, value) = false) Then
+				Me._Хранилище = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_База", DbType:="Bit")>  _
+	Public Property База() As System.Nullable(Of Boolean)
+		Get
+			Return Me._База
+		End Get
+		Set
+			If (Me._База.Equals(value) = false) Then
+				Me._База = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Оригинал", DbType:="VarBinary(MAX)")>  _
+	Public Property Оригинал() As System.Data.Linq.Binary
+		Get
+			Return Me._Оригинал
+		End Get
+		Set
+			If (Object.Equals(Me._Оригинал, value) = false) Then
+				Me._Оригинал = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Записал", DbType:="NVarChar(50)")>  _
+	Public Property Записал() As String
+		Get
+			Return Me._Записал
+		End Get
+		Set
+			If (String.Equals(Me._Записал, value) = false) Then
+				Me._Записал = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_датаЗаписал", DbType:="DateTime2")>  _
+	Public Property датаЗаписал() As System.Nullable(Of Date)
+		Get
+			Return Me._датаЗаписал
+		End Get
+		Set
+			If (Me._датаЗаписал.Equals(value) = false) Then
+				Me._датаЗаписал = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Исправил", DbType:="NVarChar(50)")>  _
+	Public Property Исправил() As String
+		Get
+			Return Me._Исправил
+		End Get
+		Set
+			If (String.Equals(Me._Исправил, value) = false) Then
+				Me._Исправил = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_датаИсправил", DbType:="DateTime2")>  _
+	Public Property датаИсправил() As System.Nullable(Of Date)
+		Get
+			Return Me._датаИсправил
+		End Get
+		Set
+			If (Me._датаИсправил.Equals(value) = false) Then
+				Me._датаИсправил = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Примечание", DbType:="NVarChar(MAX)")>  _
+	Public Property Примечание() As String
+		Get
+			Return Me._Примечание
+		End Get
+		Set
+			If (String.Equals(Me._Примечание, value) = false) Then
+				Me._Примечание = value
 			End If
 		End Set
 	End Property
