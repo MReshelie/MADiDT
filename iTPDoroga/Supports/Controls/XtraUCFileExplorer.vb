@@ -99,7 +99,6 @@ Public Class XtraUCFileExplorer
             breadCrumbEdit.Properties.History.Add(New BreadCrumbHistoryItem(driveInfo.RootDirectory.ToString()))
         Next driveInfo
     End Sub
-
     ''' <summary>
     ''' Процедура: Инициализация главных ветвей
     ''' </summary>
@@ -109,7 +108,6 @@ Public Class XtraUCFileExplorer
         node.ChildNodes.Add(New BreadCrumbNode("Windows", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
         node.ChildNodes.Add(New BreadCrumbNode("Program Files", Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)))
     End Sub
-
     ''' <summary>
     ''' Процедура: Инициализация ветви компьютер
     ''' </summary>
@@ -119,7 +117,6 @@ Public Class XtraUCFileExplorer
             node.ChildNodes.Add(New BreadCrumbNode(driveInfo.Name, driveInfo.RootDirectory))
         Next driveInfo
     End Sub
-
     ''' <summary>
     ''' Функция: Получение листа доступных накопителей 
     ''' </summary>
@@ -133,7 +130,6 @@ Public Class XtraUCFileExplorer
             Yield driveInfo
         Next driveInfo
     End Function
-
     ''' <summary>
     ''' Функция: Get all subfolders contained within the target directory 
     ''' </summary>
@@ -155,7 +151,6 @@ Public Class XtraUCFileExplorer
         Array.Copy(subDirs, res, res.Length)
         Return res
     End Function
-
     ''' <summary>
     ''' Функция: Get the names of the subdirectories
     ''' </summary>
@@ -171,7 +166,6 @@ Public Class XtraUCFileExplorer
 
         Return subDirs
     End Function
-
     ''' <summary>
     ''' Функция: создание ветви для компонента BreadCrumbNode
     ''' </summary>

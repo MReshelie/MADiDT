@@ -520,6 +520,12 @@ Partial Public Class DataClassesDorogaDataContext
 		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодСотрудник)
 		Return CType(result.ReturnValue,ISingleResult(Of p_GetФото_СотрудникResult))
 	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.p_SelectСотрудники_Login")>  _
+	Public Function p_SelectСотрудники_Login() As ISingleResult(Of p_SelectСотрудники_LoginResult)
+		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo))
+		Return CType(result.ReturnValue,ISingleResult(Of p_SelectСотрудники_LoginResult))
+	End Function
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.address")>  _
@@ -9582,6 +9588,112 @@ Partial Public Class p_GetФото_СотрудникResult
 		Set
 			If (String.Equals(Me._Примечание, value) = false) Then
 				Me._Примечание = value
+			End If
+		End Set
+	End Property
+End Class
+
+Partial Public Class p_SelectСотрудники_LoginResult
+	
+	Private _КодСотрудник As Integer
+	
+	Private _Фамилия As String
+	
+	Private _Имя As String
+	
+	Private _Отчество As String
+	
+	Private _Степень As String
+	
+	Private _Должность As String
+	
+	Private _Фото As System.Data.Linq.Binary
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_КодСотрудник", DbType:="Int NOT NULL")>  _
+	Public Property КодСотрудник() As Integer
+		Get
+			Return Me._КодСотрудник
+		End Get
+		Set
+			If ((Me._КодСотрудник = value)  _
+						= false) Then
+				Me._КодСотрудник = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Фамилия", DbType:="NVarChar(50)")>  _
+	Public Property Фамилия() As String
+		Get
+			Return Me._Фамилия
+		End Get
+		Set
+			If (String.Equals(Me._Фамилия, value) = false) Then
+				Me._Фамилия = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Имя", DbType:="NVarChar(20)")>  _
+	Public Property Имя() As String
+		Get
+			Return Me._Имя
+		End Get
+		Set
+			If (String.Equals(Me._Имя, value) = false) Then
+				Me._Имя = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Отчество", DbType:="NVarChar(50)")>  _
+	Public Property Отчество() As String
+		Get
+			Return Me._Отчество
+		End Get
+		Set
+			If (String.Equals(Me._Отчество, value) = false) Then
+				Me._Отчество = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Степень", DbType:="NVarChar(10)")>  _
+	Public Property Степень() As String
+		Get
+			Return Me._Степень
+		End Get
+		Set
+			If (String.Equals(Me._Степень, value) = false) Then
+				Me._Степень = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Должность", DbType:="NVarChar(100)")>  _
+	Public Property Должность() As String
+		Get
+			Return Me._Должность
+		End Get
+		Set
+			If (String.Equals(Me._Должность, value) = false) Then
+				Me._Должность = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Фото", DbType:="VarBinary(MAX)")>  _
+	Public Property Фото() As System.Data.Linq.Binary
+		Get
+			Return Me._Фото
+		End Get
+		Set
+			If (Object.Equals(Me._Фото, value) = false) Then
+				Me._Фото = value
 			End If
 		End Set
 	End Property

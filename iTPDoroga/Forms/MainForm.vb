@@ -58,9 +58,29 @@ Partial Public Class MainForm
         If gblExit Then Exit Sub
 
         If Me.windowsUIViewMain.ShowFlyoutDialog(closeAppFlyout) = System.Windows.Forms.DialogResult.OK Then
+            SplashScreenManager.ShowImage(ResizeImage(My.Resources._stop, New Size(512, 384)), True, True, SplashImagePainter.Painter)
+            SplashImagePainter.Painter.ViewInfo.Stage = "Отключение соединения с БД..."
+            SplashScreenManager.Default.Invalidate()
+
+            If (New DataClassesDorogaDataContext()).Connection.State = ConnectionState.Open Then
+                Dim db As New DataClassesDorogaDataContext()
+                db.Connection.Close()
+                db.Dispose()
+            End If
+
             gblExit = True
             e.Cancel = False
             Me.TimerServers.Enabled = False
+
+            For i As Integer = 1 To 100
+                System.Threading.Thread.Sleep(20)
+                ' Change progress to be displayed by SplashImagePainter
+                SplashImagePainter.Painter.ViewInfo.Counter = i
+                'Force SplashImagePainter to repaint information
+                SplashScreenManager.Default.Invalidate()
+            Next i
+
+            SplashScreenManager.HideImage()
         End If
     End Sub
 

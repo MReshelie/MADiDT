@@ -24,7 +24,6 @@ Partial Class XtraUCLogin
         Me.StyleControllerLogin = New DevExpress.XtraEditors.StyleController(Me.components)
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.ImageSliderPerson = New DevExpress.XtraEditors.Controls.ImageSlider()
-        Me.ImageCollectionSlider = New DevExpress.Utils.ImageCollection(Me.components)
         Me.TextEditPassword = New DevExpress.XtraEditors.TextEdit()
         Me.ComboBoxEditPerson = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
@@ -36,12 +35,12 @@ Partial Class XtraUCLogin
         Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.ImageCollectionSlider = New DevExpress.Utils.ImageCollection(Me.components)
         Me.TimerSlider = New System.Windows.Forms.Timer(Me.components)
         CType(Me.StyleControllerLogin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.ImageSliderPerson, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ImageCollectionSlider, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TextEditPassword.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ComboBoxEditPerson.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,6 +51,7 @@ Partial Class XtraUCLogin
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ImageCollectionSlider, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'StyleControllerLogin
@@ -77,8 +77,7 @@ Partial Class XtraUCLogin
         '
         'ImageSliderPerson
         '
-        Me.ImageSliderPerson.CurrentImageIndex = 0
-        Me.ImageSliderPerson.ImageList = Me.ImageCollectionSlider
+        Me.ImageSliderPerson.CurrentImageIndex = -1
         Me.ImageSliderPerson.LayoutMode = DevExpress.Utils.Drawing.ImageLayoutMode.Stretch
         Me.ImageSliderPerson.Location = New System.Drawing.Point(12, 41)
         Me.ImageSliderPerson.Name = "ImageSliderPerson"
@@ -87,15 +86,6 @@ Partial Class XtraUCLogin
         Me.ImageSliderPerson.TabIndex = 7
         Me.ImageSliderPerson.Text = "ImageSliderPerson"
         Me.ImageSliderPerson.UseDisabledStatePainter = True
-        '
-        'ImageCollectionSlider
-        '
-        Me.ImageCollectionSlider.ImageSize = New System.Drawing.Size(500, 500)
-        Me.ImageCollectionSlider.ImageStream = CType(resources.GetObject("ImageCollectionSlider.ImageStream"), DevExpress.Utils.ImageCollectionStreamer)
-        Me.ImageCollectionSlider.InsertImage(Global.iTPDoroga.My.Resources.Resources.sec00, "sec00", GetType(Global.iTPDoroga.My.Resources.Resources), 0)
-        Me.ImageCollectionSlider.Images.SetKeyName(0, "sec00")
-        Me.ImageCollectionSlider.InsertImage(Global.iTPDoroga.My.Resources.Resources.sec01, "sec01", GetType(Global.iTPDoroga.My.Resources.Resources), 1)
-        Me.ImageCollectionSlider.Images.SetKeyName(1, "sec01")
         '
         'TextEditPassword
         '
@@ -210,9 +200,18 @@ Partial Class XtraUCLogin
         Me.EmptySpaceItem3.Size = New System.Drawing.Size(721, 43)
         Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
         '
+        'ImageCollectionSlider
+        '
+        Me.ImageCollectionSlider.ImageSize = New System.Drawing.Size(500, 500)
+        Me.ImageCollectionSlider.ImageStream = CType(resources.GetObject("ImageCollectionSlider.ImageStream"), DevExpress.Utils.ImageCollectionStreamer)
+        Me.ImageCollectionSlider.InsertImage(Global.iTPDoroga.My.Resources.Resources.sec00, "sec00", GetType(Global.iTPDoroga.My.Resources.Resources), 0)
+        Me.ImageCollectionSlider.Images.SetKeyName(0, "sec00")
+        Me.ImageCollectionSlider.InsertImage(Global.iTPDoroga.My.Resources.Resources.sec01, "sec01", GetType(Global.iTPDoroga.My.Resources.Resources), 1)
+        Me.ImageCollectionSlider.Images.SetKeyName(1, "sec01")
+        '
         'TimerSlider
         '
-        Me.TimerSlider.Interval = 10000
+        Me.TimerSlider.Interval = 400
         '
         'XtraUCLogin
         '
@@ -225,7 +224,6 @@ Partial Class XtraUCLogin
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
         CType(Me.ImageSliderPerson, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ImageCollectionSlider, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TextEditPassword.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ComboBoxEditPerson.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -236,6 +234,7 @@ Partial Class XtraUCLogin
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ImageCollectionSlider, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

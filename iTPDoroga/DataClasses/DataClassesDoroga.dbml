@@ -776,4 +776,15 @@
       <Column Name="Примечание" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.p_SelectСотрудники_Login" Method="p_SelectСотрудники_Login">
+    <ElementType Name="p_SelectСотрудники_LoginResult">
+      <Column Name="КодСотрудник" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Имя" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Степень" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Должность" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Фото" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>
