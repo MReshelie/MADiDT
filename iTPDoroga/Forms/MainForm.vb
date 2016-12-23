@@ -37,7 +37,7 @@ Partial Public Class MainForm
         closeAppFlyout.FlyoutButtons = MessageBoxButtons.OK
         closeAppFlyout.Action = clAppAction
 
-        windowsUIViewMain.AddTileWhenCreatingDocument = DevExpress.Utils.DefaultBoolean.False
+        Me.windowsUIViewMain.AddTileWhenCreatingDocument = DevExpress.Utils.DefaultBoolean.False
         dataSource = New SampleDataSource()
         groupsItemDetailPage = New Dictionary(Of SampleDataGroup, PageGroup)()
 
@@ -74,9 +74,7 @@ Partial Public Class MainForm
 
             For i As Integer = 1 To 100
                 System.Threading.Thread.Sleep(20)
-                ' Change progress to be displayed by SplashImagePainter
                 SplashImagePainter.Painter.ViewInfo.Counter = i
-                'Force SplashImagePainter to repaint information
                 SplashScreenManager.Default.Invalidate()
             Next i
 
@@ -105,7 +103,6 @@ Partial Public Class MainForm
         End If
 
         If e.Document Is closeAppFlyout Then
-            'e.Control = New iTPDoroga.XtraUCServers()
             Console.WriteLine("Панель завершения...")
         End If
 
