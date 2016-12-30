@@ -238,21 +238,16 @@ Public Class XtraUCPersonRecord
 
         Dim edit As PopupContainerEdit = TryCast(sender, PopupContainerEdit)
         Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
-        Dim res As String() = (From _res In db.CheckCreateDirectory((From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo") Select _res.Результат__).First().Split(New Char() {"|"c})
 
         view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}\[{1} {2} {3} {4}]{5}",
                                                                              (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
                                                                                              Me.TextEditФамилия.Text,
                                                                                              Me.TextEditИмя.Text,
                                                                                              Me.TextEditОтчество.Text,
-                                                                                             Date.Now,
+                                                                                             String.Format("{0}", Date.Now.ToString("ddMMyyy-HHmm")),
                                                                                              Path.GetExtension(CType(e.Value, String))))
-
         view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"), New System.Data.Linq.Binary(ImageToByteArray(Image.FromFile(CType(e.Value, String)))))
-
-        If edit.IsPopupOpen Then
-            edit.ClosePopup()
-        End If
+        edit.Text = e.Value.ToString
     End Sub
     Private Sub riPopupCEdit_QueryResultValue(ByVal sender As Object, ByVal e As DevExpress.XtraEditors.Controls.QueryResultValueEventArgs)
         For Each cntrl As Control In Me.PopupContainerControlФото.Controls

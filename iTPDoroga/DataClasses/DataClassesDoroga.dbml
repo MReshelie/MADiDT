@@ -738,23 +738,6 @@
       <Column Name="[Результат: ]" Member="Результат__" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.p_SaveФото" Method="p_SaveФото">
-    <Parameter Name="кодФото" Type="System.Int32" DbType="Int" />
-    <Parameter Name="кодСотрудник" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Тип_фото" Parameter="тип_фото" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Источник" Parameter="источник" Type="System.String" DbType="NVarChar(MAX)" />
-    <Parameter Name="Хранилище" Parameter="хранилище" Type="System.String" DbType="NVarChar(MAX)" />
-    <Parameter Name="База" Parameter="база" Type="System.Boolean" DbType="Bit" />
-    <Parameter Name="Оригинал" Parameter="оригинал" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" />
-    <Parameter Name="Записал" Parameter="записал" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" />
-    <Parameter Name="Исправил" Parameter="исправил" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" />
-    <Parameter Name="Примечание" Parameter="примечание" Type="System.String" DbType="NVarChar(MAX)" />
-    <ElementType Name="p_SaveФотоResult">
-      <Column Name="NewRecordID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.p_DeleteФото" Method="p_DeleteФото">
     <Parameter Name="кодФото" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
@@ -785,6 +768,23 @@
       <Column Name="Степень" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="Должность" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="Фото" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.p_SaveФото" Method="p_SaveФото">
+    <Parameter Name="кодФото" Type="System.Int32" DbType="Int" />
+    <Parameter Name="кодСотрудник" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Тип_фото" Parameter="тип_фото" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Источник" Parameter="источник" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Хранилище" Parameter="хранилище" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="База" Parameter="база" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Оригинал" Parameter="оригинал" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" />
+    <Parameter Name="Записал" Parameter="записал" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="датаЗаписал" Type="System.DateTime" DbType="DateTime2" />
+    <Parameter Name="Исправил" Parameter="исправил" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="датаИсправил" Type="System.DateTime" DbType="DateTime2" />
+    <Parameter Name="Примечание" Parameter="примечание" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="p_SaveФотоResult">
+      <Column Name="NewRecordID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

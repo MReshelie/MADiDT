@@ -503,12 +503,6 @@ Partial Public Class DataClassesDorogaDataContext
 		Return CType(result.ReturnValue,ISingleResult(Of CheckCreateDirectoryResult))
 	End Function
 	
-	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.p_SaveФото")>  _
-	Public Function p_SaveФото(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодФото As System.Nullable(Of Integer), <Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодСотрудник As System.Nullable(Of Integer), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Тип_фото", DbType:="Int")> ByVal тип_фото As System.Nullable(Of Integer), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Источник", DbType:="NVarChar(MAX)")> ByVal источник As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Хранилище", DbType:="NVarChar(MAX)")> ByVal хранилище As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="База", DbType:="Bit")> ByVal база As System.Nullable(Of Boolean), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Оригинал", DbType:="VarBinary(MAX)")> ByVal оригинал As System.Data.Linq.Binary, <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Записал", DbType:="NVarChar(50)")> ByVal записал As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="DateTime2")> ByVal датаЗаписал As System.Nullable(Of Date), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Исправил", DbType:="NVarChar(50)")> ByVal исправил As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="DateTime2")> ByVal датаИсправил As System.Nullable(Of Date), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Примечание", DbType:="NVarChar(MAX)")> ByVal примечание As String) As ISingleResult(Of p_SaveФотоResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодФото, кодСотрудник, тип_фото, источник, хранилище, база, оригинал, записал, датаЗаписал, исправил, датаИсправил, примечание)
-		Return CType(result.ReturnValue,ISingleResult(Of p_SaveФотоResult))
-	End Function
-	
 	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.p_DeleteФото")>  _
 	Public Function p_DeleteФото(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодФото As System.Nullable(Of Integer)) As Integer
 		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодФото)
@@ -525,6 +519,12 @@ Partial Public Class DataClassesDorogaDataContext
 	Public Function p_SelectСотрудники_Login() As ISingleResult(Of p_SelectСотрудники_LoginResult)
 		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo))
 		Return CType(result.ReturnValue,ISingleResult(Of p_SelectСотрудники_LoginResult))
+	End Function
+	
+	<Global.System.Data.Linq.Mapping.FunctionAttribute(Name:="dbo.p_SaveФото")>  _
+	Public Function p_SaveФото(<Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодФото As System.Nullable(Of Integer), <Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="Int")> ByVal кодСотрудник As System.Nullable(Of Integer), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Тип_фото", DbType:="Int")> ByVal тип_фото As System.Nullable(Of Integer), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Источник", DbType:="NVarChar(MAX)")> ByVal источник As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Хранилище", DbType:="NVarChar(MAX)")> ByVal хранилище As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="База", DbType:="Bit")> ByVal база As System.Nullable(Of Boolean), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Оригинал", DbType:="VarBinary(MAX)")> ByVal оригинал As System.Data.Linq.Binary, <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Записал", DbType:="NVarChar(50)")> ByVal записал As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="DateTime2")> ByVal датаЗаписал As System.Nullable(Of Date), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Исправил", DbType:="NVarChar(50)")> ByVal исправил As String, <Global.System.Data.Linq.Mapping.ParameterAttribute(DbType:="DateTime2")> ByVal датаИсправил As System.Nullable(Of Date), <Global.System.Data.Linq.Mapping.ParameterAttribute(Name:="Примечание", DbType:="NVarChar(MAX)")> ByVal примечание As String) As ISingleResult(Of p_SaveФотоResult)
+		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), кодФото, кодСотрудник, тип_фото, источник, хранилище, база, оригинал, записал, датаЗаписал, исправил, датаИсправил, примечание)
+		Return CType(result.ReturnValue,ISingleResult(Of p_SaveФотоResult))
 	End Function
 End Class
 
@@ -9395,27 +9395,6 @@ Partial Public Class CheckCreateDirectoryResult
 	End Property
 End Class
 
-Partial Public Class p_SaveФотоResult
-	
-	Private _NewRecordID As System.Nullable(Of Integer)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_NewRecordID", DbType:="Int")>  _
-	Public Property NewRecordID() As System.Nullable(Of Integer)
-		Get
-			Return Me._NewRecordID
-		End Get
-		Set
-			If (Me._NewRecordID.Equals(value) = false) Then
-				Me._NewRecordID = value
-			End If
-		End Set
-	End Property
-End Class
-
 Partial Public Class p_GetФото_СотрудникResult
 	
 	Private _кодФото As Integer
@@ -9694,6 +9673,27 @@ Partial Public Class p_SelectСотрудники_LoginResult
 		Set
 			If (Object.Equals(Me._Фото, value) = false) Then
 				Me._Фото = value
+			End If
+		End Set
+	End Property
+End Class
+
+Partial Public Class p_SaveФотоResult
+	
+	Private _NewRecordID As System.Nullable(Of Integer)
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_NewRecordID", DbType:="Int")>  _
+	Public Property NewRecordID() As System.Nullable(Of Integer)
+		Get
+			Return Me._NewRecordID
+		End Get
+		Set
+			If (Me._NewRecordID.Equals(value) = false) Then
+				Me._NewRecordID = value
 			End If
 		End Set
 	End Property
