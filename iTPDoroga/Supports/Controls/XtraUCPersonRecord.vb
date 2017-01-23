@@ -21,6 +21,7 @@ Public Class XtraUCPersonRecord
     Dim iСотрудник As Integer
     Dim iSlider As Integer = 0
     Dim newRow As Boolean = False
+    Dim sShame As String = String.Empty
     Dim riLookUpEditСтепень As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditСтепень"}
     Dim riLookUpEditДолжность As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditДолжность"}
     Dim riLookUpEditФакультет As New RepositoryItemLookUpEdit() With {.Name = "riLookUpEditФакультет"}
@@ -119,6 +120,7 @@ Public Class XtraUCPersonRecord
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Источник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Источник"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"))),
+                                     Trim(sShame) + ".fmt",
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("База"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("База"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
@@ -238,14 +240,22 @@ Public Class XtraUCPersonRecord
 
         Dim edit As PopupContainerEdit = TryCast(sender, PopupContainerEdit)
         Dim view As GridView = TryCast(Me.GridControlФото.FocusedView, GridView)
+        'Dim sExt As String = String.Empty
 
-        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}\[{1} {2} {3} {4}]{5}",
-                                                                             (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
-                                                                                             Me.TextEditФамилия.Text,
-                                                                                             Me.TextEditИмя.Text,
-                                                                                             Me.TextEditОтчество.Text,
-                                                                                             String.Format("{0}", Date.Now.ToString("ddMMyyy-HHmm")),
-                                                                                             Path.GetExtension(CType(e.Value, String))))
+        'sExt = Path.GetExtension(CType(e.Value, String))
+        'sShame = String.Format("{0}\[{1} {2} {3} {4}]{5}", (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
+        '                                                   Me.TextEditФамилия.Text,
+        '                                                   Me.TextEditИмя.Text,
+        '                                                   Me.TextEditОтчество.Text,
+        '                                                   String.Format("{0}", Date.Now.ToString("ddMMyyy-HHmm")),
+        '                                                   sExt)
+        sShame = String.Format("{0}\[{1} {2} {3} {4}]", (From _dr In db.p_GetDBInfo() Select _dr.Drive).First() + ":\Doroga\Photo",
+                                                           Me.TextEditФамилия.Text,
+                                                           Me.TextEditИмя.Text,
+                                                           Me.TextEditОтчество.Text,
+                                                           String.Format("{0}", Date.Now.ToString("ddMMyyy-HHmm")))
+
+        view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"), String.Format("{0}{1}", sShame, Trim(Path.GetExtension(CType(e.Value, String)))))
         view.SetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"), New System.Data.Linq.Binary(ImageToByteArray(Image.FromFile(CType(e.Value, String)))))
         edit.Text = e.Value.ToString
     End Sub
