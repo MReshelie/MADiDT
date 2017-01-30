@@ -286,6 +286,14 @@ Module MainModule
 
         Return newImage
     End Function
+    ''' <summary>
+    ''' Фукция: возвращает имя сервера из строки подключения
+    ''' </summary>
+    ''' <param name="_connstr">Строка подключения</param>
+    ''' <returns></returns>
+    Public Function DataSource(ByVal _connstr As String) As String
+        Return New SqlConnectionStringBuilder(_connstr).DataSource
+    End Function
 #End Region
 #End Region
 End Module

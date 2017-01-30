@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Configuration
 Imports System.Data.Linq
 Imports System.IO
 Imports DevExpress.Utils.Win
@@ -120,7 +121,7 @@ Public Class XtraUCPersonRecord
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Тип_фото"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Источник"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Источник"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Хранилище"))),
-                                     Trim(sShame) + ".fmt",
+                                     Trim(DataSource(My.Settings.DorogaConnectionString.ToString)),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("База"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("База"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Оригинал"))),
                                      IIf(IsDBNull(view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))), Nothing, view.GetRowCellValue(view.FocusedRowHandle, view.Columns("Записал"))),
